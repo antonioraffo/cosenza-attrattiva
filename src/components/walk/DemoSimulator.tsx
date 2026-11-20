@@ -74,21 +74,21 @@ export function DemoSimulator({ map, route, stops }: { map: MLMap | null; route:
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="rounded-full bg-oro-500 px-3 py-1.5 text-xs font-bold tracking-wider text-pietra-950 shadow-[var(--shadow-float)]"
+        className="rounded-full bg-arancio-500 px-3 py-1.5 text-xs font-bold tracking-wider text-neutro-950 shadow-[var(--shadow-float)]"
       >
         {t("badge")} · {t("title")}
       </button>
       {open && (
-        <div className="w-64 rounded-2xl bg-pietra-900/95 p-4 text-sm text-white shadow-[var(--shadow-float)] backdrop-blur">
+        <div className="w-64 rounded-2xl bg-neutro-900/95 p-4 text-sm text-white shadow-[var(--shadow-float)] backdrop-blur">
           <button
             type="button"
             onClick={() => setPlaying((p) => !p)}
-            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-oro-500 font-semibold text-pietra-950"
+            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-arancio-500 font-semibold text-neutro-950"
           >
             {playing ? <IconPause size={16} /> : <IconPlay size={16} />} {playing ? t("pause") : t("walkRoute")}
           </button>
           <fieldset className="mt-3">
-            <legend className="text-xs text-pietra-300">{t("speed")}</legend>
+            <legend className="text-xs text-neutro-300">{t("speed")}</legend>
             <div className="mt-1 grid grid-cols-4 gap-1">
               {SPEEDS.map((s) => (
                 <button
@@ -96,17 +96,17 @@ export function DemoSimulator({ map, route, stops }: { map: MLMap | null; route:
                   type="button"
                   aria-pressed={speed === s}
                   onClick={() => setSpeed(s)}
-                  className={`min-h-9 rounded-lg text-xs font-semibold ${speed === s ? "bg-white text-pietra-900" : "bg-pietra-800"}`}
+                  className={`min-h-9 rounded-lg text-xs font-semibold ${speed === s ? "bg-white text-neutro-900" : "bg-neutro-800"}`}
                 >
                   {s}×
                 </button>
               ))}
             </div>
           </fieldset>
-          <p className="mt-3 text-xs text-pietra-300">{t("jumpTo")}</p>
+          <p className="mt-3 text-xs text-neutro-300">{t("jumpTo")}</p>
           <div className="mt-1 flex flex-wrap gap-1">
             {stops.map((_, i) => (
-              <button key={i} type="button" onClick={() => jump(i)} className="size-9 rounded-lg bg-pietra-800 text-xs font-semibold hover:bg-pietra-700">
+              <button key={i} type="button" onClick={() => jump(i)} className="size-9 rounded-lg bg-neutro-800 text-xs font-semibold hover:bg-neutro-700">
                 {i + 1}
               </button>
             ))}
@@ -116,7 +116,7 @@ export function DemoSimulator({ map, route, stops }: { map: MLMap | null; route:
             aria-pressed={tapMode}
             onClick={() => setTapMode((m) => !m)}
             className={`mt-3 flex min-h-10 w-full items-center justify-center gap-2 rounded-full border text-xs font-semibold ${
-              tapMode ? "border-oro-300 bg-oro-500/20" : "border-pietra-600"
+              tapMode ? "border-arancio-300 bg-arancio-500/20" : "border-neutro-600"
             }`}
           >
             <IconTarget size={16} /> {t("tapMap")}

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -12,8 +12,14 @@ import { OfflineIndicator } from "@/components/layout/OfflineIndicator";
 import { PwaProvider } from "@/components/pwa/PwaProvider";
 import "../globals.css";
 
-const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", axes: ["opsz", "SOFT"], display: "swap" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+// Font self-hosted (SIL Open Font License), gli stessi di vivicosenza: file variabili, sottoinsieme latin
+const jakarta = localFont({
+  src: "../../fonts/plus-jakarta-sans-latin.woff2",
+  weight: "400 800",
+  variable: "--font-jakarta",
+  display: "swap",
+});
+const manrope = localFont({ src: "../../fonts/manrope-latin.woff2", weight: "400 700", variable: "--font-manrope", display: "swap" });
 
 // Contenuti letti dal database a ogni richiesta (nessun prerender in fase di build)
 export const dynamic = "force-dynamic";
@@ -57,7 +63,7 @@ export default async function LocaleLayout({
   const t = await getTranslations("nav");
 
   return (
-    <html lang={locale} className={`${fraunces.variable} ${inter.variable}`}>
+    <html lang={locale} className={`${jakarta.variable} ${manrope.variable}`}>
       <body className="min-h-dvh antialiased">
         <a
           href="#main"

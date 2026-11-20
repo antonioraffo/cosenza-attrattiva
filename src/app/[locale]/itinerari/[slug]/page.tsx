@@ -45,17 +45,17 @@ export default async function ItineraryPage({ params }: Props) {
     <>
       <Header overlay />
       <main id="main">
-        <section className="relative isolate flex min-h-[78svh] items-end overflow-hidden bg-pietra-950 text-white">
+        <section className="relative isolate flex min-h-[78svh] items-end overflow-hidden bg-neutro-950 text-white">
           <div className="absolute inset-0 -z-10">
             <SmartImage media={it.cover} locale={locale} priority sizes="100vw" fallbackColor={it.color} className="object-cover opacity-85" />
           </div>
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-pietra-950 via-pietra-950/40 to-transparent" />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-neutro-950 via-neutro-950/40 to-transparent" />
           <div className="mx-auto w-full max-w-5xl px-4 pt-28 pb-10 md:px-8">
             <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: it.color }}>
               {tt(it.theme)}
             </span>
-            <h1 className="mt-4 text-5xl leading-[1.02] font-light md:text-7xl">{tr(it.title, locale)}</h1>
-            <p className="mt-3 max-w-2xl text-xl text-pietra-100/90">{tr(it.subtitle, locale)}</p>
+            <h1 className="mt-4 text-5xl leading-[1.08] tracking-[-0.045em] md:text-7xl">{tr(it.title, locale)}</h1>
+            <p className="mt-3 max-w-2xl text-xl text-neutro-100/90">{tr(it.subtitle, locale)}</p>
           </div>
         </section>
 
@@ -74,20 +74,20 @@ export default async function ItineraryPage({ params }: Props) {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href={`/itinerari/${it.slug}/racconto`}
-              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-magliocco-700 px-6 font-semibold text-white transition hover:bg-magliocco-600"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-primario-700 px-6 font-semibold text-white transition hover:bg-primario-600"
             >
               <IconBook size={18} /> {t("readStory")}
             </Link>
             <Link
               href={`/itinerari/${it.slug}/passeggiata`}
-              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sila-700 px-6 font-semibold text-white transition hover:bg-sila-600"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-primario-700 px-6 font-semibold text-white transition hover:bg-primario-600"
             >
               <IconWalk size={18} /> {t("startWalk")}
             </Link>
             <OfflineButton slug={it.slug} />
           </div>
 
-          <p className="mt-10 max-w-3xl font-serif text-2xl leading-relaxed text-pietra-800">{tr(it.intro, locale)}</p>
+          <p className="mt-10 max-w-3xl font-display text-2xl leading-relaxed text-neutro-800">{tr(it.intro, locale)}</p>
 
           <section aria-labelledby="map-title" className="mt-12">
             <h2 id="map-title" className="sr-only">
@@ -106,7 +106,7 @@ export default async function ItineraryPage({ params }: Props) {
               {it.chapters.map((c, i) => (
                 <li key={c.id} className="relative">
                   <span
-                    className="absolute top-1 -left-[2.95rem] grid size-9 place-items-center rounded-full font-serif text-sm font-semibold text-white ring-4 ring-pietra-50"
+                    className="absolute top-1 -left-[2.95rem] grid size-9 place-items-center rounded-full font-display text-sm font-semibold text-white ring-4 ring-neutro-50"
                     style={{ backgroundColor: it.color }}
                     aria-hidden="true"
                   >
@@ -117,15 +117,15 @@ export default async function ItineraryPage({ params }: Props) {
                       <SmartImage media={c.image} locale={locale} sizes="96px" fallbackColor={it.color} />
                     </div>
                     <div className="min-w-0">
-                      <p className="eyebrow text-pietra-500">
+                      <p className="eyebrow text-neutro-500">
                         {t("chapter", { n: i + 1 })} · {c.placeName ? tr(c.placeName, locale) : t("transition")}
                       </p>
                       <h3 className="mt-1 text-xl">{tr(c.title, locale)}</h3>
-                      <p className="mt-1.5 text-[15px] leading-relaxed text-pietra-600">{excerpt(tr(c.body, locale), 26)}</p>
+                      <p className="mt-1.5 text-[15px] leading-relaxed text-neutro-600">{excerpt(tr(c.body, locale), 26)}</p>
                       {c.placeSlug && (
                         <Link
                           href={`/luoghi/${c.placeSlug}`}
-                          className="mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-magliocco-700 hover:underline"
+                          className="mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primario-700 hover:underline"
                         >
                           {t("openPlace")} <IconArrowRight size={16} />
                         </Link>

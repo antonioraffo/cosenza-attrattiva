@@ -26,24 +26,24 @@ export function ConsentBanner() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
-          className="fixed inset-x-3 bottom-3 z-[60] mx-auto max-w-lg rounded-2xl border border-pietra-200 bg-white p-5 shadow-[var(--shadow-float)]"
+          className="fixed inset-x-3 bottom-3 z-[60] mx-auto max-w-lg rounded-2xl border border-neutro-200 bg-white p-5 shadow-[var(--shadow-float)]"
         >
           <h2 id="consent-title" className="text-lg">
             {t("title")}
           </h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-pietra-600">{t("text")}</p>
+          <p className="mt-1.5 text-sm leading-relaxed text-neutro-600">{t("text")}</p>
           <div className="mt-4 flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => setConsent(true)}
-              className="min-h-11 rounded-full bg-magliocco-700 px-5 text-sm font-semibold text-white hover:bg-magliocco-600"
+              className="min-h-11 rounded-full bg-primario-700 px-5 text-sm font-semibold text-white hover:bg-primario-600"
             >
               {t("acceptGoogle")}
             </button>
             <button
               type="button"
               onClick={() => setConsent(false)}
-              className="min-h-11 rounded-full border border-pietra-300 px-5 text-sm font-semibold text-pietra-800 hover:bg-pietra-100"
+              className="min-h-11 rounded-full border border-neutro-300 px-5 text-sm font-semibold text-neutro-800 hover:bg-neutro-100"
             >
               {t("necessaryOnly")}
             </button>

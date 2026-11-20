@@ -131,11 +131,11 @@ function Flight({ stops }: { stops: FlyStop[] }) {
   return (
     <div className="relative size-full">
       <div ref={el} className="size-full" />
-      {status === "loading" && <p className="absolute inset-0 grid place-items-center text-pietra-300">{t("loading")}</p>}
+      {status === "loading" && <p className="absolute inset-0 grid place-items-center text-neutro-300">{t("loading")}</p>}
       {status === "error" && <p className="absolute inset-0 grid place-items-center p-6 text-center">{t("error")}</p>}
       {status === "ready" && (
         <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/80 to-transparent p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-          <p className="mb-3 min-h-8 text-center font-serif text-2xl text-white drop-shadow" aria-live="polite">
+          <p className="mb-3 min-h-8 text-center font-display text-2xl text-white drop-shadow" aria-live="polite">
             {index >= 0 ? `${index + 1}. ${stops[index]!.name}` : ""}
           </p>
           <div className="flex items-center justify-center gap-3">
@@ -151,7 +151,7 @@ function Flight({ stops }: { stops: FlyStop[] }) {
             <button
               type="button"
               onClick={() => setAuto((a) => !a)}
-              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-oro-500 px-6 font-semibold text-pietra-950"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-arancio-500 px-6 font-semibold text-neutro-950"
             >
               {auto ? <IconPause size={18} /> : <IconPlay size={18} />} {t("flyStart")}
             </button>

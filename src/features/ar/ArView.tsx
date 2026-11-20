@@ -98,11 +98,11 @@ function ArScene({ focusSlug, fallbackViewpoint }: { focusSlug?: string; fallbac
 
   if (!started) {
     return (
-      <div className="grid size-full place-items-center bg-[radial-gradient(circle_at_50%_30%,#3a0e1b,#14110e)] p-6">
+      <div className="grid size-full place-items-center bg-[radial-gradient(circle_at_50%_30%,#07362e,#151311)] p-6">
         <div className="max-w-sm text-center">
-          <IconCamera size={44} className="mx-auto text-oro-300" />
-          <p className="mt-4 leading-relaxed text-pietra-100">{t("arIntro")}</p>
-          <button type="button" onClick={start} className="mt-6 min-h-12 rounded-full bg-oro-500 px-6 font-semibold text-pietra-950">
+          <IconCamera size={44} className="mx-auto text-arancio-300" />
+          <p className="mt-4 leading-relaxed text-neutro-100">{t("arIntro")}</p>
+          <button type="button" onClick={start} className="mt-6 min-h-12 rounded-full bg-arancio-500 px-6 font-semibold text-neutro-950">
             {t("arStart")}
           </button>
         </div>
@@ -112,7 +112,7 @@ function ArScene({ focusSlug, fallbackViewpoint }: { focusSlug?: string; fallbac
 
   return (
     <div
-      className="relative size-full touch-none overflow-hidden bg-[radial-gradient(circle_at_50%_120%,#244c35,#14110e_70%)]"
+      className="relative size-full touch-none overflow-hidden bg-[radial-gradient(circle_at_50%_120%,#0a4c41,#151311_70%)]"
       tabIndex={0}
       aria-label={t("arTitle")}
       onKeyDown={(e) => {
@@ -156,17 +156,17 @@ function ArScene({ focusSlug, fallbackViewpoint }: { focusSlug?: string; fallbac
           >
             <span
               className={`block rounded-2xl px-3 py-2 shadow-lg backdrop-blur ${
-                isFocus ? "bg-magliocco-700/90 text-white ring-2 ring-oro-300" : "bg-white/85 text-pietra-900"
+                isFocus ? "bg-primario-700/90 text-white ring-2 ring-arancio-300" : "bg-white/85 text-neutro-900"
               }`}
               style={{ transform: `scale(${1.15 - near * 0.4})` }}
             >
-              <span className="block font-serif text-[15px] leading-tight whitespace-nowrap">{tr(p.name, locale)}</span>
-              <span className={`block text-xs ${isFocus ? "text-oro-300" : "text-pietra-500"}`}>
+              <span className="block font-display text-[15px] leading-tight whitespace-nowrap">{tr(p.name, locale)}</span>
+              <span className={`block text-xs ${isFocus ? "text-arancio-300" : "text-neutro-500"}`}>
                 {t("arDistance", { distance: formatDistance(p.d, locale) })}
               </span>
             </span>
-            <span className={`mx-auto block h-8 w-0.5 ${isFocus ? "bg-oro-300" : "bg-white/80"}`} />
-            <span className={`mx-auto block size-2.5 rounded-full ${isFocus ? "bg-oro-300" : "bg-white"}`} />
+            <span className={`mx-auto block h-8 w-0.5 ${isFocus ? "bg-arancio-300" : "bg-white/80"}`} />
+            <span className={`mx-auto block size-2.5 rounded-full ${isFocus ? "bg-arancio-300" : "bg-white"}`} />
           </button>
         );
       })}
@@ -174,7 +174,7 @@ function ArScene({ focusSlug, fallbackViewpoint }: { focusSlug?: string; fallbac
       {/* freccia verso il luogo in evidenza se fuori campo */}
       {focus && Math.abs(focusDiff) > hfov / 2 && (
         <div
-          className="pointer-events-none absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-magliocco-700/90 px-3 py-2 text-sm font-semibold text-white"
+          className="pointer-events-none absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-primario-700/90 px-3 py-2 text-sm font-semibold text-white"
           style={focusDiff > 0 ? { right: 8 } : { left: 8 }}
         >
           {focusDiff > 0 ? "→" : "←"} {tr(focus.name, locale)}
@@ -197,19 +197,19 @@ function ArScene({ focusSlug, fallbackViewpoint }: { focusSlug?: string; fallbac
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 260 }}
-            className="absolute inset-x-0 bottom-0 z-20 max-h-[48%] overflow-y-auto rounded-t-3xl bg-pietra-950/90 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-white backdrop-blur-md"
+            className="absolute inset-x-0 bottom-0 z-20 max-h-[48%] overflow-y-auto rounded-t-3xl bg-neutro-950/90 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-white backdrop-blur-md"
             onPointerDown={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="eyebrow text-oro-300">{t("arTimeline")}</p>
+                <p className="eyebrow text-arancio-300">{t("arTimeline")}</p>
                 <h3 className="mt-1 text-2xl">{tr(selectedPlace.ar.headline, locale)}</h3>
               </div>
-              <button type="button" onClick={() => setSelected(null)} className="min-h-11 rounded-full px-3 text-sm text-pietra-300">
+              <button type="button" onClick={() => setSelected(null)} className="min-h-11 rounded-full px-3 text-sm text-neutro-300">
                 ✕
               </button>
             </div>
-            <ol className="relative mt-4 space-y-3 border-l border-oro-500/50 pl-5">
+            <ol className="relative mt-4 space-y-3 border-l border-arancio-500/50 pl-5">
               {selectedPlace.ar.timeline.map((e, i) => (
                 <motion.li
                   key={i}
@@ -218,9 +218,9 @@ function ArScene({ focusSlug, fallbackViewpoint }: { focusSlug?: string; fallbac
                   transition={{ delay: 0.08 * i }}
                   className="relative"
                 >
-                  <span className="absolute top-1.5 -left-[25px] size-2.5 rounded-full bg-oro-500" />
-                  <span className="font-serif text-lg text-oro-300">{e.year}</span>
-                  <p className="text-sm leading-relaxed text-pietra-100">{tr(e.text, locale)}</p>
+                  <span className="absolute top-1.5 -left-[25px] size-2.5 rounded-full bg-arancio-500" />
+                  <span className="font-display text-lg text-arancio-300">{e.year}</span>
+                  <p className="text-sm leading-relaxed text-neutro-100">{tr(e.text, locale)}</p>
                 </motion.li>
               ))}
             </ol>

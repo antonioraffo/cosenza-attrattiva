@@ -26,8 +26,8 @@ export function ListenButton({
       aria-pressed={playing}
       className={
         variant === "solid"
-          ? "inline-flex min-h-12 items-center gap-2 rounded-full bg-pietra-900 px-5 font-semibold text-white transition hover:bg-pietra-800"
-          : "inline-flex min-h-11 items-center gap-2 rounded-full border border-pietra-300 px-4 text-sm font-semibold text-pietra-800 transition hover:bg-pietra-100"
+          ? "inline-flex min-h-12 items-center gap-2 rounded-full bg-neutro-900 px-5 font-semibold text-white transition hover:bg-neutro-800"
+          : "inline-flex min-h-11 items-center gap-2 rounded-full border border-neutro-300 px-4 text-sm font-semibold text-neutro-800 transition hover:bg-neutro-100"
       }
     >
       {playing ? <IconPause size={16} /> : current && status === "paused" ? <IconPlay size={16} /> : <IconHeadphones size={18} />}

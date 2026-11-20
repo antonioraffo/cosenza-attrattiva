@@ -40,8 +40,8 @@ function userMarkerEl() {
     <div class="relative size-6">
       <div data-cone class="absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-full origin-bottom opacity-0 transition-opacity"
            style="background: conic-gradient(from -25deg at 50% 100%, rgba(63,122,85,.55), transparent 50deg); clip-path: polygon(50% 100%, 0 0, 100% 0);"></div>
-      <span class="absolute inset-0 rounded-full bg-sila-500/40" style="animation: pulse-ring 2s ease-out infinite"></span>
-      <span class="absolute inset-[3px] rounded-full border-[3px] border-white bg-sila-500 shadow-lg"></span>
+      <span class="absolute inset-0 rounded-full bg-primario-500/40" style="animation: pulse-ring 2s ease-out infinite"></span>
+      <span class="absolute inset-[3px] rounded-full border-[3px] border-white bg-primario-500 shadow-lg"></span>
     </div>`;
   return el;
 }
@@ -188,17 +188,17 @@ export function WalkView({
   /* ── schermata iniziale ────────────────────────────── */
   if (!started) {
     return (
-      <main id="main" className="relative grid min-h-dvh place-items-center bg-[radial-gradient(circle_at_50%_0%,var(--color-sila-700),var(--color-pietra-950)_70%)] px-5 py-16 text-white">
+      <main id="main" className="relative grid min-h-dvh place-items-center bg-[radial-gradient(circle_at_50%_0%,var(--color-primario-700),var(--color-neutro-950)_70%)] px-5 py-16 text-white">
         <Link href={`/itinerari/${slug}`} className="absolute top-4 left-3 grid size-11 place-items-center rounded-full hover:bg-white/10" aria-label={ti("backToItinerary")}>
           <IconArrowLeft />
         </Link>
         <div className="max-w-md text-center">
-          <IconWalk size={44} className="mx-auto text-oro-300" />
-          <p className="eyebrow mt-6 text-oro-300">{t("title")}</p>
-          <h1 className="mt-2 text-4xl font-light">{title}</h1>
-          <p className="mt-5 leading-relaxed text-pietra-100/85">{t("intro")}</p>
+          <IconWalk size={44} className="mx-auto text-arancio-300" />
+          <p className="eyebrow mt-6 text-arancio-300">{t("title")}</p>
+          <h1 className="mt-2 text-4xl tracking-[-0.045em]">{title}</h1>
+          <p className="mt-5 leading-relaxed text-neutro-100/85">{t("intro")}</p>
           <div className="mt-8 flex flex-col items-center gap-3">
-            <button type="button" onClick={() => begin(false)} className="min-h-12 w-full max-w-xs rounded-full bg-oro-500 px-6 font-semibold text-pietra-950 hover:bg-oro-300">
+            <button type="button" onClick={() => begin(false)} className="min-h-12 w-full max-w-xs rounded-full bg-arancio-500 px-6 font-semibold text-neutro-950 hover:bg-arancio-300">
               {t("start")}
             </button>
             {publicEnv.demoTools && (
@@ -214,29 +214,29 @@ export function WalkView({
 
   /* ── passeggiata attiva ────────────────────────────── */
   return (
-    <main id="main" className="relative h-dvh overflow-hidden bg-pietra-100">
+    <main id="main" className="relative h-dvh overflow-hidden bg-neutro-100">
       <div ref={mapRef} className="absolute inset-0" role="region" aria-label={ti("routeMap")} />
 
       {/* barra superiore con prossima tappa e bussola */}
       <div className="absolute inset-x-0 top-0 z-20 p-3 pt-[max(.75rem,env(safe-area-inset-top))]">
         <div className="mx-auto flex max-w-xl items-center gap-3 rounded-2xl bg-white/95 p-3 shadow-[var(--shadow-float)] backdrop-blur">
-          <Link href={`/itinerari/${slug}`} className="grid size-11 shrink-0 place-items-center rounded-full hover:bg-pietra-100" aria-label={ti("backToItinerary")}>
+          <Link href={`/itinerari/${slug}`} className="grid size-11 shrink-0 place-items-center rounded-full hover:bg-neutro-100" aria-label={ti("backToItinerary")}>
             <IconArrowLeft />
           </Link>
-          {status === "locating" && <p className="flex-1 text-sm text-pietra-600">{t("locating")}</p>}
-          {status === "denied" && <p className="flex-1 text-sm text-magliocco-700">{t("denied")}</p>}
-          {status === "unavailable" && <p className="flex-1 text-sm text-magliocco-700">{t("unavailable")}</p>}
+          {status === "locating" && <p className="flex-1 text-sm text-neutro-600">{t("locating")}</p>}
+          {status === "denied" && <p className="flex-1 text-sm text-primario-700">{t("denied")}</p>}
+          {status === "unavailable" && <p className="flex-1 text-sm text-primario-700">{t("unavailable")}</p>}
           {status === "active" && next && (
             <>
               <div className="min-w-0 flex-1" aria-live="polite">
-                <p className="eyebrow text-pietra-500">
+                <p className="eyebrow text-neutro-500">
                   {t("next")} · {nextIndex + 1}/{chapters.length}
                 </p>
-                <p className="truncate font-serif text-lg leading-tight">{next.placeName ?? next.title}</p>
-                <p className="text-sm text-pietra-600">
+                <p className="truncate font-display text-lg leading-tight">{next.placeName ?? next.title}</p>
+                <p className="text-sm text-neutro-600">
                   {distToNext !== null && formatDistance(distToNext, locale)}
                   {bearingToNext !== null && ` · ${t("toward", { dir: cardinal(bearingToNext, locale) })}`}
-                  {source === "gps" && accuracy > 0 && <span className="text-pietra-400"> · {t("accuracy", { m: Math.round(accuracy) })}</span>}
+                  {source === "gps" && accuracy > 0 && <span className="text-neutro-400"> · {t("accuracy", { m: Math.round(accuracy) })}</span>}
                 </p>
               </div>
               <button
@@ -251,14 +251,14 @@ export function WalkView({
                 }
               >
                 <IconArrowUp size={28} style={{ transform: `rotate(${arrowRotation}deg)`, transition: "transform .3s ease-out" }} />
-                {compass !== "active" && <IconCompass size={14} className="absolute right-0 bottom-0 rounded-full bg-white text-pietra-700" />}
+                {compass !== "active" && <IconCompass size={14} className="absolute right-0 bottom-0 rounded-full bg-white text-neutro-700" />}
               </button>
             </>
           )}
-          {status === "active" && !next && <p className="flex-1 font-serif text-lg">{t("completed")}</p>}
+          {status === "active" && !next && <p className="flex-1 font-display text-lg">{t("completed")}</p>}
         </div>
         {compass === "unsupported" && status === "active" && (
-          <p className="mx-auto mt-2 max-w-xl rounded-xl bg-pietra-900/80 px-3 py-1.5 text-center text-xs text-white">{t("compassUnavailable")}</p>
+          <p className="mx-auto mt-2 max-w-xl rounded-xl bg-neutro-900/80 px-3 py-1.5 text-center text-xs text-white">{t("compassUnavailable")}</p>
         )}
       </div>
 
@@ -286,12 +286,12 @@ export function WalkView({
                   map?.flyTo({ center: c.position, zoom: 17, duration: reducedMotion() ? 0 : 1200 });
                 }}
                 className={`flex min-h-12 items-center gap-2 rounded-full py-1.5 pr-4 pl-1.5 text-sm font-medium shadow-[var(--shadow-card)] ${
-                  i === nextIndex ? "bg-pietra-900 text-white" : "bg-white text-pietra-800"
+                  i === nextIndex ? "bg-neutro-900 text-white" : "bg-white text-neutro-800"
                 }`}
               >
                 <span
                   className="grid size-8 place-items-center rounded-full text-xs font-bold text-white"
-                  style={{ backgroundColor: isVisited(i) ? "var(--color-sila-600)" : color }}
+                  style={{ backgroundColor: isVisited(i) ? "var(--color-primario-600)" : color }}
                 >
                   {isVisited(i) ? <IconCheck size={16} /> : i + 1}
                 </span>
@@ -316,10 +316,10 @@ export function WalkView({
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 260 }}
-            className={`absolute inset-x-0 bottom-0 z-40 overflow-y-auto rounded-t-[2rem] bg-pietra-50 shadow-[0_-20px_60px_rgba(0,0,0,.35)] ${expanded ? "top-12" : "max-h-[78%]"}`}
+            className={`absolute inset-x-0 bottom-0 z-40 overflow-y-auto rounded-t-[2rem] bg-neutro-50 shadow-[0_-20px_60px_rgba(0,0,0,.35)] ${expanded ? "top-12" : "max-h-[78%]"}`}
           >
             <div className="mx-auto max-w-xl p-5 pb-[max(6rem,calc(env(safe-area-inset-bottom)+6rem))]">
-              <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-pietra-300" />
+              <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-neutro-300" />
               {arrived.image && (
                 <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-2xl">
                   <Image src={arrived.image.url} alt={arrived.image.alt} fill sizes="600px" className="object-cover" />
@@ -330,27 +330,27 @@ export function WalkView({
                   )}
                 </div>
               )}
-              <p className="eyebrow text-sila-600">{t("arrived")}</p>
+              <p className="eyebrow text-primario-600">{t("arrived")}</p>
               <h2 id="arrival-title" className="mt-1 text-3xl">
                 {arrived.title}
               </h2>
               {arrival?.newStamp && (
-                <p className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-magliocco-50 px-3 py-1 text-sm font-semibold text-magliocco-700" role="status">
+                <p className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-primario-50 px-3 py-1 text-sm font-semibold text-primario-700" role="status">
                   {t("stamped")}
                 </p>
               )}
               {expanded ? (
-                <div className="prose-story mt-5 text-pietra-800" dangerouslySetInnerHTML={{ __html: arrived.html }} />
+                <div className="prose-story mt-5 text-neutro-800" dangerouslySetInnerHTML={{ __html: arrived.html }} />
               ) : (
-                <p className="mt-3 line-clamp-3 leading-relaxed text-pietra-700">{arrived.plain}</p>
+                <p className="mt-3 line-clamp-3 leading-relaxed text-neutro-700">{arrived.plain}</p>
               )}
               <div className="mt-5 flex flex-wrap gap-2">
                 {!expanded && (
-                  <button type="button" onClick={() => setExpanded(true)} className="min-h-12 rounded-full bg-pietra-900 px-5 font-semibold text-white">
+                  <button type="button" onClick={() => setExpanded(true)} className="min-h-12 rounded-full bg-neutro-900 px-5 font-semibold text-white">
                     {t("readChapter")}
                   </button>
                 )}
-                <button type="button" onClick={() => setArrival(null)} className="inline-flex min-h-12 items-center gap-1.5 rounded-full border border-pietra-300 px-5 font-semibold">
+                <button type="button" onClick={() => setArrival(null)} className="inline-flex min-h-12 items-center gap-1.5 rounded-full border border-neutro-300 px-5 font-semibold">
                   <IconClose size={18} /> {t("close")}
                 </button>
               </div>
@@ -368,21 +368,21 @@ export function WalkView({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 z-50 grid place-items-center bg-pietra-950/80 p-6 backdrop-blur"
+            className="absolute inset-0 z-50 grid place-items-center bg-neutro-950/80 p-6 backdrop-blur"
           >
-            <div className="max-w-sm rounded-3xl bg-pietra-50 p-8 text-center">
+            <div className="max-w-sm rounded-3xl bg-neutro-50 p-8 text-center">
               <div className="mx-auto w-fit">
                 <Stamp name={title} size={150} animate color={color} date={new Date().toLocaleDateString(locale)} />
               </div>
               <h2 id="done-title" className="mt-4 text-3xl">
                 {t("completed")}
               </h2>
-              <p className="mt-2 text-pietra-600">{t("completedText")}</p>
+              <p className="mt-2 text-neutro-600">{t("completedText")}</p>
               <div className="mt-6 flex flex-col gap-2">
-                <Link href="/passaporto" className="min-h-12 rounded-full bg-magliocco-700 px-6 py-3 font-semibold text-white">
+                <Link href="/passaporto" className="min-h-12 rounded-full bg-primario-700 px-6 py-3 font-semibold text-white">
                   {th("openPassport")}
                 </Link>
-                <button type="button" onClick={() => setCompleted(false)} className="min-h-12 rounded-full border border-pietra-300 px-6 font-semibold">
+                <button type="button" onClick={() => setCompleted(false)} className="min-h-12 rounded-full border border-neutro-300 px-6 font-semibold">
                   {t("close")}
                 </button>
               </div>

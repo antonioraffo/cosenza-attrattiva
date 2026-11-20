@@ -36,7 +36,7 @@ export default async function PassportPage({ params }: Props) {
       <Header />
       <main id="main" className="mx-auto max-w-5xl px-4 pt-10 md:px-8">
         <h1 className="text-4xl md:text-5xl">{t("title")}</h1>
-        <p className="mt-3 max-w-xl text-pietra-600">{t("subtitle")}</p>
+        <p className="mt-3 max-w-xl text-neutro-600">{t("subtitle")}</p>
         <PassportView itineraries={itineraries} placeNames={placeNames} />
       </main>
       <Footer />

@@ -24,19 +24,19 @@ export default async function CreditsPage({ params }: Props) {
       <Header />
       <main id="main" className="mx-auto max-w-5xl px-4 pt-10 md:px-8">
         <h1 className="text-4xl">{t("title")}</h1>
-        <p className="mt-3 max-w-2xl text-pietra-600">{t("intro")}</p>
-        <p className="mt-2 max-w-2xl text-pietra-600">{t("map")}</p>
+        <p className="mt-3 max-w-2xl text-neutro-600">{t("intro")}</p>
+        <p className="mt-2 max-w-2xl text-neutro-600">{t("map")}</p>
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {media.map((m) => (
             <li key={m.key} className="flex gap-3 rounded-2xl bg-white p-3 shadow-[var(--shadow-card)]">
-              <div className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-pietra-200">
+              <div className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-neutro-200">
                 <Image src={m.url} alt={tr(m.alt, locale)} fill sizes="80px" className="object-cover" />
               </div>
               <div className="min-w-0 text-sm">
-                <p className="line-clamp-2 text-pietra-800">{m.credit}</p>
-                <p className="text-xs text-pietra-500">{m.license}</p>
+                <p className="line-clamp-2 text-neutro-800">{m.credit}</p>
+                <p className="text-xs text-neutro-500">{m.license}</p>
                 {m.sourceUrl && (
-                  <a href={m.sourceUrl} target="_blank" rel="noopener" className="text-xs font-semibold text-magliocco-700 hover:underline">
+                  <a href={m.sourceUrl} target="_blank" rel="noopener" className="text-xs font-semibold text-primario-700 hover:underline">
                     {t("source")} ↗
                   </a>
                 )}

@@ -45,10 +45,10 @@ export function OfflineButton({ slug }: { slug: string }) {
       onClick={onClick}
       disabled={state === "loading"}
       aria-live="polite"
-      className="inline-flex min-h-12 items-center gap-2 rounded-full border border-pietra-300 bg-white px-5 text-sm font-semibold text-pietra-800 transition hover:border-pietra-500 disabled:opacity-70"
+      className="inline-flex min-h-12 items-center gap-2 rounded-full border border-neutro-300 bg-white px-5 text-sm font-semibold text-neutro-800 transition hover:border-neutro-500 disabled:opacity-70"
       title={state === "done" ? t("removeOffline") : undefined}
     >
-      {state === "done" ? <IconCheck size={18} className="text-sila-600" /> : <IconDownload size={18} />}
+      {state === "done" ? <IconCheck size={18} className="text-primario-600" /> : <IconDownload size={18} />}
       {state === "loading"
         ? t("downloading", { progress })
         : state === "done"

@@ -12,7 +12,7 @@ export function SmartImage({
   sizes,
   priority = false,
   className = "object-cover",
-  fallbackColor = "#6e1b33",
+  fallbackColor = "#0c6455",
   fallbackLabel,
 }: {
   media: MediaItem | null | undefined;
@@ -51,7 +51,7 @@ export function PlaceholderArt({ color, label }: { color: string; label?: string
       <defs>
         <linearGradient id={`sky-${color.slice(1)}`} x1="0" x2="0" y1="0" y2="1">
           <stop offset="0" stopColor={color} />
-          <stop offset="1" stopColor="#1f1a16" />
+          <stop offset="1" stopColor="#211e1c" />
         </linearGradient>
       </defs>
       <rect width="400" height="300" fill={`url(#sky-${color.slice(1)})`} />

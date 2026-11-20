@@ -19,8 +19,8 @@ export function ThemeFilter({ cards }: { cards: { slug: string; theme: Theme; no
   const chip = (selected: boolean) =>
     `min-h-11 shrink-0 rounded-full border px-4 text-sm font-medium transition ${
       selected
-        ? "border-magliocco-700 bg-magliocco-700 text-white"
-        : "border-pietra-300 bg-white text-pietra-700 hover:border-pietra-500"
+        ? "border-primario-700 bg-primario-700 text-white"
+        : "border-neutro-300 bg-white text-neutro-700 hover:border-neutro-500"
     }`;
 
   return (
@@ -54,7 +54,7 @@ export function ThemeFilter({ cards }: { cards: { slug: string; theme: Theme; no
           ))}
         </AnimatePresence>
       </ul>
-      {shown.length === 0 && <p className="mt-6 text-pietra-500">{t("empty")}</p>}
+      {shown.length === 0 && <p className="mt-6 text-neutro-500">{t("empty")}</p>}
     </div>
   );
 }

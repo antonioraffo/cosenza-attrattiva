@@ -22,7 +22,7 @@ export function ThenNowSlider({
   const id = useId();
   return (
     <figure className="select-none">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] bg-pietra-200 shadow-[var(--shadow-card)]">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] bg-neutro-200 shadow-[var(--shadow-card)]">
         <Image src={now.url} alt={now.alt} fill sizes="(min-width: 768px) 700px, 100vw" className="object-cover" />
         <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
           <Image
@@ -34,7 +34,7 @@ export function ThenNowSlider({
           />
         </div>
         <div className="pointer-events-none absolute inset-y-0 w-0.5 bg-white shadow-[0_0_12px_rgba(0,0,0,.5)]" style={{ left: `${pos}%` }}>
-          <span className="absolute top-1/2 left-1/2 grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-pietra-900 shadow-lg">
+          <span className="absolute top-1/2 left-1/2 grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-neutro-900 shadow-lg">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="m9 6-6 6 6 6M15 6l6 6-6 6" />
             </svg>
@@ -56,7 +56,7 @@ export function ThenNowSlider({
           className="absolute inset-0 size-full cursor-ew-resize opacity-0"
         />
       </div>
-      <figcaption className="mt-2 text-center text-sm text-pietra-500">{labels.hint}</figcaption>
+      <figcaption className="mt-2 text-center text-sm text-neutro-500">{labels.hint}</figcaption>
     </figure>
   );
 }

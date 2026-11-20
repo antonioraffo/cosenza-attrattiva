@@ -38,7 +38,7 @@ type Props =
     };
 
 const btn =
-  "inline-flex min-h-11 items-center gap-2 rounded-full border border-pietra-300 bg-white px-4 text-sm font-semibold text-pietra-800 transition hover:border-pietra-500";
+  "inline-flex min-h-11 items-center gap-2 rounded-full border border-neutro-300 bg-white px-4 text-sm font-semibold text-neutro-800 transition hover:border-neutro-500";
 
 export function ImmersiveLauncher(props: Props) {
   const t = useTranslations("story");
@@ -52,7 +52,7 @@ export function ImmersiveLauncher(props: Props) {
         <button
           type="button"
           onClick={() => setOpen("3d")}
-          className={props.compact ? "inline-flex min-h-11 items-center gap-1.5 rounded-full bg-pietra-900 px-3.5 text-sm font-semibold text-white" : btn}
+          className={props.compact ? "inline-flex min-h-11 items-center gap-1.5 rounded-full bg-neutro-900 px-3.5 text-sm font-semibold text-white" : btn}
         >
           <IconCube size={18} /> {t("view3d")}
         </button>

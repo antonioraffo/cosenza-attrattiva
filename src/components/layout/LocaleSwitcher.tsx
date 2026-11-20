@@ -22,7 +22,7 @@ export function LocaleSwitcher({ light = false }: { light?: boolean }) {
         router.replace({ pathname, params }, { locale: other, scroll: false })
       }
       className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium transition ${
-        light ? "text-white hover:bg-white/15" : "text-pietra-700 hover:bg-pietra-100"
+        light ? "text-white hover:bg-white/15" : "text-neutro-700 hover:bg-neutro-100"
       }`}
     >
       <IconGlobe size={18} />

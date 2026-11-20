@@ -38,12 +38,12 @@ export function FullscreenModal({
         e.preventDefault();
         onClose();
       }}
-      className={`fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none p-0 ${dark ? "bg-pietra-950 text-white" : "bg-pietra-50"} backdrop:bg-black/70`}
+      className={`fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none p-0 ${dark ? "bg-neutro-950 text-white" : "bg-neutro-50"} backdrop:bg-black/70`}
     >
       <div className="relative size-full">
         {children}
         <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-3 bg-gradient-to-b from-black/70 to-transparent p-3 pt-[max(.75rem,env(safe-area-inset-top))]">
-          <h2 className="truncate pl-2 font-serif text-lg text-white">{title}</h2>
+          <h2 className="truncate pl-2 font-display text-lg text-white">{title}</h2>
           <button
             type="button"
             onClick={onClose}

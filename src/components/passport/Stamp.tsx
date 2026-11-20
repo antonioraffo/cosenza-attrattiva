@@ -2,7 +2,7 @@
 export function Stamp({
   name,
   date,
-  color = "#8a2440",
+  color = "#0f7663",
   size = 120,
   animate = false,
   muted = false,

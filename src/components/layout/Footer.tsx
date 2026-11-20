@@ -6,11 +6,11 @@ import { ConsentManageButton } from "./ConsentBanner";
 export async function Footer() {
   const t = await getTranslations("footer");
   return (
-    <footer className="mt-24 bg-pietra-900 text-pietra-200">
+    <footer className="mt-24 bg-neutro-900 text-neutro-200">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-[1.5fr_1fr] md:px-8">
         <div>
           <LogoConnect light className="h-24 w-auto" />
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-pietra-300">{t("project")}</p>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-neutro-300">{t("project")}</p>
         </div>
         <ul className="space-y-1 text-sm">
           <li>
@@ -23,7 +23,7 @@ export async function Footer() {
           </li>
         </ul>
       </div>
-      <p className="border-t border-pietra-800 px-4 py-5 text-center text-xs text-pietra-400">{t("mapData")}</p>
+      <p className="border-t border-neutro-800 px-4 py-5 text-center text-xs text-neutro-400">{t("mapData")}</p>
     </footer>
   );
 }

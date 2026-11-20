@@ -43,7 +43,7 @@ export async function ItineraryCard({
               {tr(it.title, locale)}
             </Link>
           </h3>
-          <p className="mt-1.5 text-[15px] leading-snug text-pietra-600">{tr(it.subtitle, locale)}</p>
+          <p className="mt-1.5 text-[15px] leading-snug text-neutro-600">{tr(it.subtitle, locale)}</p>
         </div>
         <div className="mt-auto">
           <ItineraryStats
@@ -56,7 +56,7 @@ export async function ItineraryCard({
         </div>
       </div>
       {/* l'outline di focus del link copre l'intera card */}
-      <span className="pointer-events-none absolute inset-0 rounded-[var(--radius-card)] ring-oro-500 ring-offset-2 group-has-[:focus-visible]:ring-3" />
+      <span className="pointer-events-none absolute inset-0 rounded-[var(--radius-card)] ring-arancio-500 ring-offset-2 group-has-[:focus-visible]:ring-3" />
     </article>
   );
 }

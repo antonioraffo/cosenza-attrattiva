@@ -44,19 +44,19 @@ export default async function PlacePage({ params }: Props) {
     <>
       <Header overlay />
       <main id="main">
-        <section className="relative isolate flex min-h-[70svh] items-end overflow-hidden bg-pietra-950 text-white">
+        <section className="relative isolate flex min-h-[70svh] items-end overflow-hidden bg-neutro-950 text-white">
           <div className="absolute inset-0 -z-10">
             <SmartImage media={cover} locale={locale} priority sizes="100vw" fallbackLabel={name} className="object-cover opacity-85" />
           </div>
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-pietra-950 via-pietra-950/35 to-transparent" />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-neutro-950 via-neutro-950/35 to-transparent" />
           <div className="mx-auto w-full max-w-4xl px-4 pt-28 pb-10 md:px-8">
             {p.neighborhood && (
-              <p className="eyebrow text-oro-300">
+              <p className="eyebrow text-arancio-300">
                 {t("neighborhood")} · {tr(p.neighborhood.name, locale)}
               </p>
             )}
-            <h1 className="mt-3 text-5xl leading-[1.03] font-light md:text-6xl">{name}</h1>
-            <p className="mt-3 max-w-2xl text-lg text-pietra-100/90">{tr(p.summary, locale)}</p>
+            <h1 className="mt-3 text-5xl leading-[1.08] tracking-[-0.045em] md:text-6xl">{name}</h1>
+            <p className="mt-3 max-w-2xl text-lg text-neutro-100/90">{tr(p.summary, locale)}</p>
           </div>
         </section>
 
@@ -78,7 +78,7 @@ export default async function PlacePage({ params }: Props) {
             <h2 id="story-title" className="text-3xl">
               {t("story")}
             </h2>
-            <div className="prose-story mt-5 text-pietra-800" dangerouslySetInnerHTML={{ __html: mdToHtml(tr(p.body, locale)) }} />
+            <div className="prose-story mt-5 text-neutro-800" dangerouslySetInnerHTML={{ __html: mdToHtml(tr(p.body, locale)) }} />
           </section>
 
           {rest.length > 0 && (
@@ -90,10 +90,10 @@ export default async function PlacePage({ params }: Props) {
                 {p.gallery.map((m) => (
                   <li key={m.url} className="w-[85%] shrink-0 snap-center md:w-[48%]">
                     <figure>
-                      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-pietra-200">
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-neutro-200">
                         <Image src={m.url} alt={tr(m.alt, locale)} fill sizes="(min-width: 768px) 420px, 85vw" className="object-cover" />
                       </div>
-                      <figcaption className="mt-1.5 text-xs text-pietra-500">
+                      <figcaption className="mt-1.5 text-xs text-neutro-500">
                         {m.sourceUrl ? (
                           <a href={m.sourceUrl} className="hover:underline" rel="noopener" target="_blank">
                             {m.credit}
@@ -115,7 +115,7 @@ export default async function PlacePage({ params }: Props) {
                 {t("thenNow")}
               </h2>
               {p.historicCaption && (
-                <p className="mt-2 text-pietra-600">
+                <p className="mt-2 text-neutro-600">
                   {p.historicYear && <strong className="font-semibold">{p.historicYear} · </strong>}
                   {tr(p.historicCaption, locale)}
                 </p>
@@ -127,19 +127,19 @@ export default async function PlacePage({ params }: Props) {
                   labels={{ then: `${t("then")}${p.historicYear ? ` · ${p.historicYear}` : ""}`, now: t("now"), hint: t("thenNowHint") }}
                 />
               </div>
-              <p className="mt-2 text-xs text-pietra-500">{p.historic.credit}</p>
+              <p className="mt-2 text-xs text-neutro-500">{p.historic.credit}</p>
             </section>
           )}
 
           {p.curiosities.length > 0 && (
-            <section aria-labelledby="curio-title" className="mt-12 rounded-[var(--radius-card)] bg-oro-300/25 p-6 md:p-8">
+            <section aria-labelledby="curio-title" className="mt-12 rounded-[var(--radius-card)] bg-arancio-300/25 p-6 md:p-8">
               <h2 id="curio-title" className="flex items-center gap-2 text-3xl">
-                <IconSparkle className="text-oro-700" /> {t("curiosities")}
+                <IconSparkle className="text-arancio-700" /> {t("curiosities")}
               </h2>
               <ul className="mt-5 space-y-4">
                 {p.curiosities.map((c, i) => (
-                  <li key={i} className="flex gap-3 leading-relaxed text-pietra-800">
-                    <span className="font-serif text-2xl leading-none text-oro-700" aria-hidden="true">
+                  <li key={i} className="flex gap-3 leading-relaxed text-neutro-800">
+                    <span className="font-display text-2xl leading-none text-arancio-700" aria-hidden="true">
                       {i + 1}
                     </span>
                     <span>{tr(c, locale)}</span>
@@ -153,28 +153,28 @@ export default async function PlacePage({ params }: Props) {
             <h2 id="info-title" className="text-3xl">
               {t("info")}
             </h2>
-            <dl className="mt-5 grid gap-px overflow-hidden rounded-2xl bg-pietra-200 md:grid-cols-3">
+            <dl className="mt-5 grid gap-px overflow-hidden rounded-2xl bg-neutro-200 md:grid-cols-3">
               <div className="bg-white p-5">
-                <dt className="flex items-center gap-1.5 text-sm font-semibold text-pietra-500">
+                <dt className="flex items-center gap-1.5 text-sm font-semibold text-neutro-500">
                   <IconClock size={16} /> {t("hours")}
                 </dt>
-                <dd className="mt-1.5 text-pietra-800">{p.openingHours ? tr(p.openingHours, locale) : "—"}</dd>
+                <dd className="mt-1.5 text-neutro-800">{p.openingHours ? tr(p.openingHours, locale) : "—"}</dd>
               </div>
               <div className="bg-white p-5">
-                <dt className="text-sm font-semibold text-pietra-500">{t("accessibility")}</dt>
-                <dd className="mt-1.5 text-pietra-800">
-                  {p.accessibility?.stepFree === true && <strong className="block font-semibold text-sila-700">{t("stepFree")}</strong>}
-                  {p.accessibility?.stepFree === false && <strong className="block font-semibold text-magliocco-700">{t("notStepFree")}</strong>}
+                <dt className="text-sm font-semibold text-neutro-500">{t("accessibility")}</dt>
+                <dd className="mt-1.5 text-neutro-800">
+                  {p.accessibility?.stepFree === true && <strong className="block font-semibold text-primario-700">{t("stepFree")}</strong>}
+                  {p.accessibility?.stepFree === false && <strong className="block font-semibold text-primario-700">{t("notStepFree")}</strong>}
                   {p.accessibility ? tr(p.accessibility.notes, locale) : "—"}
                 </dd>
               </div>
               <div className="bg-white p-5">
-                <dt className="flex items-center gap-1.5 text-sm font-semibold text-pietra-500">
+                <dt className="flex items-center gap-1.5 text-sm font-semibold text-neutro-500">
                   <IconPin size={16} /> {t("address")}
                 </dt>
-                <dd className="mt-1.5 text-pietra-800">
+                <dd className="mt-1.5 text-neutro-800">
                   {p.address}
-                  {!p.coordsVerified && <span className="mt-1 block text-xs text-pietra-500">{t("coordsUnverified")}</span>}
+                  {!p.coordsVerified && <span className="mt-1 block text-xs text-neutro-500">{t("coordsUnverified")}</span>}
                 </dd>
               </div>
             </dl>
@@ -198,10 +198,10 @@ export default async function PlacePage({ params }: Props) {
                       style={{ borderColor: it.color }}
                     >
                       <span>
-                        <span className="eyebrow block text-pietra-500">{tt(it.theme)}</span>
-                        <span className="font-serif text-lg">{tr(it.title, locale)}</span>
+                        <span className="eyebrow block text-neutro-500">{tt(it.theme)}</span>
+                        <span className="font-display text-lg">{tr(it.title, locale)}</span>
                       </span>
-                      <IconArrowRight size={18} className="shrink-0 text-pietra-500" />
+                      <IconArrowRight size={18} className="shrink-0 text-neutro-500" />
                     </Link>
                   </li>
                 ))}
@@ -218,11 +218,11 @@ export default async function PlacePage({ params }: Props) {
                 {p.nearby.map((n) => (
                   <li key={n.slug}>
                     <Link href={`/luoghi/${n.slug}`} className="group block">
-                      <div className="relative aspect-square overflow-hidden rounded-2xl bg-pietra-200">
+                      <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutro-200">
                         <SmartImage media={n.image} locale={locale} sizes="200px" className="object-cover transition group-hover:scale-105" />
                       </div>
-                      <p className="mt-2 font-serif leading-tight">{tr(n.name, locale)}</p>
-                      <p className="text-xs text-pietra-500">{t("meters", { m: n.distance })}</p>
+                      <p className="mt-2 font-display leading-tight">{tr(n.name, locale)}</p>
+                      <p className="text-xs text-neutro-500">{t("meters", { m: n.distance })}</p>
                     </Link>
                   </li>
                 ))}

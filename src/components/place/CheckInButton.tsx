@@ -48,7 +48,7 @@ export function CheckInButton({
     return (
       <div className="flex items-center gap-4" role="status">
         <Stamp name={name} size={88} animate />
-        <p className="font-serif text-xl text-magliocco-700">{t("checkedIn")}</p>
+        <p className="font-display text-xl text-primario-700">{t("checkedIn")}</p>
       </div>
     );
   }
@@ -58,11 +58,11 @@ export function CheckInButton({
         type="button"
         onClick={check}
         disabled={state === "checking"}
-        className="inline-flex min-h-12 items-center gap-2 rounded-full bg-magliocco-700 px-6 font-semibold text-white hover:bg-magliocco-600 disabled:opacity-70"
+        className="inline-flex min-h-12 items-center gap-2 rounded-full bg-primario-700 px-6 font-semibold text-white hover:bg-primario-600 disabled:opacity-70"
       >
         <IconStamp size={18} /> {state === "checking" ? t("checkingIn") : t("checkIn")}
       </button>
-      <p className="mt-2 text-sm text-pietra-600" aria-live="polite">
+      <p className="mt-2 text-sm text-neutro-600" aria-live="polite">
         {state === "far" && t("tooFar", { distance: formatDistance(dist, locale), radius: radiusM })}
       </p>
     </div>

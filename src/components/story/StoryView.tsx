@@ -131,17 +131,17 @@ export function StoryView(props: {
       {/* ── Barra superiore ─────────────────────────────── */}
       <div className="fixed inset-x-0 top-0 z-40 lg:right-auto lg:w-[max(420px,44%)]">
         <motion.div className="h-1 origin-left" style={{ scaleX: progress, backgroundColor: color }} />
-        <div className="flex h-14 items-center gap-2 bg-pietra-50/90 px-2 backdrop-blur lg:px-4">
+        <div className="flex h-14 items-center gap-2 bg-neutro-50/90 px-2 backdrop-blur lg:px-4">
           <Link
             href={`/itinerari/${slug}`}
-            className="grid size-11 shrink-0 place-items-center rounded-full hover:bg-pietra-200"
+            className="grid size-11 shrink-0 place-items-center rounded-full hover:bg-neutro-200"
             aria-label={ti("backToItinerary")}
           >
             <IconArrowLeft />
           </Link>
           <div className="min-w-0 flex-1">
-            <p className="truncate font-serif text-[17px] leading-tight">{title}</p>
-            <p className="text-xs text-pietra-500" aria-live="polite">
+            <p className="truncate font-display text-[17px] leading-tight">{title}</p>
+            <p className="text-xs text-neutro-500" aria-live="polite">
               {active >= 0 ? t("progress", { current: active + 1, total: chapters.length }) : subtitle}
             </p>
           </div>
@@ -150,22 +150,22 @@ export function StoryView(props: {
       </div>
 
       {/* ── Mappa: sticky in alto su mobile, a destra su desktop ── */}
-      <div className="sticky top-0 z-30 h-[46svh] bg-pietra-50 pt-[60px] shadow-[0_8px_24px_-12px_rgba(0,0,0,.35)] lg:order-2 lg:h-dvh lg:pt-0 lg:shadow-none">
-        <div ref={mapRef} className="size-full bg-pietra-100" role="region" aria-label={t("mapLabel", { title })} />
+      <div className="sticky top-0 z-30 h-[46svh] bg-neutro-50 pt-[60px] shadow-[0_8px_24px_-12px_rgba(0,0,0,.35)] lg:order-2 lg:h-dvh lg:pt-0 lg:shadow-none">
+        <div ref={mapRef} className="size-full bg-neutro-100" role="region" aria-label={t("mapLabel", { title })} />
       </div>
 
       {/* ── Testo ─────────────────────────────────────── */}
-      <main id="main" className="relative z-10 bg-pietra-50 lg:order-1 lg:pt-14">
+      <main id="main" className="relative z-10 bg-neutro-50 lg:order-1 lg:pt-14">
         <header ref={introRef} data-index={-1} className="px-5 pt-8 pb-10 lg:px-12 lg:pt-12">
           {cover && (
             <div className="relative mb-6 aspect-[16/10] overflow-hidden rounded-2xl">
               <Image src={cover.url} alt={cover.alt} fill priority sizes="(min-width:1024px) 40vw, 100vw" className="object-cover" />
             </div>
           )}
-          <h1 className="text-4xl leading-tight font-light lg:text-5xl">{title}</h1>
-          <p className="mt-4 font-serif text-xl leading-relaxed text-pietra-700">{intro}</p>
-          <p className="mt-8 flex items-center gap-2 text-sm font-semibold text-pietra-500">
-            <span className="inline-block h-px w-8 bg-pietra-400" /> {t("scrollHint")}
+          <h1 className="text-4xl leading-tight tracking-[-0.045em] lg:text-5xl">{title}</h1>
+          <p className="mt-4 font-display text-xl leading-relaxed text-neutro-700">{intro}</p>
+          <p className="mt-8 flex items-center gap-2 text-sm font-semibold text-neutro-500">
+            <span className="inline-block h-px w-8 bg-neutro-400" /> {t("scrollHint")}
           </p>
         </header>
 
@@ -177,7 +177,7 @@ export function StoryView(props: {
             }}
             data-index={i}
             aria-labelledby={`ch-${c.id}`}
-            className="scroll-mt-[50svh] border-t border-pietra-200 px-5 py-12 lg:scroll-mt-16 lg:px-12 lg:py-16"
+            className="scroll-mt-[50svh] border-t border-neutro-200 px-5 py-12 lg:scroll-mt-16 lg:px-12 lg:py-16"
           >
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 24 }}
@@ -196,10 +196,10 @@ export function StoryView(props: {
               </h2>
               {c.image && (
                 <figure className="mt-6">
-                  <div className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-pietra-200">
+                  <div className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-neutro-200">
                     <Image src={c.image.url} alt={c.image.alt} fill sizes="(min-width:1024px) 40vw, 100vw" className="object-cover" />
                   </div>
-                  <figcaption className="mt-1.5 text-xs text-pietra-500">{c.image.credit}</figcaption>
+                  <figcaption className="mt-1.5 text-xs text-neutro-500">{c.image.credit}</figcaption>
                 </figure>
               )}
               <div className="mt-5 flex flex-wrap gap-2">
@@ -208,11 +208,11 @@ export function StoryView(props: {
                   <ImmersiveLauncher kind="place" placeSlug={c.placeSlug} hasStreetview={c.hasStreetview} hasAr={c.hasAr} />
                 )}
               </div>
-              <div className="prose-story mt-6 text-pietra-800" dangerouslySetInnerHTML={{ __html: c.html }} />
+              <div className="prose-story mt-6 text-neutro-800" dangerouslySetInnerHTML={{ __html: c.html }} />
               {c.placeSlug && (
                 <Link
                   href={`/luoghi/${c.placeSlug}`}
-                  className="mt-2 inline-flex min-h-11 items-center gap-1.5 font-semibold text-magliocco-700 hover:underline"
+                  className="mt-2 inline-flex min-h-11 items-center gap-1.5 font-semibold text-primario-700 hover:underline"
                 >
                   {ti("openPlace")} <IconArrowRight size={16} />
                 </Link>
@@ -221,12 +221,12 @@ export function StoryView(props: {
           </section>
         ))}
 
-        <footer className="border-t border-pietra-200 px-5 pt-12 pb-[40svh] lg:px-12 lg:pb-24">
+        <footer className="border-t border-neutro-200 px-5 pt-12 pb-[40svh] lg:px-12 lg:pb-24">
           <h2 className="text-3xl">{t("end")}</h2>
-          <p className="mt-2 text-pietra-600">{t("endText")}</p>
+          <p className="mt-2 text-neutro-600">{t("endText")}</p>
           <Link
             href={`/itinerari/${slug}/passeggiata`}
-            className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full bg-sila-700 px-6 font-semibold text-white hover:bg-sila-600"
+            className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full bg-primario-700 px-6 font-semibold text-white hover:bg-primario-600"
           >
             <IconWalk size={18} /> {ti("startWalk")}
           </Link>

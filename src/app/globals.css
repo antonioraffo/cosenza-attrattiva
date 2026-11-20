@@ -2,58 +2,120 @@
 @import "maplibre-gl/dist/maplibre-gl.css";
 
 /*
- * Design system "Cosenza": pietra del centro storico, verde Sila, rosso vino Magliocco,
- * oro del tufo. Contrasti verificati per WCAG AA sulle combinazioni d'uso.
+ * Design token "Cosenza attrattiva" (vedi docs/DESIGN-TOKENS.md).
+ * Colori dal logo ufficiale (#128771 verde, #dd7b19 arancio, #9c37b5 viola, #1a98c4 azzurro),
+ * con varianti più scure/chiare dove serve il contrasto WCAG AA; neutri caldi e tipografia
+ * (Plus Jakarta Sans + Manrope) presi dall'impianto di vivicosenza.
  */
 @theme {
-  --font-serif: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
-  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-sans: var(--font-manrope), "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --color-pietra-50: #f7f3ed;
-  --color-pietra-100: #eee6da;
-  --color-pietra-200: #ddd0bd;
-  --color-pietra-300: #c4b299;
-  --color-pietra-400: #a08d72;
-  --color-pietra-500: #6f5d49;
-  --color-pietra-600: #625343;
-  --color-pietra-700: #483d32;
-  --color-pietra-800: #312a23;
-  --color-pietra-900: #1f1a16;
-  --color-pietra-950: #14110e;
+  /* Neutri (sfondi, testo, bordi) */
+  --color-neutro-50: #f5f3ef;
+  --color-neutro-100: #ece8e1;
+  --color-neutro-200: #e1dcd4;
+  --color-neutro-300: #c9c1b5;
+  --color-neutro-400: #8a8073; /* solo elementi UI/testo grande: 3,9:1 su bianco */
+  --color-neutro-500: #665f55; /* testo secondario: 6,3:1 su bianco */
+  --color-neutro-600: #574f46;
+  --color-neutro-700: #433d36;
+  --color-neutro-800: #2e2a26;
+  --color-neutro-900: #211e1c; /* testo: 15:1 su neutro-50 */
+  --color-neutro-950: #151311;
 
-  /* Sila: allineato al verde del marchio "Cosenza attrattiva" (#128771) */
-  --color-sila-50: #e9f5f2;
-  --color-sila-100: #cfe9e2;
-  --color-sila-300: #7cc3b2;
-  --color-sila-500: #1a9c82;
-  --color-sila-600: #128771;
-  --color-sila-700: #0d6b59;
-  --color-sila-900: #07362e;
+  /* Primario: verde del marchio. 500 = colore del logo (4,44:1, solo decoro/testo grande);
+     600 è la variante per testo e pulsanti (5,5:1 su bianco). */
+  --color-primario-50: #e8f5f2;
+  --color-primario-100: #cdeae3;
+  --color-primario-200: #a3d8cb;
+  --color-primario-300: #6fbfac;
+  --color-primario-400: #4fb39b;
+  --color-primario-500: #128771;
+  --color-primario-600: #0f7663;
+  --color-primario-700: #0c6455;
+  --color-primario-800: #0a4c41;
+  --color-primario-900: #07362e;
+  --color-primario-950: #04211c;
 
-  --color-magliocco-50: #fbeff1;
-  --color-magliocco-100: #f4d6dc;
-  --color-magliocco-300: #d98c9a;
-  --color-magliocco-500: #a3304a;
-  --color-magliocco-600: #8a2440;
-  --color-magliocco-700: #6e1b33;
-  --color-magliocco-900: #3a0e1b;
+  /* Arancio (pilastro Crea). 500 solo su scuro o con testo neutro-900; 700 per testo su chiaro. */
+  --color-arancio-50: #fdf3e8;
+  --color-arancio-100: #fae3c9;
+  --color-arancio-200: #f0c9a0;
+  --color-arancio-300: #f3b46c;
+  --color-arancio-500: #dd7b19;
+  --color-arancio-600: #c06a12;
+  --color-arancio-700: #a3570c;
+  --color-arancio-900: #5a2f06;
 
-  /* Oro: arancio del marchio (#dd7b19) */
-  --color-oro-300: #f3b46c;
-  --color-oro-500: #dd7b19;
-  --color-oro-700: #9e520b;
+  /* Viola (pilastro Vive): il colore del logo regge già il testo bianco (5,8:1). */
+  --color-viola-50: #f7edfa;
+  --color-viola-100: #ecd6f3;
+  --color-viola-300: #d08fe0;
+  --color-viola-500: #9c37b5;
+  --color-viola-700: #7a2a8e;
+  --color-viola-900: #43164f;
 
-  /* Colori del marchio ufficiale */
+  /* Azzurro (pilastro Connect). 500 solo decoro; 700 per testo/sfondi con testo bianco (5,4:1). */
+  --color-azzurro-50: #e8f6fb;
+  --color-azzurro-100: #c9e9f4;
+  --color-azzurro-300: #6cc3e3;
+  --color-azzurro-500: #1a98c4;
+  --color-azzurro-700: #137396;
+  --color-azzurro-900: #0a3e51;
+
+  /* Colori del marchio ufficiale (valori esatti degli SVG) */
   --color-brand-teal: #128771;
   --color-brand-orange: #dd7b19;
   --color-brand-purple: #9c37b5;
   --color-brand-blue: #1a98c4;
 
-  --radius-card: 1.25rem;
-  --shadow-card: 0 1px 2px rgb(31 26 22 / 0.06), 0 8px 24px -8px rgb(31 26 22 / 0.18);
-  --shadow-float: 0 10px 40px -10px rgb(20 17 14 / 0.45);
+  --radius-card: 1.5rem;
+  --shadow-card: 0 1px 2px rgb(33 30 28 / 0.06), 0 8px 24px -8px rgb(33 30 28 / 0.18);
+  --shadow-float: 0 10px 40px -10px rgb(21 19 17 / 0.45);
+  --shadow-header: 0 2px 24px rgb(33 30 28 / 0.08);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* easing degli ingressi di vivicosenza (home-motion) */
+  --ease-reveal: cubic-bezier(0.2, 0.7, 0.1, 1);
+
+  --breakpoint-nav: 60rem; /* 960px: sotto, menu a hamburger */
+}
+
+/*
+ * Token semantici (chiaro e scuro). L'app usa il tema chiaro, come vivicosenza;
+ * il tema scuro è definito e verificato, attivabile con data-theme="dark" su <html>.
+ */
+:root {
+  color-scheme: light;
+  --ca-bg: var(--color-neutro-50);
+  --ca-surface: #ffffff;
+  --ca-ink: var(--color-neutro-900);
+  --ca-ink-muted: var(--color-neutro-500);
+  --ca-border: var(--color-neutro-200);
+  --ca-primary: var(--color-primario-600);
+  --ca-on-primary: #ffffff;
+  --ca-accent: var(--color-arancio-700);
+  --ca-focus: var(--color-arancio-500);
+  --ca-header-h: 80px;
+}
+@media (max-width: 1200px) {
+  :root { --ca-header-h: 76px; }
+}
+@media (max-width: 640px) {
+  :root { --ca-header-h: 72px; }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ca-bg: var(--color-neutro-950);
+  --ca-surface: var(--color-neutro-900);
+  --ca-ink: var(--color-neutro-100);
+  --ca-ink-muted: #b3aa9d;
+  --ca-border: var(--color-neutro-700);
+  --ca-primary: var(--color-primario-400);
+  --ca-on-primary: var(--color-neutro-950);
+  --ca-accent: var(--color-arancio-300);
+  --ca-focus: var(--color-arancio-300);
 }
 
 @layer base {
@@ -62,27 +124,29 @@
     text-size-adjust: 100%;
   }
   body {
-    background: var(--color-pietra-50);
-    color: var(--color-pietra-900);
+    background: var(--ca-bg);
+    color: var(--ca-ink);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
+    font-size: 1rem;
+    line-height: 1.6;
+    font-synthesis: none;
   }
-  h1, h2, h3 {
-    font-family: var(--font-serif);
-    font-optical-sizing: auto;
-    letter-spacing: -0.015em;
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.025em;
     text-wrap: balance;
   }
   p {
     text-wrap: pretty;
   }
   :focus-visible {
-    outline: 3px solid var(--color-oro-500);
+    outline: 3px solid var(--ca-focus);
     outline-offset: 2px;
     border-radius: 4px;
   }
   ::selection {
-    background: var(--color-magliocco-100);
+    background: var(--color-primario-100);
   }
 }
 
@@ -94,12 +158,12 @@
     font-size: 1.0625rem;
   }
   .prose-story p:first-child::first-letter {
-    font-family: var(--font-serif);
+    font-family: var(--font-display);
     float: left;
     font-size: 3.4em;
     line-height: 0.85;
     padding: 0.08em 0.1em 0 0;
-    color: var(--color-magliocco-600);
+    color: var(--color-primario-600);
   }
   .prose-story em {
     font-style: italic;
@@ -112,11 +176,17 @@
     line-height: 1.7;
   }
 
+  /* eyebrow di vivicosenza: Manrope 600 12/1.55, .07em (.035em su mobile) */
   .eyebrow {
+    font-family: var(--font-sans);
     font-size: 0.75rem;
+    line-height: 1.55;
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.035em;
     text-transform: uppercase;
+    @media (min-width: 640px) {
+      letter-spacing: 0.07em;
+    }
   }
 
   .grain::after {
@@ -143,7 +213,7 @@
 /* MapLibre: popup e controlli coerenti col design system */
 .maplibregl-ctrl-attrib {
   font-size: 10px !important;
-  background: rgb(247 243 237 / 0.85) !important;
+  background: rgb(245 243 239 / 0.85) !important;
 }
 .maplibregl-ctrl-group {
   border-radius: 12px !important;

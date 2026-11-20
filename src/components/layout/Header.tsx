@@ -13,7 +13,7 @@ export async function Header({ overlay = false }: { overlay?: boolean }) {
       className={
         overlay
           ? "absolute inset-x-0 top-0 z-30 bg-gradient-to-b from-black/50 to-transparent"
-          : "sticky top-0 z-30 border-b border-pietra-200/70 bg-pietra-50/85 backdrop-blur"
+          : "sticky top-0 z-30 border-b border-neutro-200/70 bg-neutro-50/85 backdrop-blur"
       }
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 md:px-8">
@@ -24,7 +24,7 @@ export async function Header({ overlay = false }: { overlay?: boolean }) {
           <Link
             href="/#itinerari"
             className={`hidden min-h-11 items-center rounded-full px-3 text-sm font-medium sm:inline-flex ${
-              overlay ? "text-white hover:bg-white/15" : "text-pietra-700 hover:bg-pietra-100"
+              overlay ? "text-white hover:bg-white/15" : "text-neutro-700 hover:bg-neutro-100"
             }`}
           >
             {t("itineraries")}
@@ -33,7 +33,7 @@ export async function Header({ overlay = false }: { overlay?: boolean }) {
             <Link
               href="/chiedi"
               className={`hidden min-h-11 items-center rounded-full px-3 text-sm font-medium md:inline-flex ${
-                overlay ? "text-white hover:bg-white/15" : "text-pietra-700 hover:bg-pietra-100"
+                overlay ? "text-white hover:bg-white/15" : "text-neutro-700 hover:bg-neutro-100"
               }`}
             >
               {t("ask")}
@@ -42,7 +42,7 @@ export async function Header({ overlay = false }: { overlay?: boolean }) {
           <Link
             href="/passaporto"
             className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium ${
-              overlay ? "text-white hover:bg-white/15" : "text-pietra-700 hover:bg-pietra-100"
+              overlay ? "text-white hover:bg-white/15" : "text-neutro-700 hover:bg-neutro-100"
             }`}
           >
             <IconStamp size={18} />

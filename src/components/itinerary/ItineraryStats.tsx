@@ -33,20 +33,20 @@ export async function ItineraryStats({
   ];
   if (variant === "large") {
     return (
-      <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-pietra-200 sm:grid-cols-4">
+      <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-neutro-200 sm:grid-cols-4">
         {items.map(({ icon: Icon, label, value }) => (
           <div key={value} className="bg-white p-4">
-            <dt className="flex items-center gap-1.5 text-xs text-pietra-500">
+            <dt className="flex items-center gap-1.5 text-xs text-neutro-500">
               <Icon size={15} /> {label ?? t("chapters")}
             </dt>
-            <dd className="mt-1 font-serif text-xl text-pietra-900">{value}</dd>
+            <dd className="mt-1 font-display text-xl text-neutro-900">{value}</dd>
           </div>
         ))}
       </dl>
     );
   }
   return (
-    <ul className="flex flex-wrap gap-x-3.5 gap-y-1 text-[13px] text-pietra-600">
+    <ul className="flex flex-wrap gap-x-3.5 gap-y-1 text-[13px] text-neutro-600">
       {items.map(({ icon: Icon, label, value }) => (
         <li key={value} className="inline-flex items-center gap-1">
           <Icon size={15} />

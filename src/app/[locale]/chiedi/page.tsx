@@ -24,9 +24,9 @@ export default async function AskPage({ params }: Props) {
       <Header />
       <main id="main" className="mx-auto max-w-2xl px-4 pt-10 md:px-8">
         <h1 className="text-4xl md:text-5xl">{t("title")}</h1>
-        <p className="mt-3 text-pietra-600">{t("intro")}</p>
+        <p className="mt-3 text-neutro-600">{t("intro")}</p>
         <AskForm />
-        <p className="mt-10 rounded-2xl bg-pietra-100 p-4 text-sm text-pietra-600">{t("stubNote")}</p>
+        <p className="mt-10 rounded-2xl bg-neutro-100 p-4 text-sm text-neutro-600">{t("stubNote")}</p>
       </main>
       <Footer />
     </>

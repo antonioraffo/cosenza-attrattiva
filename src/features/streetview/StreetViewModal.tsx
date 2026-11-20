@@ -81,8 +81,8 @@ function Panorama({ config, placeName }: { config: StreetViewConfig; placeName: 
   return (
     <div className="relative size-full">
       <div ref={el} className="size-full" />
-      {status === "loading" && <p className="absolute inset-0 grid place-items-center text-pietra-300">{t("loading")}</p>}
-      {status === "error" && <p className="absolute inset-0 grid place-items-center p-6 text-center text-pietra-200">{t("error")}</p>}
+      {status === "loading" && <p className="absolute inset-0 grid place-items-center text-neutro-300">{t("loading")}</p>}
+      {status === "error" && <p className="absolute inset-0 grid place-items-center p-6 text-center text-neutro-200">{t("error")}</p>}
       {status === "ready" && (
         <>
           {config.hotspots.map((h, i) => {
@@ -97,8 +97,8 @@ function Panorama({ config, placeName }: { config: StreetViewConfig; placeName: 
                 style={{ left: p.x, top: p.y }}
                 aria-label={tr(h.label, locale)}
               >
-                <span className="absolute inset-0 rounded-full bg-oro-300 motion-safe:animate-[pulse-ring_1.8s_ease-out_infinite]" />
-                <span className="relative grid size-10 place-items-center rounded-full border-2 border-white bg-oro-500/90 font-serif text-sm font-bold text-pietra-950 shadow-lg">
+                <span className="absolute inset-0 rounded-full bg-arancio-300 motion-safe:animate-[pulse-ring_1.8s_ease-out_infinite]" />
+                <span className="relative grid size-10 place-items-center rounded-full border-2 border-white bg-arancio-500/90 font-display text-sm font-bold text-neutro-950 shadow-lg">
                   {i + 1}
                 </span>
                 <span className="absolute top-12 left-1/2 hidden -translate-x-1/2 rounded-full bg-black/70 px-3 py-1 text-xs whitespace-nowrap text-white group-hover:block">
@@ -119,13 +119,13 @@ function Panorama({ config, placeName }: { config: StreetViewConfig; placeName: 
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 280 }}
-            className="absolute inset-x-0 bottom-0 z-30 max-h-[60%] overflow-y-auto rounded-t-3xl bg-pietra-50 p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-pietra-900 md:inset-x-auto md:right-4 md:bottom-4 md:w-96 md:rounded-3xl"
+            className="absolute inset-x-0 bottom-0 z-30 max-h-[60%] overflow-y-auto rounded-t-3xl bg-neutro-50 p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-neutro-900 md:inset-x-auto md:right-4 md:bottom-4 md:w-96 md:rounded-3xl"
             aria-live="polite"
           >
-            <p className="eyebrow text-magliocco-600">{placeName}</p>
+            <p className="eyebrow text-primario-600">{placeName}</p>
             <h3 className="mt-1 text-2xl">{tr(open.label, locale)}</h3>
-            <p className="mt-3 leading-relaxed text-pietra-700">{tr(open.text, locale)}</p>
-            <button type="button" onClick={() => setOpen(null)} className="mt-5 min-h-11 rounded-full border border-pietra-300 px-5 text-sm font-semibold">
+            <p className="mt-3 leading-relaxed text-neutro-700">{tr(open.text, locale)}</p>
+            <button type="button" onClick={() => setOpen(null)} className="mt-5 min-h-11 rounded-full border border-neutro-300 px-5 text-sm font-semibold">
               {t("close")}
             </button>
           </motion.aside>
