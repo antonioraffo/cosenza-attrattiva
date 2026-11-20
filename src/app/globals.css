@@ -1,14 +1,187 @@
 @import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
 
-/* Token provvisori: il design system completo arriva in Fase 4 */
+/*
+ * Design system "Cosenza": pietra del centro storico, verde Sila, rosso vino Magliocco,
+ * oro del tufo. Contrasti verificati per WCAG AA sulle combinazioni d'uso.
+ */
 @theme {
-  --color-pietra-50: #f7f4ef;
-  --color-pietra-900: #2b2520;
-  --color-sila-700: #2f5a3f;
-  --color-magliocco-700: #7a1f2b;
+  --font-serif: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-pietra-50: #f7f3ed;
+  --color-pietra-100: #eee6da;
+  --color-pietra-200: #ddd0bd;
+  --color-pietra-300: #c4b299;
+  --color-pietra-400: #a08d72;
+  --color-pietra-500: #7f6d56;
+  --color-pietra-600: #625343;
+  --color-pietra-700: #483d32;
+  --color-pietra-800: #312a23;
+  --color-pietra-900: #1f1a16;
+  --color-pietra-950: #14110e;
+
+  --color-sila-50: #eef4ef;
+  --color-sila-100: #d6e6da;
+  --color-sila-300: #8fb59b;
+  --color-sila-500: #3f7a55;
+  --color-sila-600: #2f6244;
+  --color-sila-700: #244c35;
+  --color-sila-900: #122a1c;
+
+  --color-magliocco-50: #fbeff1;
+  --color-magliocco-100: #f4d6dc;
+  --color-magliocco-300: #d98c9a;
+  --color-magliocco-500: #a3304a;
+  --color-magliocco-600: #8a2440;
+  --color-magliocco-700: #6e1b33;
+  --color-magliocco-900: #3a0e1b;
+
+  --color-oro-300: #e3c58f;
+  --color-oro-500: #c9a25e;
+  --color-oro-700: #8a6a2f;
+
+  --radius-card: 1.25rem;
+  --shadow-card: 0 1px 2px rgb(31 26 22 / 0.06), 0 8px 24px -8px rgb(31 26 22 / 0.18);
+  --shadow-float: 0 10px 40px -10px rgb(20 17 14 / 0.45);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-body {
-  background: var(--color-pietra-50);
-  color: var(--color-pietra-900);
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-pietra-50);
+    color: var(--color-pietra-900);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-oro-500);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: var(--color-magliocco-100);
+  }
+}
+
+@layer components {
+  /* Testo narrativo (markdown dei capitoli) */
+  .prose-story p {
+    margin-block: 0 1.1em;
+    line-height: 1.75;
+    font-size: 1.0625rem;
+  }
+  .prose-story p:first-child::first-letter {
+    font-family: var(--font-serif);
+    float: left;
+    font-size: 3.4em;
+    line-height: 0.85;
+    padding: 0.08em 0.1em 0 0;
+    color: var(--color-magliocco-600);
+  }
+  .prose-story em {
+    font-style: italic;
+  }
+  .prose-story strong {
+    font-weight: 600;
+  }
+  .prose-plain p {
+    margin-block: 0 1em;
+    line-height: 1.7;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+/* MapLibre: popup e controlli coerenti col design system */
+.maplibregl-ctrl-attrib {
+  font-size: 10px !important;
+  background: rgb(247 243 237 / 0.85) !important;
+}
+.maplibregl-ctrl-group {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-card) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1.12) translate3d(0, 2%, 0);
+  }
+  to {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+@keyframes stamp-in {
+  0% {
+    transform: scale(2.2) rotate(-18deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(0.92) rotate(-8deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(-8deg);
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
 }

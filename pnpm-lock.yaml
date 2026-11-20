@@ -64,7 +64,7 @@ importers:
         version: 0.0.1
       serwist:
         specifier: 9.5.15
-        version: 9.5.15(browserslist@4.29.6)(typescript@6.0.3)
+        version: 9.5.15(browserslist@4.29.3)(typescript@6.0.3)
       zod:
         specifier: 4.6.7
         version: 4.6.7
@@ -78,6 +78,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4.3.5
         version: 4.3.5
+      '@types/google.maps':
+        specifier: ^3.67.0
+        version: 3.67.0
       '@types/node':
         specifier: ^24.19.2
         version: 24.19.2
@@ -1604,6 +1607,9 @@ packages:
 
   '@types/geojson@7946.0.16':
     resolution: {integrity: sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==}
+
+  '@types/google.maps@3.67.0':
+    resolution: {integrity: sha512-LQ+kWi0BOWeEUpcMaag/cqOMI3DmOPCE34aST1jpeCw5mjoS0hI0P7eV1PUk+8PwpqXeO31Cy+HzBN3dSz103g==}
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -4405,10 +4411,6 @@ snapshots:
     optionalDependencies:
       browserslist: 4.29.3
 
-  '@serwist/utils@9.5.15(browserslist@4.29.6)':
-    optionalDependencies:
-      browserslist: 4.29.6
-
   '@serwist/window@9.5.15(browserslist@4.29.3)(typescript@6.0.3)':
     dependencies:
       '@types/trusted-types': 2.0.7
@@ -4696,6 +4698,8 @@ snapshots:
   '@types/estree@1.0.10': {}
 
   '@types/geojson@7946.0.16': {}
+
+  '@types/google.maps@3.67.0': {}
 
   '@types/json-schema@7.0.15': {}
 
@@ -6392,15 +6396,6 @@ snapshots:
   serwist@9.5.15(browserslist@4.29.3)(typescript@6.0.3):
     dependencies:
       '@serwist/utils': 9.5.15(browserslist@4.29.3)
-      idb: 8.0.3
-    optionalDependencies:
-      typescript: 6.0.3
-    transitivePeerDependencies:
-      - browserslist
-
-  serwist@9.5.15(browserslist@4.29.6)(typescript@6.0.3):
-    dependencies:
-      '@serwist/utils': 9.5.15(browserslist@4.29.6)
       idb: 8.0.3
     optionalDependencies:
       typescript: 6.0.3

@@ -5,6 +5,7 @@ import postgres from "postgres";
 const client = postgres(process.env.DATABASE_URL!, { max: 1 });
 
 await client`CREATE EXTENSION IF NOT EXISTS postgis`;
+await client`CREATE EXTENSION IF NOT EXISTS unaccent`;
 await migrate(drizzle(client), { migrationsFolder: "drizzle" });
 console.log("✔ Migrazioni applicate");
 await client.end();
