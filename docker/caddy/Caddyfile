@@ -1,0 +1,32 @@
+# Terminazione TLS locale con certificati mkcert.
+# Caddy gestisce da solo WebSocket (HMR di Next) e header
+# X-Forwarded-For / -Proto / -Host verso l'upstream.
+{
+	skip_install_trust
+	admin off
+}
+
+(root_ca) {
+	# CA pubblica mkcert scaricabile dallo smartphone (mai la chiave privata)
+	handle /dev/rootCA.pem {
+		root * /certs
+		rewrite * /rootCA.pem
+		header Content-Type application/x-x509-ca-cert
+		file_server
+	}
+}
+
+# HTTP: serve solo la CA (il telefono non la conosce ancora), tutto il resto → HTTPS
+http://cosenzaattrattiva.test, http://*.cosenzaattrattiva.test {
+	import root_ca
+	handle {
+		redir https://{host}{uri} 308
+	}
+}
+
+cosenzaattrattiva.test, *.cosenzaattrattiva.test {
+	tls /certs/cosenzaattrattiva.test.pem /certs/cosenzaattrattiva.test-key.pem
+	encode zstd gzip
+	import root_ca
+	reverse_proxy {$UPSTREAM:app:3000}
+}

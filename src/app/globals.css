@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+/* Token provvisori: il design system completo arriva in Fase 4 */
+@theme {
+  --color-pietra-50: #f7f4ef;
+  --color-pietra-900: #2b2520;
+  --color-sila-700: #2f5a3f;
+  --color-magliocco-700: #7a1f2b;
+}
+
+body {
+  background: var(--color-pietra-50);
+  color: var(--color-pietra-900);
+}

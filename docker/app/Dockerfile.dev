@@ -1,0 +1,17 @@
+# Immagine di sviluppo: il codice è montato in bind, node_modules vive in un volume.
+FROM node:24-alpine
+
+RUN apk add --no-cache libc6-compat \
+ && npm install -g pnpm@10.34.9 \
+ && pnpm config set store-dir /pnpm/store --global
+
+ENV NEXT_TELEMETRY_DISABLED=1 \
+    CI=true
+
+WORKDIR /app
+COPY docker/app/dev-entrypoint.sh /usr/local/bin/dev-entrypoint
+RUN chmod +x /usr/local/bin/dev-entrypoint
+
+EXPOSE 3000
+ENTRYPOINT ["dev-entrypoint"]
+CMD ["pnpm", "dev"]

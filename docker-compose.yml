@@ -1,0 +1,111 @@
+name: cosenzaattrattiva
+
+services:
+  db:
+    image: imresamu/postgis:17-3.5 # build multi-arch (amd64 + arm64) di postgis/postgis
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cosenza}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cosenza}
+      POSTGRES_DB: ${POSTGRES_DB:-cosenza}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./docker/db/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "127.0.0.1:${DB_HOST_PORT:-5433}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile.dev
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://cosenzaattrattiva.test}
+      DATABASE_URL: ${DATABASE_URL:-postgres://cosenza:cosenza@db:5432/cosenza}
+      NEXT_PUBLIC_DEMO_TOOLS: ${NEXT_PUBLIC_DEMO_TOOLS:-true}
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+      - next-cache:/app/.next
+      - pnpm-store:/pnpm/store
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 120s
+
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      UPSTREAM: ${UPSTREAM:-app:3000}
+    ports:
+      # Default 80/443 (URL senza porta). Se occupate da un altro progetto:
+      # HTTP_PORT=8080 HTTPS_PORT=8443 make up  →  https://cosenzaattrattiva.test:8443
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+      - "${HTTPS_PORT:-443}:443/udp"
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./docker/certs:/certs:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - app
+
+  # ── Profilo "prod": build di produzione dietro lo stesso proxy (make prod-local)
+  app-prod:
+    profiles: ["prod"]
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://cosenzaattrattiva.test}
+        NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:-}
+        NEXT_PUBLIC_FEATURE_3D: ${NEXT_PUBLIC_FEATURE_3D:-false}
+        NEXT_PUBLIC_FEATURE_STREETVIEW: ${NEXT_PUBLIC_FEATURE_STREETVIEW:-false}
+        NEXT_PUBLIC_FEATURE_AR: ${NEXT_PUBLIC_FEATURE_AR:-false}
+        NEXT_PUBLIC_FEATURE_ASSISTANT: ${NEXT_PUBLIC_FEATURE_ASSISTANT:-false}
+        NEXT_PUBLIC_DEMO_TOOLS: ${NEXT_PUBLIC_DEMO_TOOLS:-true}
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgres://cosenza:cosenza@db:5432/cosenza}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ── Profilo "dns": risolve *.cosenzaattrattiva.test verso l'IP LAN del Mac
+  # per i test da smartphone (make dns). Impostare il DNS del telefono su LAN_IP.
+  dns:
+    profiles: ["dns"]
+    image: alpine:3.22
+    command: >
+      sh -c "apk add --no-cache dnsmasq >/dev/null &&
+             exec dnsmasq --keep-in-foreground --log-facility=- --no-resolv
+             --server=1.1.1.1 --server=9.9.9.9
+             --address=/cosenzaattrattiva.test/$${LAN_IP}"
+    environment:
+      LAN_IP: ${LAN_IP:-127.0.0.1}
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+
+volumes:
+  db-data:
+  node_modules:
+  next-cache:
+  pnpm-store:
+  caddy-data:
+  caddy-config:
