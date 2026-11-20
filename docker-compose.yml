@@ -52,9 +52,9 @@ services:
     restart: unless-stopped
     environment:
       UPSTREAM: ${UPSTREAM:-app:3000}
+      HTTPS_PORT: ${HTTPS_PORT:-443}
     ports:
-      # Default 80/443 (URL senza porta). Se occupate da un altro progetto:
-      # HTTP_PORT=8080 HTTPS_PORT=8443 make up  →  https://cosenzaattrattiva.test:8443
+      # Porte impostate dal Makefile (HTTP_PORT / HTTPS_PORT); default 80/443.
       - "${HTTP_PORT:-80}:80"
       - "${HTTPS_PORT:-443}:443"
       - "${HTTPS_PORT:-443}:443/udp"

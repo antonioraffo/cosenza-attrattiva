@@ -20,7 +20,7 @@
 http://cosenzaattrattiva.test, http://*.cosenzaattrattiva.test {
 	import root_ca
 	handle {
-		redir https://{host}{uri} 308
+		redir https://{host}:{$HTTPS_PORT:443}{uri} 308
 	}
 }
 

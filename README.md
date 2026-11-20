@@ -11,7 +11,7 @@ Demo per il Comune di Cosenza / brand *Vivi Cosenza*.
 
 - Docker Desktop (Compose v2)
 - [mkcert](https://github.com/FiloSottile/mkcert) – `brew install mkcert nss`
-- Porte **80** e **443** libere sull'host
+- Porte libere sull'host per il proxy (vedi [Porte del proxy](#porte-del-proxy))
 
 ## Avvio rapido
 
@@ -66,13 +66,17 @@ di `docker-compose.yml`. `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` è opzionale: senza c
 solo la mappa open source. Nella console Google limita la chiave al referrer
 `https://cosenzaattrattiva.test/*`.
 
-### Porte 80/443 occupate da un altro progetto
+### Porte del proxy
+
+Le porte sono definite in cima al `Makefile` (`HTTP_PORT` / `HTTPS_PORT`). Attualmente sono
+**8080/8443** perché 80/443 sono occupate da un altro stack locale, quindi l'app risponde su
+**https://cosenzaattrattiva.test:8443**. Quando le porte standard si liberano:
 
 ```bash
-HTTP_PORT=8080 HTTPS_PORT=8443 make up   # → https://cosenzaattrattiva.test:8443
+make up HTTP_PORT=80 HTTPS_PORT=443     # una tantum, oppure cambia i default nel Makefile
 ```
 
-Utile per convivere con altri stack locali; per la demo usa le porte standard.
+`NEXT_PUBLIC_SITE_URL`, redirect HTTP→HTTPS e test e2e si adeguano automaticamente.
 
 ## Test da smartphone (LAN)
 

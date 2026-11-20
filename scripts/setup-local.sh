@@ -82,4 +82,4 @@ docker compose exec -T app pnpm run --if-present db:seed
 ok "Migrazioni e seed eseguiti"
 
 echo
-bold "Pronto → https://$DOMAIN"
+bold "Pronto → ${NEXT_PUBLIC_SITE_URL:-https://$DOMAIN}"
