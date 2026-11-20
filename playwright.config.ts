@@ -4,7 +4,9 @@ const baseURL = process.env.BASE_URL ?? "https://cosenzaattrattiva.test:8443";
 
 export default defineConfig({
   testDir: "tests/e2e",
-  timeout: 45_000,
+  timeout: 60_000,
+  // il dev server compila le pagine al primo accesso: pochi worker = test stabili
+  workers: 2,
   expect: { timeout: 10_000 },
   retries: process.env.CI ? 1 : 0,
   reporter: [["list"], ["html", { open: "never", outputFolder: "playwright-report" }]],

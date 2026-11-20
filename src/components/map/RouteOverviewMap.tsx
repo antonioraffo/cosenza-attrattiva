@@ -31,5 +31,5 @@ export function RouteOverviewMap({
     map.scrollZoom.disable();
   }, [map, route, stops, color]);
 
-  return <div ref={ref} role="img" aria-label={label} className="size-full bg-pietra-100" />;
+  return <div ref={ref} role="region" aria-label={label} className="size-full bg-pietra-100" />;
 }

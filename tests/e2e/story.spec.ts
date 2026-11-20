@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 test("racconto: lo scroll attiva i capitoli e la mappa", async ({ page }) => {
   await page.goto("/it/itinerari/il-re-nel-fiume/racconto");

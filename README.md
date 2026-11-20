@@ -1,11 +1,18 @@
-# Cosenza Attrattiva – Itinerari narrativi
+# Cosenza attrattiva – Itinerari narrativi
 
 Web app mobile-first per vivere gli itinerari di Cosenza come un racconto a capitoli:
 mappa e narrazione si muovono insieme, la passeggiata si attiva quando arrivi nei luoghi.
-Demo per il Comune di Cosenza / brand *Vivi Cosenza*.
+Demo per il Comune di Cosenza, masterplan *Cosenza Città Attrattiva* – pilastro **Connect** (turismo).
 
-> Stato: **Fase 2** – ambiente locale dockerizzato con HTTPS. Le sezioni successive
-> del README (architettura, contenuti, demo script) si completano nelle fasi seguenti.
+- **Racconto**: scrollytelling con la mappa che vola di tappa in tappa e disegna il percorso fatto/rimanente
+- **Passeggiata**: geofencing, bussola, narrazione vocale all'arrivo, timbri del Passaporto
+- **Scheda luogo**: galleria, "Ieri e oggi", curiosità, orari e accessibilità, itinerari collegati
+- **PWA** installabile con download offline dell'itinerario (testi, foto, mappa)
+- **IT / EN**, WCAG 2.1 AA, nessun tracciamento della posizione
+- **Fase 2** (feature flag): Street View con hotspot, volo 3D fotorealistico, AR geolocalizzata, "Chiedi a Cosenza"
+
+Documenti: [Architettura](docs/ARCHITECTURE.md) · [Scaletta della demo](docs/DEMO-SCRIPT.md) ·
+[Coordinate da verificare](TODO-coordinate.md) · [Asset mappa](scripts/map/README.md)
 
 ## Requisiti
 
@@ -20,7 +27,9 @@ make setup   # certificati mkcert, /etc/hosts (con conferma), stack, migrazioni,
 make up      # avvio quotidiano
 ```
 
-Apri **https://cosenzaattrattiva.test**: il lucchetto deve essere valido, senza avvisi.
+Apri l'URL stampato da `make up` (con le porte standard **https://cosenzaattrattiva.test**, oggi
+**https://cosenzaattrattiva.test:8443**, vedi [Porte del proxy](#porte-del-proxy)): il lucchetto deve essere
+valido, senza avvisi.
 
 | Comando | Cosa fa |
 |---|---|
@@ -32,6 +41,8 @@ Apri **https://cosenzaattrattiva.test**: il lucchetto deve essere valido, senza 
 | `make migrate` | Applica le migrazioni Drizzle |
 | `make sh` / `make psql` | Shell nel container app / console Postgres |
 | `make typecheck` / `make lint` | Controlli statici |
+| `make test` | Test unitari Vitest (geo, geofence, WKB) |
+| `make e2e` | Test Playwright (mobile 375px + desktop) contro il dominio HTTPS |
 | `make prod-local` | Build di produzione servita dallo stesso proxy (per Lighthouse) |
 | `make dns` | DNS locale per testare da smartphone in LAN |
 | `make help` | Elenco completo |
@@ -59,12 +70,30 @@ browser ──HTTPS──▶ proxy (Caddy, :80→:443, cert mkcert)
 - `docker/app/Dockerfile` è il **Dockerfile multi-stage di produzione** (output standalone),
   separato da `Dockerfile.dev`.
 
+## Contenuti
+
+I contenuti sono file TypeScript tipizzati in `content/seed/` (luoghi, itinerari con capitoli IT/EN,
+media con crediti, quartieri). `make seed` li valida e li carica in modo idempotente.
+
+- **Foto**: Wikimedia Commons con licenze libere; autore e licenza sono nella tabella `media` e nella pagina
+  `/crediti`.
+- **Percorsi**: tracciati pedonali reali calcolati una tantum con OSRM (`docker compose exec app pnpm routes`)
+  e salvati in `content/seed/routes/`, così il seed funziona offline.
+- **Coordinate**: verificate su Wikidata/OSM dove possibile; le altre sono elencate in `TODO-coordinate.md`.
+
 ### Variabili d'ambiente
 
 Copia `.env.example` in `.env` (lo fa `make setup`). Le variabili non impostate usano i default
 di `docker-compose.yml`. `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` è opzionale: senza chiave l'app usa
-solo la mappa open source. Nella console Google limita la chiave al referrer
-`https://cosenzaattrattiva.test/*`.
+solo la mappa open source e nasconde Street View e 3D.
+
+**Chiave Google**: abilita *Maps JavaScript API* e *Map Tiles API*; restrizione per referrer HTTP con
+`https://cosenzaattrattiva.test/*` **e**, finché si usa la porta 8443, `https://cosenzaattrattiva.test:8443/*`.
+
+| Flag | Default |
+|---|---|
+| `NEXT_PUBLIC_FEATURE_STREETVIEW`, `_3D`, `_AR`, `_ASSISTANT` | `true` |
+| `NEXT_PUBLIC_DEMO_TOOLS` (simulatore di posizione) | `true` in dev, impostare `false` in produzione |
 
 ### Porte del proxy
 

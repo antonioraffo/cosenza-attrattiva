@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 test("scheda luogo: racconto, info, itinerari collegati", async ({ page }) => {
   await page.goto("/it/luoghi/duomo");

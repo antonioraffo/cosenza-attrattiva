@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 test("home editoriale con itinerari e filtri per tema", async ({ page }) => {
   await page.goto("/");

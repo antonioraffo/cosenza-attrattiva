@@ -150,12 +150,12 @@ export function StoryView(props: {
       </div>
 
       {/* ── Mappa: sticky in alto su mobile, a destra su desktop ── */}
-      <div className="sticky top-0 z-10 h-[46svh] pt-[60px] lg:order-2 lg:h-dvh lg:pt-0">
+      <div className="sticky top-0 z-30 h-[46svh] bg-pietra-50 pt-[60px] shadow-[0_8px_24px_-12px_rgba(0,0,0,.35)] lg:order-2 lg:h-dvh lg:pt-0 lg:shadow-none">
         <div ref={mapRef} className="size-full bg-pietra-100" role="region" aria-label={t("mapLabel", { title })} />
       </div>
 
       {/* ── Testo ─────────────────────────────────────── */}
-      <main id="main" className="relative z-20 -mt-4 rounded-t-3xl bg-pietra-50 lg:order-1 lg:mt-0 lg:rounded-none lg:pt-14">
+      <main id="main" className="relative z-10 bg-pietra-50 lg:order-1 lg:pt-14">
         <header ref={introRef} data-index={-1} className="px-5 pt-8 pb-10 lg:px-12 lg:pt-12">
           {cover && (
             <div className="relative mb-6 aspect-[16/10] overflow-hidden rounded-2xl">

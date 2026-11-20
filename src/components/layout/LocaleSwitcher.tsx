@@ -24,10 +24,11 @@ export function LocaleSwitcher({ light = false }: { light?: boolean }) {
       className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium transition ${
         light ? "text-white hover:bg-white/15" : "text-pietra-700 hover:bg-pietra-100"
       }`}
-      aria-label={`${t("language")}: ${t("switchTo")}`}
     >
       <IconGlobe size={18} />
+      <span className="sr-only">{t("language")}: </span>
       <span className="uppercase">{other}</span>
+      <span className="sr-only"> ({t("switchTo")})</span>
     </button>
   );
 }

@@ -13,7 +13,7 @@ export HTTP_PORT HTTPS_PORT
 export NEXT_PUBLIC_SITE_URL := $(SITE_URL)
 
 .DEFAULT_GOAL := help
-.PHONY: help setup up down restart logs ps sh psql migrate seed reset-db typecheck lint test e2e prod-local dns
+.PHONY: help setup up down restart logs ps sh psql migrate seed routes reset-db typecheck lint test e2e screenshots prod-local dns
 
 help: ## Elenca i comandi disponibili
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -49,6 +49,9 @@ migrate: ## Applica le migrazioni Drizzle
 seed: ## Popola il database con i contenuti di Cosenza (idempotente)
 	$(COMPOSE) exec -T app pnpm run --if-present db:seed
 
+routes: ## Ricalcola i percorsi pedonali (OSRM) in content/seed/routes
+	$(COMPOSE) exec -T app pnpm routes
+
 reset-db: ## Cancella il database e lo ricrea da zero (migrazioni + seed)
 	$(COMPOSE) rm -sf db
 	docker volume rm -f cosenzaattrattiva_db-data
@@ -66,6 +69,9 @@ test: ## Test unitari (Vitest)
 
 e2e: ## Test end-to-end (Playwright) contro $(SITE_URL)
 	$(COMPOSE) --profile tests run --rm e2e
+
+screenshots: ## Screenshot delle pagine principali (mobile/desktop) in docs/screenshots
+	$(COMPOSE) --profile tests run --rm e2e node scripts/screenshots.mjs $(p)
 
 prod-local: ## Build di produzione servita da Caddy su $(SITE_URL)
 	$(COMPOSE) --profile prod up -d --build --wait app-prod

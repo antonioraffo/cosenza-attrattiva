@@ -113,8 +113,19 @@ await db.transaction(async (tx) => {
     }
   }
 
-  /* itinerari + capitoli */
-  for (const [sort, it] of content.itineraries.entries()) {
+  /* itinerari + capitoli (ordine editoriale; gli altri in coda) */
+  const ORDER = [
+    "il-re-nel-fiume",
+    "atene-della-calabria",
+    "arte-a-cielo-aperto",
+    "la-via-del-magliocco",
+    "fede-di-pietra",
+    "cosenza-contemporanea",
+    "anime-di-quartiere",
+  ];
+  const rank = (slug: string) => (ORDER.includes(slug) ? ORDER.indexOf(slug) : ORDER.length);
+  const ordered = [...content.itineraries].sort((a, b) => rank(a.slug) - rank(b.slug));
+  for (const [sort, it] of ordered.entries()) {
     const stops = it.chapters.map((ch) => chapterPoint(content, ch));
     const route = (await readRoute(it.slug)) ?? stops; // fallback: linea spezzata tra le tappe
     const lengthM = Math.round(lineLengthM(route));

@@ -24,6 +24,7 @@ export function useMapLibre(
     (async () => {
       const [maplibregl, { Protocol }] = await Promise.all([import("maplibre-gl"), import("pmtiles")]);
       if (!protocolReady) {
+        maplibregl.setWorkerUrl("/map/maplibre-gl-worker.mjs");
         maplibregl.addProtocol("pmtiles", new Protocol({ metadata: true }).tile);
         protocolReady = true;
       }

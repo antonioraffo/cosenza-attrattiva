@@ -28,3 +28,6 @@ coverage/
 
 # materiali del cliente (fonti: i loghi usati sono copiati in public/brand)
 materiale/
+
+# copiato da node_modules (scripts/copy-maplibre-worker.mjs)
+public/map/maplibre-gl-worker.mjs

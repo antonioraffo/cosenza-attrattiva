@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 test.use({ permissions: ["geolocation"], geolocation: { latitude: 39.2878, longitude: 16.2547 } });
 
