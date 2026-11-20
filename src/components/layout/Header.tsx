@@ -17,7 +17,7 @@ export async function Header({ overlay = false }: { overlay?: boolean }) {
       }
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 md:px-8">
-        <Link href="/" className="rounded-lg" aria-label={`Vivi Cosenza Attrattiva – ${t("home")}`}>
+        <Link href="/" className="rounded-lg" aria-label={`Cosenza attrattiva – ${t("home")}`}>
           <Logo light={overlay} />
         </Link>
         <nav aria-label={t("menu")} className="flex items-center gap-1">

@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     metadataBase: new URL(publicEnv.siteUrl),
     title: { default: t("title"), template: `%s · ${t("brand")}` },
     description: t("description"),
-    applicationName: "Cosenza Attrattiva",
+    applicationName: "Cosenza attrattiva",
     appleWebApp: { capable: true, title: "Cosenza", statusBarStyle: "black-translucent" },
     alternates: { languages: { it: "/it", en: "/en" } },
     openGraph: { type: "website", siteName: t("brand"), locale: locale === "it" ? "it_IT" : "en_GB" },
@@ -41,7 +41,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#6e1b33",
+  themeColor: "#128771",
 };
 
 export default async function LocaleLayout({

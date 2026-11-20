@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Cosenza Attrattiva – Itinerari narrativi",
+    "title": "Cosenza attrattiva – Itinerari narrativi",
     "description": "Scopri Cosenza come un racconto: itinerari a capitoli, mappe che volano tra le tappe, passeggiate guidate dalla voce.",
-    "brand": "Vivi Cosenza"
+    "brand": "Cosenza attrattiva"
   },
   "nav": {
     "itineraries": "Itinerari",
@@ -15,7 +15,7 @@
     "menu": "Menu"
   },
   "home": {
-    "heroEyebrow": "Vivi Cosenza · Itinerari narrativi",
+    "heroEyebrow": "Cosenza attrattiva · Connect",
     "heroTitle": "Una città che si racconta, un capitolo alla volta",
     "heroText": "Dal fiume dove riposa un re alle opere d'arte sotto il cielo di Corso Mazzini: scegli una storia e lascia che sia la città a guidarti.",
     "heroCta": "Scegli il tuo racconto",
@@ -214,7 +214,7 @@
     "noAnswer": "Non ho trovato nulla nei racconti. Prova a riformulare."
   },
   "footer": {
-    "project": "Progetto dimostrativo per il Comune di Cosenza.",
+    "project": "Progetto dimostrativo per il Comune di Cosenza · Masterplan \"Cosenza Città Attrattiva\", pilastro Connect – Turismo.",
     "credits": "Crediti foto e mappe",
     "privacy": "Privacy",
     "mapData": "Dati cartografici © OpenStreetMap contributors · Protomaps",

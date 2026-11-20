@@ -25,3 +25,6 @@ coverage/
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# materiali del cliente (fonti: i loghi usati sono copiati in public/brand)
+materiale/

@@ -1,33 +1,24 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { ImageResponse } from "next/og";
 
 export const dynamic = "force-static";
 
 const SIZES = new Set([180, 192, 512]);
 
-/** Icone PWA generate: arco del ponte su fondo rosso Magliocco. */
+/** Icone PWA generate dal marchio ufficiale su fondo bianco (variante "maskable" con margine di sicurezza). */
 export async function GET(req: Request, ctx: { params: Promise<{ size: string }> }) {
   const size = Number((await ctx.params).size);
   if (!SIZES.has(size)) return new Response("Not found", { status: 404 });
   const maskable = new URL(req.url).searchParams.has("maskable");
-  const pad = maskable ? size * 0.2 : size * 0.12;
+  const svg = await readFile(path.join(process.cwd(), "public/brand/mark.svg"));
+  const src = `data:image/svg+xml;base64,${svg.toString("base64")}`;
+  const inner = size * (maskable ? 0.58 : 0.74);
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#6e1b33",
-          borderRadius: maskable ? 0 : size * 0.22,
-        }}
-      >
-        <svg width={size - pad * 2} height={size - pad * 2} viewBox="0 0 32 32">
-          <path d="M6 23c3-9 7-13 10-13s7 4 10 13" fill="none" stroke="#e3c58f" strokeWidth="2.6" strokeLinecap="round" />
-          <path d="M16 10V5.5" stroke="#e3c58f" strokeWidth="2.6" strokeLinecap="round" />
-          <path d="M5 26.5h22" stroke="#8fb59b" strokeWidth="2.6" strokeLinecap="round" />
-        </svg>
+      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#ffffff" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} width={inner} height={(inner * 416) / 476} alt="" />
       </div>
     ),
     { width: size, height: size },

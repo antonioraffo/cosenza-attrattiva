@@ -21,13 +21,14 @@
   --color-pietra-900: #1f1a16;
   --color-pietra-950: #14110e;
 
-  --color-sila-50: #eef4ef;
-  --color-sila-100: #d6e6da;
-  --color-sila-300: #8fb59b;
-  --color-sila-500: #3f7a55;
-  --color-sila-600: #2f6244;
-  --color-sila-700: #244c35;
-  --color-sila-900: #122a1c;
+  /* Sila: allineato al verde del marchio "Cosenza attrattiva" (#128771) */
+  --color-sila-50: #e9f5f2;
+  --color-sila-100: #cfe9e2;
+  --color-sila-300: #7cc3b2;
+  --color-sila-500: #1a9c82;
+  --color-sila-600: #128771;
+  --color-sila-700: #0d6b59;
+  --color-sila-900: #07362e;
 
   --color-magliocco-50: #fbeff1;
   --color-magliocco-100: #f4d6dc;
@@ -37,9 +38,16 @@
   --color-magliocco-700: #6e1b33;
   --color-magliocco-900: #3a0e1b;
 
-  --color-oro-300: #e3c58f;
-  --color-oro-500: #c9a25e;
-  --color-oro-700: #8a6a2f;
+  /* Oro: arancio del marchio (#dd7b19) */
+  --color-oro-300: #f3b46c;
+  --color-oro-500: #dd7b19;
+  --color-oro-700: #9e520b;
+
+  /* Colori del marchio ufficiale */
+  --color-brand-teal: #128771;
+  --color-brand-orange: #dd7b19;
+  --color-brand-purple: #9c37b5;
+  --color-brand-blue: #1a98c4;
 
   --radius-card: 1.25rem;
   --shadow-card: 0 1px 2px rgb(31 26 22 / 0.06), 0 8px 24px -8px rgb(31 26 22 / 0.18);

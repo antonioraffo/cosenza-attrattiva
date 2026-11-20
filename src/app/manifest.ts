@@ -4,15 +4,15 @@ export default function manifest(): MetadataRoute.Manifest {
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://cosenzaattrattiva.test";
   return {
     id: `${site}/`,
-    name: "Cosenza Attrattiva – Itinerari narrativi",
-    short_name: "Vivi Cosenza",
+    name: "Cosenza attrattiva – Itinerari narrativi",
+    short_name: "Cosenza",
     description: "Itinerari narrativi per scoprire Cosenza: racconti, mappe e passeggiate geolocalizzate.",
     start_url: "/it",
     scope: "/",
     display: "standalone",
     orientation: "portrait",
     background_color: "#f7f3ed",
-    theme_color: "#6e1b33",
+    theme_color: "#128771",
     lang: "it",
     categories: ["travel", "education"],
     icons: [

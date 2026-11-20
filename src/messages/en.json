@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Cosenza Attrattiva – Story-driven itineraries",
+    "title": "Cosenza attrattiva – Story-driven itineraries",
     "description": "Discover Cosenza as a story: chaptered itineraries, maps that fly between stops, walks guided by voice.",
-    "brand": "Vivi Cosenza"
+    "brand": "Cosenza attrattiva"
   },
   "nav": {
     "itineraries": "Itineraries",
@@ -15,7 +15,7 @@
     "menu": "Menu"
   },
   "home": {
-    "heroEyebrow": "Vivi Cosenza · Story-driven itineraries",
+    "heroEyebrow": "Cosenza attrattiva · Connect",
     "heroTitle": "A city that tells its own story, one chapter at a time",
     "heroText": "From the river where a king lies buried to the open-air artworks of Corso Mazzini: pick a story and let the city lead the way.",
     "heroCta": "Choose your story",
@@ -214,7 +214,7 @@
     "noAnswer": "I couldn't find anything in the stories. Try rephrasing."
   },
   "footer": {
-    "project": "Demo project for the Comune di Cosenza.",
+    "project": "Demo project for the Comune di Cosenza · \"Cosenza Città Attrattiva\" masterplan, Connect – Tourism pillar.",
     "credits": "Photo and map credits",
     "privacy": "Privacy",
     "mapData": "Map data © OpenStreetMap contributors · Protomaps",

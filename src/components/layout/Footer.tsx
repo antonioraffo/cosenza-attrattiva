@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { Logo } from "./Logo";
+import { LogoConnect } from "./Logo";
 import { ConsentManageButton } from "./ConsentBanner";
 
 export async function Footer() {
@@ -9,7 +9,7 @@ export async function Footer() {
     <footer className="mt-24 bg-pietra-900 text-pietra-200">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-[1.5fr_1fr] md:px-8">
         <div>
-          <Logo light />
+          <LogoConnect light className="h-24 w-auto" />
           <p className="mt-4 max-w-md text-sm leading-relaxed text-pietra-300">{t("project")}</p>
         </div>
         <ul className="space-y-1 text-sm">
