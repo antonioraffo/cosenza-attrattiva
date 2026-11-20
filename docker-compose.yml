@@ -32,6 +32,11 @@ services:
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://cosenzaattrattiva.test}
       DATABASE_URL: ${DATABASE_URL:-postgres://cosenza:cosenza@db:5432/cosenza}
       NEXT_PUBLIC_DEMO_TOOLS: ${NEXT_PUBLIC_DEMO_TOOLS:-true}
+      # funzioni "wow": attive di default, quelle Google richiedono anche la chiave
+      NEXT_PUBLIC_FEATURE_3D: ${NEXT_PUBLIC_FEATURE_3D:-true}
+      NEXT_PUBLIC_FEATURE_STREETVIEW: ${NEXT_PUBLIC_FEATURE_STREETVIEW:-true}
+      NEXT_PUBLIC_FEATURE_AR: ${NEXT_PUBLIC_FEATURE_AR:-true}
+      NEXT_PUBLIC_FEATURE_ASSISTANT: ${NEXT_PUBLIC_FEATURE_ASSISTANT:-true}
     volumes:
       - .:/app
       - node_modules:/app/node_modules
@@ -75,10 +80,10 @@ services:
       args:
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://cosenzaattrattiva.test}
         NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:-}
-        NEXT_PUBLIC_FEATURE_3D: ${NEXT_PUBLIC_FEATURE_3D:-false}
-        NEXT_PUBLIC_FEATURE_STREETVIEW: ${NEXT_PUBLIC_FEATURE_STREETVIEW:-false}
-        NEXT_PUBLIC_FEATURE_AR: ${NEXT_PUBLIC_FEATURE_AR:-false}
-        NEXT_PUBLIC_FEATURE_ASSISTANT: ${NEXT_PUBLIC_FEATURE_ASSISTANT:-false}
+        NEXT_PUBLIC_FEATURE_3D: ${NEXT_PUBLIC_FEATURE_3D:-true}
+        NEXT_PUBLIC_FEATURE_STREETVIEW: ${NEXT_PUBLIC_FEATURE_STREETVIEW:-true}
+        NEXT_PUBLIC_FEATURE_AR: ${NEXT_PUBLIC_FEATURE_AR:-true}
+        NEXT_PUBLIC_FEATURE_ASSISTANT: ${NEXT_PUBLIC_FEATURE_ASSISTANT:-true}
         NEXT_PUBLIC_DEMO_TOOLS: ${NEXT_PUBLIC_DEMO_TOOLS:-true}
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgres://cosenza:cosenza@db:5432/cosenza}

@@ -3,8 +3,9 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
 
-const url = process.env.DATABASE_URL;
-if (!url) throw new Error("DATABASE_URL non impostata");
+// Nessun errore all'import: durante `next build` i moduli vengono valutati senza database.
+// postgres-js apre la connessione solo alla prima query.
+const url = process.env.DATABASE_URL ?? "postgres://localhost:5432/missing-database-url";
 
 // In dev l'HMR ricarica i moduli: riusa la stessa connessione
 const globalForDb = globalThis as unknown as { pg?: ReturnType<typeof postgres> };
