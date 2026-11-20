@@ -94,7 +94,9 @@ services:
   # ── Profilo "tests": Playwright contro https://cosenzaattrattiva.test (via host → Caddy)
   e2e:
     profiles: ["tests"]
-    image: mcr.microsoft.com/playwright:v1.65.1-noble
+    build:
+      context: .
+      dockerfile: docker/e2e/Dockerfile
     working_dir: /app
     ipc: host
     environment:

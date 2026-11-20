@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 import { bbox, type LngLat } from "@/lib/geo";
 import { addItineraryLayers, setItineraryProgress, type StopFeature } from "./itineraryLayers";
@@ -20,7 +20,16 @@ export function RouteOverviewMap({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const locale = useLocale() as "it" | "en";
-  const map = useMapLibre(ref, locale, { interactive: true, dragRotate: false, pitchWithRotate: false });
+  // la mappa è sotto la piega: MapLibre si avvia solo quando sta per entrare nel viewport
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => e?.isIntersecting && setNear(true), { rootMargin: "300px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  const map = useMapLibre(ref, locale, { interactive: true, dragRotate: false, pitchWithRotate: false }, near);
 
   useEffect(() => {
     if (!map) return;

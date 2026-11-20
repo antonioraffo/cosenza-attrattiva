@@ -70,8 +70,14 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     setTtsSupported("speechSynthesis" in window);
     // alcuni browser caricano le voci in modo asincrono
     if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
-    return () => {
+    // Chrome continua a parlare anche dopo aver lasciato la pagina: si interrompe esplicitamente
+    const silence = () => {
       if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    };
+    window.addEventListener("pagehide", silence);
+    return () => {
+      window.removeEventListener("pagehide", silence);
+      silence();
     };
   }, []);
 

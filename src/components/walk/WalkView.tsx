@@ -132,7 +132,11 @@ export function WalkView({
       } else marker.current.setLngLat(p);
       const along = locateOnLine(route, p).alongM;
       setItineraryProgress(map, route, totalM ? along / totalM : 0, stops, nextIndex);
-      if (following) map.easeTo({ center: p, zoom: Math.max(map.getZoom(), 16.5), duration: reducedMotion() ? 0 : 800 });
+      // segue l'utente solo per spostamenti apprezzabili: niente animazioni continue sul jitter
+      const c = map.getCenter();
+      if (following && distanceM([c.lng, c.lat], p) > 3) {
+        map.easeTo({ center: p, zoom: Math.max(map.getZoom(), 16.5), duration: reducedMotion() ? 0 : 800 });
+      }
     }
 
     const events = updateGeofences(fenceState.current, fences, p, source === "gps" ? accuracy : 0);

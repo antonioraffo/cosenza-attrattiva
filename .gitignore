@@ -31,3 +31,6 @@ materiale/
 
 # copiato da node_modules (scripts/copy-maplibre-worker.mjs)
 public/map/maplibre-gl-worker.mjs
+
+# report generati
+docs/lighthouse/

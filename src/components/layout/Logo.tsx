@@ -21,6 +21,7 @@ export function LogoConnect({ light = false, className = "" }: { light?: boolean
       alt="Cosenza attrattiva Connect"
       width={120}
       height={139}
+      loading="lazy"
       className={className}
     />
   );

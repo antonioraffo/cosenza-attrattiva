@@ -17,7 +17,7 @@ const out = "docs/screenshots";
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch();
 for (const [vw, size] of [["mobile", { width: 375, height: 812 }], ["desktop", { width: 1440, height: 900 }]]) {
-  const ctx = await browser.newContext({ viewport: size, deviceScaleFactor: vw === "mobile" ? 2 : 1, ignoreHTTPSErrors: true, locale: "it-IT" });
+  const ctx = await browser.newContext({ viewport: size, deviceScaleFactor: vw === "mobile" ? 2 : 1, locale: "it-IT" });
   // banner di consenso già gestito, per screenshot puliti
   await ctx.addInitScript(() => localStorage.setItem("cosenza-consent:v1", JSON.stringify({ decided: true, google: false })));
   for (const [name, path, action] of pages) {

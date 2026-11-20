@@ -80,7 +80,7 @@ function Flight({ stops }: { stops: FlyStop[] }) {
         v.scene.skyAtmosphere.show = true;
         viewer.current = v;
         Cesium.GoogleMaps.defaultApiKey = publicEnv.googleMapsKey;
-        const tileset = await Cesium.createGooglePhotorealistic3DTileset();
+        const tileset = await Cesium.createGooglePhotorealistic3DTileset({ onlyUsingWithGoogleGeocoder: true });
         if (disposed) return;
         v.scene.primitives.add(tileset);
         // vista d'insieme iniziale da sud-ovest, in quota

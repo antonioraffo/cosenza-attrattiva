@@ -13,7 +13,7 @@ export HTTP_PORT HTTPS_PORT
 export NEXT_PUBLIC_SITE_URL := $(SITE_URL)
 
 .DEFAULT_GOAL := help
-.PHONY: help setup up down restart logs ps sh psql migrate seed routes reset-db typecheck lint test e2e screenshots prod-local dns
+.PHONY: help setup up down restart logs ps sh psql migrate seed routes reset-db typecheck lint test e2e e2e-prod screenshots lighthouse prod-local dns
 
 help: ## Elenca i comandi disponibili
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -70,8 +70,14 @@ test: ## Test unitari (Vitest)
 e2e: ## Test end-to-end (Playwright) contro $(SITE_URL)
 	$(COMPOSE) --profile tests run --rm e2e
 
+e2e-prod: ## Test e2e incluso l'offline (dopo make prod-local)
+	$(COMPOSE) --profile tests run --rm -e E2E_PROD=1 e2e
+
 screenshots: ## Screenshot delle pagine principali (mobile/desktop) in docs/screenshots
 	$(COMPOSE) --profile tests run --rm e2e node scripts/screenshots.mjs $(p)
+
+lighthouse: ## Lighthouse mobile (eseguire dopo make prod-local) → docs/lighthouse
+	$(COMPOSE) --profile tests run --rm e2e bash scripts/lighthouse.sh
 
 prod-local: ## Build di produzione servita da Caddy su $(SITE_URL)
 	$(COMPOSE) --profile prod up -d --build --wait app-prod

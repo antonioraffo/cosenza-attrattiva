@@ -31,6 +31,7 @@ export function SmartImage({
       fill
       sizes={sizes}
       priority={priority}
+      fetchPriority={priority ? "high" : undefined}
       className={className}
     />
   );
