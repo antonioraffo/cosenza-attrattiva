@@ -104,6 +104,9 @@ services:
       # la CA mkcert rende verificabile il certificato anche da Node (test TLS)
       NODE_EXTRA_CA_CERTS: /app/docker/certs/rootCA.pem
       CI: "true"
+      # password del sito di riferimento vivi-cosenza (solo per scripts/reference)
+      REF_PASSWORD: ${REF_PASSWORD:-}
+      REF_COOKIE: ${REF_COOKIE:-}
     extra_hosts:
       - "cosenzaattrattiva.test:host-gateway"
     volumes:
