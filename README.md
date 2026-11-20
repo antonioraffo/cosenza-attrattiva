@@ -14,6 +14,13 @@ Demo per il Comune di Cosenza, masterplan *Cosenza Città Attrattiva* – pilast
 Documenti: [Architettura](docs/ARCHITECTURE.md) · [Scaletta della demo](docs/DEMO-SCRIPT.md) ·
 [Coordinate da verificare](TODO-coordinate.md) · [Asset mappa](scripts/map/README.md)
 
+<p>
+  <img src="docs/screenshots/home-mobile.jpg" width="180" alt="Home su smartphone">
+  <img src="docs/screenshots/racconto-mobile.jpg" width="180" alt="Modalità Racconto con mappa">
+  <img src="docs/screenshots/luogo-mobile.jpg" width="180" alt="Scheda del Castello Svevo">
+  <img src="docs/screenshots/passeggiata-mobile.jpg" width="180" alt="Modalità Passeggiata">
+</p>
+
 ## Requisiti
 
 - Docker Desktop (Compose v2)
@@ -69,6 +76,19 @@ browser ──HTTPS──▶ proxy (Caddy, :80→:443, cert mkcert)
   Apple Silicon). Esposto solo su `127.0.0.1:5433` per strumenti dall'host.
 - `docker/app/Dockerfile` è il **Dockerfile multi-stage di produzione** (output standalone),
   separato da `Dockerfile.dev`.
+
+## Qualità
+
+| Controllo | Comando | Stato |
+|---|---|---|
+| Test unitari (geo, geofence con isteresi, WKB) | `make test` | 23 ✔ |
+| E2E Playwright, mobile 375px + desktop, contro il dominio HTTPS con CA verificata dal browser | `make e2e` | ✔ |
+| E2E sulla build di produzione, incluso offline | `make prod-local && make e2e-prod` | ✔ |
+| Accessibilità axe WCAG 2.1 AA (home, itinerario, luogo, passaporto) | incluso in `make e2e` | 0 violazioni gravi |
+| Lighthouse mobile (build di produzione) | `make prod-local && make lighthouse` | Performance 91–92, Accessibility 100, Best practices 100, SEO 100 |
+| Typecheck / lint | `make typecheck` / `make lint` | ✔ |
+
+Il container e2e (`docker/e2e`) registra la CA mkcert nell'NSS di Chromium: i test non ignorano gli errori TLS.
 
 ## Contenuti
 

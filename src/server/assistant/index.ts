@@ -33,7 +33,8 @@ export const KeywordProvider: AnswerProvider = {
     const cfg = locale === "it" ? sql.raw("'italian'") : sql.raw("'english'");
     const rows = Array.from(
       await db.execute<Row>(sql`
-        with q as (select websearch_to_tsquery(${cfg}::regconfig, unaccent(${question})) as query),
+        -- termini in OR (non tutti devono comparire), poi ordinamento per pertinenza
+        with q as (select nullif(replace(plainto_tsquery(${cfg}::regconfig, unaccent(${question}))::text, '&', '|'), '')::tsquery as query),
         docs as (
           select 'chapter' as kind, c.id::text as slug, i.slug as parent,
                  c.title->>${locale} as title, c.body->>${locale} as body

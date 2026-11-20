@@ -26,7 +26,7 @@ for (const [vw, size] of [["mobile", { width: 375, height: 812 }], ["desktop", {
     await p.goto(base + path, { waitUntil: "load" });
     if (action) await action(p);
     else await p.waitForTimeout(3000);
-    await p.screenshot({ path: `${out}/${name}-${vw}.png`, fullPage: false });
+    await p.screenshot({ path: `${out}/${name}-${vw}.jpg`, type: "jpeg", quality: 75, fullPage: false });
     console.log(`✔ ${name}-${vw}`);
     await p.close();
   }
