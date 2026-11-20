@@ -264,7 +264,7 @@ Since 2017 the square has been pedestrianised, with trees and benches. Sit for a
       stepFree: true,
       notes: { it: "Piazza pedonale in piano.", en: "Level pedestrian square." },
     },
-    images: [],
+    images: ["quartiere-rivocati-1"],
     neighborhood: "rivocati",
   },
   {
@@ -306,7 +306,7 @@ Above the quarter, the church of the Cappuccinelle looks out over the Crati vall
       stepFree: false,
       notes: { it: "Vicoli stretti con gradini e pavimentazione irregolare.", en: "Narrow alleys with steps and uneven paving." },
     },
-    images: [],
+    images: ["quartiere-santa-lucia-1"],
     historic: {
       media: "quartiere-santa-lucia-storica",
       year: "1897",
@@ -362,7 +362,7 @@ Imagine the sounds of this quarter a hundred years ago: a potter's wheel, a wate
         en: "Gently sloping streets; check museum accessibility directly with the venue.",
       },
     },
-    images: [],
+    images: ["museo-brettii-enotri-1"],
     neighborhood: "massa",
   },
   {

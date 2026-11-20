@@ -2,6 +2,28 @@ import type { SeedMedia } from "../types";
 
 export const media: SeedMedia[] = [
   {
+    key: "quartiere-rivocati-1",
+    file: "/media/quartiere-rivocati-1.jpg",
+    kind: "image",
+    width: 960,
+    height: 826,
+    alt: { it: "Piazza della Riforma a Cosenza, con la pavimentazione colorata e gli alberi al centro", en: "Piazza della Riforma in Cosenza, with its colourful paving and trees in the middle" },
+    credit: "Lupo silano 1914, CC BY-SA 4.0, via Wikimedia Commons",
+    license: "CC BY-SA 4.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:PIAZZA_RIFORMA_Cosenza.jpg",
+  },
+  {
+    key: "quartiere-santa-lucia-1",
+    file: "/media/quartiere-santa-lucia-1.jpg",
+    kind: "image",
+    width: 1200,
+    height: 1600,
+    alt: { it: "Una scalinata del centro storico di Cosenza illuminata dai lampioni di notte", en: "A stairway in Cosenza's old town lit by street lamps at night" },
+    credit: "Luposilano1914, Public domain, via Wikimedia Commons",
+    license: "Public domain",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:CENTRO_STORICO_COSENZA.JPG",
+  },
+  {
     key: "cantine-donnici-1",
     file: "/media/cantine-donnici-1.jpg",
     kind: "image",
