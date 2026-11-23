@@ -211,7 +211,7 @@
   "credits": {
     "title": "Credits",
     "intro": "Photographs come from Wikimedia Commons and are published under free licences. Thanks to all the authors.",
-    "map": "Map: © OpenStreetMap contributors (ODbL), Protomaps tiles. Walking routes computed with OSRM.",
+    "map": "Map: © OpenStreetMap contributors (ODbL), Protomaps tiles. 3D flight terrain: Terrain Tiles (SRTM, GMTED, AWS open dataset). Walking routes computed with OSRM.",
     "source": "Source"
   },
   "common": {

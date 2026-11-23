@@ -211,7 +211,7 @@
   "credits": {
     "title": "Crediti",
     "intro": "Le fotografie provengono da Wikimedia Commons e sono pubblicate con licenze libere. Grazie a tutte le autrici e gli autori.",
-    "map": "Mappa: © OpenStreetMap contributors (ODbL), tile Protomaps. Percorsi pedonali calcolati con OSRM.",
+    "map": "Mappa: © OpenStreetMap contributors (ODbL), tile Protomaps. Rilievo del volo 3D: Terrain Tiles (SRTM, GMTED, dataset pubblico AWS). Percorsi pedonali calcolati con OSRM.",
     "source": "Fonte"
   },
   "common": {

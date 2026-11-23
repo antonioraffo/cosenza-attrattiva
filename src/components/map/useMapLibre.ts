@@ -15,7 +15,7 @@ function setupMapLibre(maplibregl: typeof import("maplibre-gl"), Protocol: typeo
 }
 
 /** WebGL2 assente (dispositivi datati, alcuni browser headless): niente mappa, la pagina resta usabile. */
-const hasWebGL2 = () => Boolean(document.createElement("canvas").getContext("webgl2"));
+export const hasWebGL2 = () => Boolean(document.createElement("canvas").getContext("webgl2"));
 
 /**
  * Crea una mappa MapLibre (import dinamico: MapLibre resta fuori dal bundle iniziale).
