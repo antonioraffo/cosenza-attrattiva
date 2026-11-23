@@ -189,6 +189,37 @@ await db.transaction(async (tx) => {
     );
   }
 
+  /* eventi */
+  for (const e of content.events) {
+    const place = e.place ? content.places.find((p) => p.slug === e.place) : undefined;
+    const values = {
+      slug: e.slug,
+      title: e.title,
+      summary: e.summary,
+      description: e.description,
+      category: e.category,
+      pillar: e.pillar,
+      major: e.major,
+      startDate: e.start ?? null,
+      endDate: e.end ?? null,
+      month: e.month ?? (e.start ? Number(e.start.slice(5, 7)) : null),
+      period: e.period ?? null,
+      schedule: e.schedule ?? null,
+      venue: e.venue ?? null,
+      placeId: e.place ? (placeIds.get(e.place) ?? null) : null,
+      geom: place ? ([place.lng, place.lat] as LngLat) : (e.at ?? null),
+      coverMediaId: e.cover ? (mediaIds.get(e.cover) ?? null) : null,
+      sourceUrl: e.sourceUrl ?? null,
+      demo: e.demo,
+      updatedAt: new Date(),
+    };
+    await tx.insert(s.events).values(values).onConflictDoUpdate({ target: s.events.slug, set: values });
+  }
+  if (content.events.length)
+    await tx.delete(s.events).where(notInArray(s.events.slug, content.events.map((e) => e.slug)));
+  else await tx.delete(s.events);
+  console.log(`  ✔ ${content.events.length} eventi (${content.events.filter((e) => e.major).length} grandi eventi)`);
+
   /* rimuove contenuti non più presenti nel seed */
   const slugs = content.itineraries.map((i) => i.slug);
   if (slugs.length) await tx.delete(s.itineraries).where(notInArray(s.itineraries.slug, slugs));

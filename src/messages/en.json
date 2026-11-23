@@ -358,12 +358,45 @@
   },
   "events": {
     "title": "Events",
-    "intro": "Music and shows in the heart of Cosenza.",
+    "intro": "Music and shows, traditions and major events in the heart of Cosenza.",
     "more": "Find out more",
     "less": "Close",
     "source": "Event website",
     "demo": "Sample calendar",
-    "to": "–"
+    "to": "–",
+    "all": "Full calendar",
+    "details": "Details",
+    "majorTitle": "Major events",
+    "majorIntro": "The city's biggest draws.",
+    "majorBadge": "Major event",
+    "calendarTitle": "City calendar",
+    "calendarIntro": "All events, filterable by type.",
+    "filterLabel": "Filter by type",
+    "allTypes": "All",
+    "onlyMajor": "Major events only",
+    "empty": "No events for this filter.",
+    "past": "Past events",
+    "demoNote": "Sample data: dates, venues and programmes to be confirmed with the City.",
+    "where": "Where",
+    "when": "When",
+    "schedule": "Times",
+    "directions": "Directions",
+    "nearby": "What to see nearby",
+    "itineraries": "Itineraries nearby",
+    "back": "All events",
+    "walk": "{min} min walk",
+    "pillar": {
+      "vive": "Cosenza Vive",
+      "connect": "Cosenza Connect",
+      "crea": "Cosenza Crea"
+    },
+    "category": {
+      "cultura": "Culture",
+      "spettacolo": "Shows",
+      "tradizioni": "Traditions",
+      "shopping-notti": "Shopping and nights",
+      "artigianato": "Crafts"
+    }
   },
   "sectionNav": {
     "label": "Highlights",

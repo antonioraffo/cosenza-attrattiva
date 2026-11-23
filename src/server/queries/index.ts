@@ -2,7 +2,7 @@ import "server-only";
 import { asc, eq, inArray, sql } from "drizzle-orm";
 import { cache } from "react";
 import { db } from "@/server/db/client";
-import { chapters, itineraries, media, neighborhoods, placeMedia, places, type Media } from "@/server/db/schema";
+import { chapters, events, itineraries, media, neighborhoods, placeMedia, places, type Media } from "@/server/db/schema";
 import type { Position } from "@/lib/geo/wkb";
 
 export type MediaItem = Pick<Media, "url" | "width" | "height" | "alt" | "credit" | "license" | "sourceUrl">;
@@ -218,3 +218,96 @@ export const placesBySlugs = cache(async (slugs: string[]) => {
     .filter((r): r is (typeof rows)[number] => !!r)
     .map((r) => ({ ...r, image: covers.get(r.id) ?? null }));
 });
+
+/* ── Eventi ─────────────────────────────────────────────────────────────── */
+
+const eventCols = {
+  id: events.id,
+  slug: events.slug,
+  title: events.title,
+  summary: events.summary,
+  category: events.category,
+  pillar: events.pillar,
+  major: events.major,
+  startDate: events.startDate,
+  endDate: events.endDate,
+  month: events.month,
+  period: events.period,
+  schedule: events.schedule,
+  venue: events.venue,
+  sourceUrl: events.sourceUrl,
+  demo: events.demo,
+  coverMediaId: events.coverMediaId,
+  placeSlug: places.slug,
+  placeName: places.name,
+};
+
+/**
+ * Tutti gli eventi in ordine di data: prima quelli con una data (anche passati, il filtro è in pagina),
+ * poi quelli con il solo mese, poi quelli "da annunciare".
+ */
+export const listEvents = cache(async () => {
+  const rows = await db
+    .select(eventCols)
+    .from(events)
+    .leftJoin(places, eq(places.id, events.placeId))
+    .orderBy(sql`${events.startDate} asc nulls last`, sql`${events.month} asc nulls last`, asc(events.slug));
+  const covers = await mediaByIds(rows.map((r) => r.coverMediaId));
+  return rows.map(({ coverMediaId, ...r }) => ({ ...r, cover: coverMediaId ? (covers.get(coverMediaId) ?? null) : null }));
+});
+
+export type EventSummary = Awaited<ReturnType<typeof listEvents>>[number];
+
+/** Luoghi entro `radiusM` da un punto (prossimità tra luoghi pubblici, mai la posizione dell'utente). */
+async function placesNearPoint(point: Position, radiusM = 600, limit = 4, exclude: number | null = null) {
+  const geom = sql`ST_SetSRID(ST_MakePoint(${point[0]}, ${point[1]}), 4326)::geography`;
+  const rows = await db.execute<{ id: number; slug: string; name: { it: string; en: string }; category: string; distance: number }>(sql`
+    select p.id, p.slug, p.name, p.category, round(ST_Distance(p.geom::geography, ${geom}))::int as distance
+    from ${places} p
+    where ST_DWithin(p.geom::geography, ${geom}, ${radiusM}) and p.id is distinct from ${exclude}
+    order by distance
+    limit ${limit}
+  `);
+  const list = Array.from(rows);
+  const covers = await coverByPlace(list.map((r) => r.id));
+  return list.map((r) => ({ ...r, image: covers.get(r.id) ?? null }));
+}
+
+/** Itinerari con almeno una tappa entro `radiusM` dal punto, i più vicini prima. */
+async function itinerariesNearPoint(point: Position, radiusM = 500) {
+  const geom = sql`ST_SetSRID(ST_MakePoint(${point[0]}, ${point[1]}), 4326)::geography`;
+  const rows = await db.execute<{ slug: string; title: { it: string; en: string }; subtitle: { it: string; en: string }; color: string; distance: number }>(sql`
+    select i.slug, i.title, i.subtitle, i.color, min(round(ST_Distance(c.geom::geography, ${geom})))::int as distance
+    from ${chapters} c join ${itineraries} i on i.id = c.itinerary_id
+    where c.geom is not null and ST_DWithin(c.geom::geography, ${geom}, ${radiusM})
+    group by i.slug, i.title, i.subtitle, i.color
+    order by distance
+    limit 3
+  `);
+  return Array.from(rows);
+}
+
+export const getEvent = cache(async (slug: string) => {
+  const [row] = await db
+    .select({ ...eventCols, description: events.description, geom: events.geom, placeId: events.placeId })
+    .from(events)
+    .leftJoin(places, eq(places.id, events.placeId))
+    .where(eq(events.slug, slug))
+    .limit(1);
+  if (!row) return null;
+  const point = (row.geom as Position | null) ?? null;
+  const [cover, nearby, nearItineraries] = await Promise.all([
+    mediaByIds([row.coverMediaId]),
+    point ? placesNearPoint(point, 600, 4, row.placeId) : Promise.resolve([]),
+    point ? itinerariesNearPoint(point) : Promise.resolve([]),
+  ]);
+  return {
+    ...row,
+    geom: point,
+    cover: row.coverMediaId ? (cover.get(row.coverMediaId) ?? null) : null,
+    nearby,
+    itineraries: nearItineraries,
+  };
+});
+
+export type EventDetail = NonNullable<Awaited<ReturnType<typeof getEvent>>>;

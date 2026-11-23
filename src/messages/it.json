@@ -358,12 +358,45 @@
   },
   "events": {
     "title": "Eventi",
-    "intro": "Musica e spettacoli, nel cuore di Cosenza.",
+    "intro": "Musica e spettacoli, tradizioni e grandi appuntamenti nel cuore di Cosenza.",
     "more": "Scopri di più",
     "less": "Chiudi",
     "source": "Sito dell'evento",
     "demo": "Calendario dimostrativo",
-    "to": "–"
+    "to": "–",
+    "all": "Tutto il calendario",
+    "details": "Dettagli",
+    "majorTitle": "Grandi eventi",
+    "majorIntro": "Gli appuntamenti di maggiore richiamo della città.",
+    "majorBadge": "Grande evento",
+    "calendarTitle": "Calendario della città",
+    "calendarIntro": "Tutti gli eventi, filtrabili per tipo.",
+    "filterLabel": "Filtra per tipo",
+    "allTypes": "Tutti",
+    "onlyMajor": "Solo grandi eventi",
+    "empty": "Nessun evento per questo filtro.",
+    "past": "Eventi passati",
+    "demoNote": "Dati dimostrativi: date, luoghi e programmi da confermare con il Comune.",
+    "where": "Dove",
+    "when": "Quando",
+    "schedule": "Orari",
+    "directions": "Indicazioni",
+    "nearby": "Cosa vedere vicino",
+    "itineraries": "Itinerari nei dintorni",
+    "back": "Tutti gli eventi",
+    "walk": "{min} min a piedi",
+    "pillar": {
+      "vive": "Cosenza Vive",
+      "connect": "Cosenza Connect",
+      "crea": "Cosenza Crea"
+    },
+    "category": {
+      "cultura": "Cultura",
+      "spettacolo": "Spettacolo",
+      "tradizioni": "Tradizioni",
+      "shopping-notti": "Shopping e notti",
+      "artigianato": "Artigianato"
+    }
   },
   "sectionNav": {
     "label": "In evidenza",

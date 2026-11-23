@@ -1,17 +1,23 @@
 import { getTranslations } from "next-intl/server";
-import { tr } from "@/lib/i18n";
-import { EVENTS } from "@/content/events";
+import { Link } from "@/i18n/navigation";
+import { isPast } from "@/lib/events";
+import { listEvents } from "@/server/queries";
+import { MajorEventsBand } from "@/components/events/MajorEventsBand";
+import { calendarItems, cardLabels } from "@/components/events/calendarItems";
+import { IconArrowRight } from "@/components/ui/icons";
 import { EventCard } from "./EventCard";
 import { Typewriter } from "./Typewriter";
 
-/** Eventi come vivicosenza: 4 card editoriali senza foto (4 → 2 → 1 colonne). */
+/**
+ * Eventi in home, come vivicosenza (titolo, intro, "Scopri di più", 4 card editoriali), dal database:
+ * prima i grandi eventi in evidenza, poi i prossimi appuntamenti del calendario.
+ */
 export async function EventsSection({ locale }: { locale: string }) {
   const t = await getTranslations("events");
-  const month = new Intl.DateTimeFormat(locale, { month: "short", year: "numeric", timeZone: "UTC" });
-  const point = (iso: string) => {
-    const d = new Date(`${iso}T00:00:00Z`);
-    return { day: String(d.getUTCDate()).padStart(2, "0"), month: month.format(d).replace(".", "").toUpperCase() };
-  };
+  const all = (await listEvents()).filter((e) => !isPast(e));
+  const majors = all.filter((e) => e.major).slice(0, 4);
+  const next = await calendarItems(all.filter((e) => !e.major).slice(0, 4), locale);
+  const labels = await cardLabels(locale);
 
   return (
     <section id="eventi" className="ca-section ca-section--light ca-events" aria-labelledby="eventi-title">
@@ -25,24 +31,40 @@ export async function EventsSection({ locale }: { locale: string }) {
               {t("intro")}
             </p>
           </div>
-          <span className="ca-events-demo">{t("demo")}</span>
+          <Link href="/eventi" className="ca-heading-action">
+            {t("all")} <IconArrowRight size={18} />
+          </Link>
         </div>
-        <div className="ca-events-grid">
-          {EVENTS.map((e) => (
-            <div key={e.slug} data-reveal>
-              <EventCard
-                dates={[point(e.start), ...(e.end ? [point(e.end)] : [])]}
-                title={tr(e.title, locale)}
-                place={e.place}
-                category={tr(e.category, locale)}
-                description={tr(e.description, locale)}
-                schedule={tr(e.schedule, locale)}
-                source={e.source}
-                labels={{ more: t("more"), less: t("less"), source: t("source") }}
-              />
-            </div>
-          ))}
-        </div>
+
+        {majors.length > 0 && (
+          <div className="ca-events-block" data-reveal>
+            <h3 className="ca-events-subtitle">{t("majorTitle")}</h3>
+            <MajorEventsBand events={majors} locale={locale} headingLevel={3} />
+          </div>
+        )}
+
+        {next.length > 0 && (
+          <ul className="ca-events-grid">
+            {next.map((e) => (
+              <li key={e.slug} data-reveal>
+                <EventCard
+                  dates={e.dates}
+                  period={e.period}
+                  href={`/eventi/${e.slug}`}
+                  major={e.major}
+                  title={e.title}
+                  place={e.place}
+                  category={e.categoryLabel}
+                  description={e.description}
+                  schedule={e.schedule}
+                  source={e.source}
+                  labels={labels}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+        {all.some((e) => e.demo) && <p className="ca-demo-note mt-6">{t("demoNote")}</p>}
       </div>
     </section>
   );

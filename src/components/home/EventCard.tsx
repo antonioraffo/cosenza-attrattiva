@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import { Link } from "@/i18n/navigation";
 
 /**
  * Card evento editoriale come vivicosenza: senza foto, data grande, titolo, luogo, categoria;
@@ -8,6 +9,9 @@ import { useId, useState } from "react";
  */
 export function EventCard({
   dates,
+  period,
+  href,
+  major = false,
   title,
   place,
   category,
@@ -17,13 +21,18 @@ export function EventCard({
   labels,
 }: {
   dates: { day: string; month: string }[];
+  /** etichetta quando la data non è nota ("Luglio", "Data da annunciare") */
+  period?: string | null;
+  /** pagina dell'evento */
+  href?: string;
+  major?: boolean;
   title: string;
   place: string;
   category: string;
   description: string;
-  schedule: string;
-  source: string;
-  labels: { more: string; less: string; source: string };
+  schedule: string | null;
+  source: string | null;
+  labels: { more: string; less: string; source: string; details: string; major: string };
 }) {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
@@ -38,6 +47,7 @@ export function EventCard({
     >
       <div className="ca-event-surface">
         <p className="ca-event-date">
+          {dates.length === 0 && period && <span className="ca-event-period">{period}</span>}
           {dates.map((d, i) => (
             <span key={i} className="ca-event-date-group">
               {i > 0 && (
@@ -53,6 +63,7 @@ export function EventCard({
           ))}
         </p>
         <div className="ca-event-main">
+          {major && <span className="ca-event-major">{labels.major}</span>}
           <h3 id={`${id}-title`}>{title}</h3>
           <p className="ca-event-place">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
@@ -63,11 +74,19 @@ export function EventCard({
           </p>
           <div className="ca-event-reveal" id={`${id}-details`} hidden={!expanded}>
             <p>{description}</p>
-            <p className="ca-event-schedule">{schedule}</p>
-            <a href={source} target="_blank" rel="noopener noreferrer" className="ca-event-source">
-              {labels.source}
-              <span className="sr-only"> – {title}</span> ↗
-            </a>
+            {schedule && <p className="ca-event-schedule">{schedule}</p>}
+            {href && (
+              <Link href={href} className="ca-event-source">
+                {labels.details}
+                <span className="sr-only"> – {title}</span> →
+              </Link>
+            )}
+            {source && (
+              <a href={source} target="_blank" rel="noopener noreferrer" className="ca-event-source">
+                {labels.source}
+                <span className="sr-only"> – {title}</span> ↗
+              </a>
+            )}
           </div>
         </div>
         <div className="ca-event-footer">

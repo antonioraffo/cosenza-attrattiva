@@ -10,6 +10,7 @@ import type {
   LngLat,
   SeedItinerary,
   SeedMedia,
+  SeedEvent,
   SeedNeighborhood,
   SeedPlace,
 } from "../../../content/seed/types";
@@ -35,6 +36,7 @@ export interface Content {
   media: SeedMedia[];
   itineraries: SeedItinerary[];
   neighborhoods: SeedNeighborhood[];
+  events: SeedEvent[];
 }
 
 export async function loadContent(): Promise<Content> {
@@ -47,7 +49,9 @@ export async function loadContent(): Promise<Content> {
   const neighborhoods = existsSync(nbFile)
     ? ((await import(pathToFileURL(nbFile).href)) as { neighborhoods: SeedNeighborhood[] }).neighborhoods
     : [];
-  return { places, media, itineraries, neighborhoods };
+  const evFile = path.join(CONTENT_DIR, "events.ts");
+  const events = existsSync(evFile) ? ((await import(pathToFileURL(evFile).href)) as { events: SeedEvent[] }).events : [];
+  return { places, media, itineraries, neighborhoods, events };
 }
 
 /** Controlli di coerenza: errori bloccanti e avvisi. */
@@ -90,6 +94,13 @@ export function validateContent(c: Content): { errors: string[]; warnings: strin
       if ((ch.place !== null || ch.at) && !ch.camera) errors.push(`itinerario ${it.slug} cap. ${i + 1}: manca "camera"`);
       if (ch.place !== null && !placeSlugs.has(ch.place)) errors.push(`itinerario ${it.slug} cap. ${i + 1}: luogo ${ch.place} inesistente`);
     });
+  }
+  dup(c.events.map((e) => e.slug), "evento");
+  for (const e of c.events) {
+    if (e.place && !placeSlugs.has(e.place)) errors.push(`evento ${e.slug}: luogo ${e.place} inesistente`);
+    if (e.cover && !mediaKeys.has(e.cover)) warnings.push(`evento ${e.slug}: copertina ${e.cover} assente`);
+    if (!e.start && !e.period) errors.push(`evento ${e.slug}: serve "start" oppure "period"`);
+    if (e.start && !/^\d{4}-\d{2}-\d{2}$/.test(e.start)) errors.push(`evento ${e.slug}: data non valida`);
   }
   return { errors, warnings };
 }
