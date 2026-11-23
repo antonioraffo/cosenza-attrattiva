@@ -47,7 +47,7 @@ export function SilhouetteIntro({
   labels,
 }: {
   scenes: Record<Kind, SceneText>;
-  labels: { nav: string; duomo: string; ponte: string; discover: string; curiosities: string; announce: Record<Kind, string> };
+  labels: { nav: string; duomo: string; ponte: string; discover: string; curiosities: string; claim: string; announce: Record<Kind, string> };
 }) {
   const root = useRef<HTMLElement>(null);
   const [kind, setKind] = useState<Kind>("duomo");
@@ -83,6 +83,10 @@ export function SilhouetteIntro({
           <div className="cs-silhouette-art" data-silhouette-art aria-hidden="true" />
           <div className="cs-silhouette-logo">
             <img src="/brand/logo-h.svg" alt="Cosenza attrattiva" width={1384} height={437} fetchPriority="high" decoding="async" />
+            {/* claim del masterplan, dove vivi-cosenza ha il suo payoff ("una città da scoprire") */}
+            <p className="cs-silhouette-claim" aria-hidden="true">
+              {labels.claim}
+            </p>
           </div>
           <div className="cs-silhouette-place" data-silhouette-place aria-hidden="true" inert>
             <h2>{text.title}</h2>

@@ -299,3 +299,22 @@
   stroke-dashoffset: 1;
   opacity: 0;
 }
+
+/* Claim sotto il logo (al posto del payoff di vivi-cosenza) */
+.ca-hero .cs-silhouette-claim {
+  margin: 14px 0 0;
+  color: var(--color-neutro-900);
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.9vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  text-align: right;
+}
+@media (max-width: 700px) {
+  .ca-hero .cs-silhouette-claim {
+    margin-top: 10px;
+    font-size: 18px;
+    text-align: center;
+  }
+}

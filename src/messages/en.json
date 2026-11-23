@@ -22,7 +22,7 @@
     "crea": "Cosenza Crea"
   },
   "home": {
-    "heroTitle": "A city that tells its own story, one chapter at a time"
+    "heroTitle": "Cosenza, a city to live in."
   },
   "themes": {
     "fede": "Faith",
@@ -225,9 +225,9 @@
   },
   "homeHero": {
     "heroLabel": "Featured",
-    "sceneNav": "Choose the monument",
-    "sceneDuomo": "Cathedral",
-    "scenePonte": "Calatrava Bridge",
+    "sceneNav": "Choose the city: historic or contemporary",
+    "sceneDuomo": "Historic",
+    "scenePonte": "Contemporary",
     "sceneAnnounce": "{title}. Scroll to discover the monument.",
     "curiositiesLabel": "Did you know: {title}",
     "discover": "Find out more",
@@ -280,7 +280,7 @@
   },
   "mission": {
     "eyebrow": "Our mission",
-    "title": "A city to live in",
+    "title": "It welcomes, creates, connects",
     "text": "Cosenza is not just a city to visit: it is a city to live in, one that welcomes, creates and connects. The “Cosenza Città Attrattiva” masterplan brings together retail, tourism, culture and craftsmanship to strengthen the city's identity, support local businesses and attract visitors, investment and new opportunities.",
     "carouselLabel": "The three areas of Cosenza attrattiva",
     "slideLabel": "{n} of {total}",

@@ -132,7 +132,7 @@ test("cambio lingua IT → EN", async ({ page }, info) => {
   await page.getByRole("button", { name: /Lingua|Language/ }).locator("visible=true").click();
   await expect(page).toHaveURL(/\/en$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await expect(page.getByRole("heading", { name: "A city to live in" })).toBeAttached();
+  await expect(page.getByRole("heading", { name: "It welcomes, creates, connects" })).toBeAttached();
 });
 
 test("dalla card di un itinerario la nuova pagina si apre in cima", async ({ page }) => {

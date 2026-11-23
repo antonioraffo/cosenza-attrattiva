@@ -22,7 +22,7 @@
     "crea": "Cosenza Crea"
   },
   "home": {
-    "heroTitle": "Una città che si racconta, un capitolo alla volta"
+    "heroTitle": "Cosenza, città da vivere."
   },
   "themes": {
     "fede": "Fede",
@@ -225,9 +225,9 @@
   },
   "homeHero": {
     "heroLabel": "Contenuti in evidenza",
-    "sceneNav": "Scegli il monumento",
-    "sceneDuomo": "Duomo",
-    "scenePonte": "Ponte Calatrava",
+    "sceneNav": "Scegli la città: antica o contemporanea",
+    "sceneDuomo": "Antica",
+    "scenePonte": "Contemporanea",
     "sceneAnnounce": "{title}. Scorri per scoprire il monumento.",
     "curiositiesLabel": "Curiosità: {title}",
     "discover": "Scopri di più",
@@ -280,7 +280,7 @@
   },
   "mission": {
     "eyebrow": "La mission",
-    "title": "Una città da vivere",
+    "title": "Accoglie, crea, connette",
     "text": "Cosenza non è solo una città da visitare: è una città da vivere, che accoglie, crea e connette. Il masterplan «Cosenza Città Attrattiva» integra commercio, turismo, cultura e artigianato per rafforzare l'identità della città, sostenere le imprese locali e attrarre visitatori, investimenti e nuove opportunità.",
     "carouselLabel": "Le tre aree di Cosenza attrattiva",
     "slideLabel": "{n} di {total}",

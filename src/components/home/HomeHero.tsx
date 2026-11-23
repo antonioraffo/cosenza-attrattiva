@@ -31,6 +31,7 @@ const chevron = (
  * dopo la mission, i pannelli sticky MAB, Duomo e San Domenico collegati alle schede luogo.
  */
 export async function HomeIntro({ title }: { title: string }) {
+  // il claim è anche l'h1 della pagina (visivamente nascosto): sotto il logo è decorativo
   const t = await getTranslations("homeHero");
   const scene = (k: "duomo" | "ponte", href: string): SceneText => ({
     label: t(`${k}.label`),
@@ -50,6 +51,7 @@ export async function HomeIntro({ title }: { title: string }) {
           duomo: t("sceneDuomo"),
           ponte: t("scenePonte"),
           discover: t("discover"),
+          claim: title,
           curiosities: t("curiositiesLabel", { title: t("duomo.title") }),
           announce: { duomo: t("sceneAnnounce", { title: t("duomo.title") }), ponte: t("sceneAnnounce", { title: t("ponte.title") }) },
         }}
