@@ -13,7 +13,7 @@ export HTTP_PORT HTTPS_PORT
 export NEXT_PUBLIC_SITE_URL := $(SITE_URL)
 
 .DEFAULT_GOAL := help
-.PHONY: help setup up down restart logs ps sh psql migrate seed routes reset-db typecheck lint test e2e e2e-prod screenshots reference lighthouse prod-local dns
+.PHONY: help setup up down restart logs ps sh psql migrate seed routes reset-db typecheck lint test e2e e2e-prod screenshots reference compare lighthouse prod-local dns
 
 help: ## Elenca i comandi disponibili
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -78,6 +78,9 @@ screenshots: ## Screenshot delle pagine principali (mobile/desktop) in docs/scre
 
 reference: ## Analisi del sito di riferimento vivi-cosenza (REF_PASSWORD in .env) → docs/reference/vivicosenza
 	$(COMPOSE) --profile tests run --rm e2e node scripts/reference/vivicosenza.mjs
+
+compare: ## Cattura la home per il confronto con vivicosenza → docs/reference/compare (w=375,768,1440)
+	$(COMPOSE) --profile tests run --rm e2e node scripts/reference/compare.mjs $(w) $(a)
 
 lighthouse: ## Lighthouse mobile (eseguire dopo make prod-local) → docs/lighthouse
 	$(COMPOSE) --profile tests run --rm e2e bash scripts/lighthouse.sh

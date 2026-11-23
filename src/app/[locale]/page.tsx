@@ -3,6 +3,8 @@ import { Link } from "@/i18n/navigation";
 import { listItineraries } from "@/server/queries";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { HomeHero } from "@/components/home/HomeHero";
+import { MissionSection } from "@/components/home/MissionSection";
 import { ItineraryCard } from "@/components/itinerary/ItineraryCard";
 import { ThemeFilter } from "@/components/itinerary/ThemeFilter";
 import { SmartImage } from "@/components/ui/SmartImage";
@@ -24,42 +26,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     <>
       <Header />
       <main id="main">
-        {/* ── Hero ─────────────────────────────────────────────── */}
-        <section className="grain relative isolate flex min-h-[100svh] items-end overflow-hidden bg-neutro-950 text-white">
-          <div className="absolute inset-0 -z-10 motion-safe:animate-[kenburns_24s_ease-out_both]">
-            <SmartImage
-              media={hero?.cover}
-              locale={locale}
-              priority
-              sizes="100vw"
-              fallbackColor="#0c6455"
-              className="object-cover opacity-80"
-            />
-          </div>
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-neutro-950 via-neutro-950/45 to-neutro-950/10" />
-          <div className="mx-auto w-full max-w-7xl px-4 pt-28 pb-14 md:px-8 md:pb-20">
-            <p className="eyebrow text-arancio-300">{t("heroEyebrow")}</p>
-            <h1 className="mt-4 max-w-3xl text-[2.6rem] leading-[1.02] font-light sm:text-6xl md:text-7xl">
-              {t("heroTitle")}
-            </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-neutro-100/90">{t("heroText")}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#itinerari"
-                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-arancio-500 px-6 font-semibold text-neutro-950 transition hover:bg-arancio-300"
-              >
-                {t("heroCta")} <IconArrowRight size={18} />
-              </a>
-              <a
-                href="#come-funziona"
-                className="inline-flex min-h-12 items-center rounded-full border border-white/40 px-6 font-semibold text-white backdrop-blur transition hover:bg-white/10"
-              >
-                {t("heroSecondary")}
-              </a>
-            </div>
-            <IconChevronDown className="mx-auto mt-12 text-white/60 motion-safe:animate-bounce" size={28} />
-          </div>
-        </section>
+        <HomeHero locale={locale} />
+        <MissionSection />
 
         {/* ── In evidenza ──────────────────────────────────────── */}
         {featured.length > 0 && (

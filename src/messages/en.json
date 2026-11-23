@@ -241,5 +241,93 @@
     "goHome": "Back to home",
     "close": "Close",
     "illustration": "Illustration"
+  },
+  "homeHero": {
+    "heroLabel": "Featured",
+    "sceneNav": "Choose the monument",
+    "sceneDuomo": "Cathedral",
+    "scenePonte": "Calatrava Bridge",
+    "sceneAnnounce": "{title}. Scroll to discover the monument.",
+    "curiositiesLabel": "Did you know: {title}",
+    "discover": "Find out more",
+    "show": "Show {title}",
+    "duomo": {
+      "label": "Cosenza Cathedral takes shape",
+      "title": "Cosenza Cathedral",
+      "description": "In the heart of the old town, the cathedral consecrated in 1222 holds more than eight centuries of history. From the three rose windows of its façade to the Madonna del Pilerio, step into one of Cosenza's defining places.",
+      "facts": [
+        {
+          "title": "1222, before Frederick II",
+          "text": "The cathedral was consecrated on 30 January 1222 in the emperor's presence, after the rebuilding that followed the 1184 earthquake."
+        },
+        {
+          "title": "The gift of the Stauroteca",
+          "text": "For the occasion Frederick II gave the city a precious reliquary cross, now kept in the Diocesan Museum."
+        },
+        {
+          "title": "The Madonna del Pilerio",
+          "text": "Her chapel holds the twelfth-century Byzantine icon of Cosenza's patron saint."
+        }
+      ]
+    },
+    "ponte": {
+      "label": "The Calatrava Bridge takes shape",
+      "title": "Calatrava Bridge",
+      "description": "Designed by Santiago Calatrava, the San Francesco di Paola bridge crosses the Crati with a tilted white mast and a fan of cables: the contemporary face of Cosenza.",
+      "facts": [
+        {
+          "title": "A mast tilted at 52°",
+          "text": "The bridge hangs from a single steel element more than a hundred metres tall, rising obliquely into the sky."
+        },
+        {
+          "title": "A harp over the Crati",
+          "text": "The cables fan out like the strings of a giant harp between the two banks of the river."
+        },
+        {
+          "title": "Opened in 2018",
+          "text": "On 26 January 2018, eighteen years after the first design, the bridge stitched the Gergeri district back to the city."
+        }
+      ]
+    },
+    "mab": {
+      "kicker": "Open-air art · Corso Mazzini",
+      "title": "MAB – Bilotti Open-Air Museum",
+      "short": "MAB",
+      "description": "Dalí, de Chirico, Manzù and Modigliani along Corso Mazzini: the MAB, a museum without walls."
+    },
+    "faithKicker": "Art and faith"
+  },
+  "mission": {
+    "eyebrow": "Our mission",
+    "title": "A city to live in",
+    "text": "Cosenza is not just a city to visit: it is a city to live in, one that welcomes, creates and connects. The “Cosenza Città Attrattiva” masterplan brings together retail, tourism, culture and craftsmanship to strengthen the city's identity, support local businesses and attract visitors, investment and new opportunities.",
+    "carouselLabel": "The three areas of Cosenza attrattiva",
+    "slideLabel": "{n} of {total}",
+    "prev": "Previous area",
+    "next": "Next area",
+    "goTo": "Go to {title}",
+    "pillars": {
+      "vive": {
+        "kicker": "Retail",
+        "title": "Cosenza Vive",
+        "tagline": "Generates economy",
+        "text": "City-centre shopping becomes an experience: market squares, themed routes such as the Food, Art and Crafts streets, and events that keep the city alive all year round.",
+        "cta": "Discover the events"
+      },
+      "connect": {
+        "kicker": "Tourism",
+        "title": "Cosenza Connect",
+        "tagline": "Brings people",
+        "text": "An organised, experience-led destination: cultural, roots and short-break tourism, with itineraries and experiences to discover the city and come back.",
+        "cta": "Discover the itineraries"
+      },
+      "crea": {
+        "kicker": "Craftsmanship",
+        "title": "Cosenza Crea",
+        "tagline": "Gives identity",
+        "text": "Craftsmanship as an economic and identity driver: workshops spread across the old town, hands-on experiences and the “Made in Cosenza” brand.",
+        "cta": "Coming soon"
+      }
+    }
   }
 }

@@ -198,3 +198,17 @@ export type PlaceLite = Awaited<ReturnType<typeof listPlacesLite>>[number];
 export const listAllMedia = cache(async () =>
   db.select({ key: media.key, ...mediaCols }).from(media).orderBy(asc(media.key)),
 );
+
+/** Luoghi per slug, nell'ordine richiesto (pannelli della home). */
+export const placesBySlugs = cache(async (slugs: string[]) => {
+  if (!slugs.length) return [];
+  const rows = await db
+    .select({ id: places.id, slug: places.slug, name: places.name, summary: places.summary })
+    .from(places)
+    .where(inArray(places.slug, slugs));
+  const covers = await coverByPlace(rows.map((r) => r.id));
+  return slugs
+    .map((slug) => rows.find((r) => r.slug === slug))
+    .filter((r): r is (typeof rows)[number] => !!r)
+    .map((r) => ({ ...r, image: covers.get(r.id) ?? null }));
+});

@@ -241,5 +241,93 @@
     "goHome": "Torna alla home",
     "close": "Chiudi",
     "illustration": "Illustrazione"
+  },
+  "homeHero": {
+    "heroLabel": "Contenuti in evidenza",
+    "sceneNav": "Scegli il monumento",
+    "sceneDuomo": "Duomo",
+    "scenePonte": "Ponte Calatrava",
+    "sceneAnnounce": "{title}. Scorri per scoprire il monumento.",
+    "curiositiesLabel": "Curiosità: {title}",
+    "discover": "Scopri di più",
+    "show": "Mostra {title}",
+    "duomo": {
+      "label": "Il Duomo di Cosenza prende forma",
+      "title": "Duomo di Cosenza",
+      "description": "Nel cuore della città antica, la cattedrale consacrata nel 1222 custodisce oltre otto secoli di storia. Dai tre rosoni della facciata alla Madonna del Pilerio, entra in uno dei luoghi simbolo di Cosenza.",
+      "facts": [
+        {
+          "title": "1222, alla presenza di Federico II",
+          "text": "La cattedrale fu consacrata il 30 gennaio 1222 davanti all'imperatore, dopo la ricostruzione seguita al terremoto del 1184."
+        },
+        {
+          "title": "Il dono della Stauroteca",
+          "text": "Per l'occasione Federico II donò alla città la preziosa croce reliquiario, oggi custodita nel Museo diocesano."
+        },
+        {
+          "title": "La Madonna del Pilerio",
+          "text": "Nella sua cappella è venerata l'icona bizantina del XII secolo della patrona di Cosenza."
+        }
+      ]
+    },
+    "ponte": {
+      "label": "Il Ponte di Calatrava prende forma",
+      "title": "Ponte di Calatrava",
+      "description": "Il ponte San Francesco di Paola, progettato da Santiago Calatrava, attraversa il Crati con un'antenna bianca inclinata e un ventaglio di cavi: il volto contemporaneo di Cosenza.",
+      "facts": [
+        {
+          "title": "Un'antenna inclinata di 52°",
+          "text": "Il ponte è sorretto da un unico elemento d'acciaio alto oltre cento metri, che sale obliquo verso il cielo."
+        },
+        {
+          "title": "Un'arpa sul Crati",
+          "text": "I cavi si aprono a ventaglio come le corde di un'arpa gigante tra le due sponde del fiume."
+        },
+        {
+          "title": "Inaugurato nel 2018",
+          "text": "Il 26 gennaio 2018, diciotto anni dopo il primo progetto, il ponte ha ricucito il quartiere di Gergeri con la città."
+        }
+      ]
+    },
+    "mab": {
+      "kicker": "Arte all'aperto · Corso Mazzini",
+      "title": "MAB – Museo all'Aperto Bilotti",
+      "short": "MAB",
+      "description": "Dalí, de Chirico, Manzù e Modigliani lungo Corso Mazzini: il MAB, un museo senza pareti."
+    },
+    "faithKicker": "Arte e spiritualità"
+  },
+  "mission": {
+    "eyebrow": "La mission",
+    "title": "Una città da vivere",
+    "text": "Cosenza non è solo una città da visitare: è una città da vivere, che accoglie, crea e connette. Il masterplan «Cosenza Città Attrattiva» integra commercio, turismo, cultura e artigianato per rafforzare l'identità della città, sostenere le imprese locali e attrarre visitatori, investimenti e nuove opportunità.",
+    "carouselLabel": "Le tre aree di Cosenza attrattiva",
+    "slideLabel": "{n} di {total}",
+    "prev": "Area precedente",
+    "next": "Area successiva",
+    "goTo": "Vai a {title}",
+    "pillars": {
+      "vive": {
+        "kicker": "Commercio",
+        "title": "Cosenza Vive",
+        "tagline": "Genera economia",
+        "text": "Il commercio urbano diventa esperienza: piazze del commercio, percorsi tematici come la Via del Gusto, la Via dell'Arte e la Via dei Mestieri, eventi che rendono la città viva tutto l'anno.",
+        "cta": "Scopri gli eventi"
+      },
+      "connect": {
+        "kicker": "Turismo",
+        "title": "Cosenza Connect",
+        "tagline": "Porta persone",
+        "text": "Una destinazione turistica organizzata ed esperienziale: turismo culturale, delle radici e di prossimità, con itinerari ed esperienze per scoprire la città e tornarci.",
+        "cta": "Scopri gli itinerari"
+      },
+      "crea": {
+        "kicker": "Artigianato",
+        "title": "Cosenza Crea",
+        "tagline": "Dà identità",
+        "text": "L'artigianato come leva economica e identitaria: botteghe diffuse nel centro storico, laboratori ed esperienze, il marchio «Fatto a Cosenza».",
+        "cta": "Contenuti in arrivo"
+      }
+    }
   }
 }
