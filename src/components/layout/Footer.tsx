@@ -1,29 +1,79 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { LogoConnect } from "./Logo";
+import { features } from "@/lib/env";
+import { Logo } from "./Logo";
 import { ConsentManageButton } from "./ConsentBanner";
+import { PillarIcon } from "./PillarIcon";
 
+/**
+ * Footer sul modello di vivicosenza: fondo scuro, marchio e recapiti del Comune, due colonne di
+ * link e riga finale con copyright, crediti e attribuzioni cartografiche (obbligatorie per OSM).
+ */
 export async function Footer() {
-  const t = await getTranslations("footer");
+  const t = await getTranslations("siteFooter");
+  const tf = await getTranslations("footer");
+  const tn = await getTranslations("nav");
+
   return (
-    <footer className="mt-24 bg-neutro-900 text-neutro-200">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-[1.5fr_1fr] md:px-8">
-        <div>
-          <LogoConnect light className="h-24 w-auto" />
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-neutro-300">{t("project")}</p>
+    <footer className="ca-footer" id="site-footer">
+      <div className="site-container ca-footer-grid">
+        <div className="ca-footer-brand">
+          <Logo light className="ca-footer-logo" />
+          <address>
+            <strong>{t("municipality")}</strong>
+            <span>{t("address")}</span>
+            <span>
+              {t("phone")} <a href="tel:+3909848131">+39 0984 8131</a>
+            </span>
+            <span>
+              {t("pec")} <a href="mailto:protocollo@pec.comune.cosenza.it">protocollo@pec.comune.cosenza.it</a>
+            </span>
+            <span>{t("fiscal")}</span>
+          </address>
+          <p className="ca-footer-project">{tf("project")}</p>
         </div>
-        <ul className="space-y-1 text-sm">
-          <li>
-            <Link href="/crediti" className="inline-flex min-h-11 items-center underline-offset-4 hover:underline">
-              {t("credits")}
-            </Link>
-          </li>
-          <li>
-            <ConsentManageButton />
-          </li>
-        </ul>
+        <nav aria-labelledby="footer-explore">
+          <h2 id="footer-explore">{t("explore")}</h2>
+          <ul className="ca-footer-links">
+            {(["vive", "connect", "crea"] as const).map((p) => (
+              <li key={p}>
+                <Link href={`/#${p}`}>
+                  <PillarIcon pillar={p} size={14} /> {tn(p)}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link href="/#itinerari">{t("itineraries")}</Link>
+            </li>
+            <li>
+              <Link href="/#eventi">{t("events")}</Link>
+            </li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="footer-services">
+          <h2 id="footer-services">{t("services")}</h2>
+          <ul className="ca-footer-links">
+            <li>
+              <Link href="/passaporto">{tn("passport")}</Link>
+            </li>
+            {features.assistant && (
+              <li>
+                <Link href="/chiedi">{tn("ask")}</Link>
+              </li>
+            )}
+            <li>
+              <Link href="/crediti">{tf("credits")}</Link>
+            </li>
+            <li>
+              <ConsentManageButton />
+            </li>
+          </ul>
+        </nav>
       </div>
-      <p className="border-t border-neutro-800 px-4 py-5 text-center text-xs text-neutro-400">{t("mapData")}</p>
+      <div className="site-container ca-footer-bottom">
+        <p>{t("copyright", { year: new Date().getFullYear() })}</p>
+        <p>{tf("mapData")}</p>
+      </div>
     </footer>
   );
 }

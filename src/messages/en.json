@@ -22,26 +22,7 @@
     "crea": "Cosenza Crea"
   },
   "home": {
-    "heroEyebrow": "Cosenza attrattiva · Connect",
-    "heroTitle": "A city that tells its own story, one chapter at a time",
-    "heroText": "From the river where a king lies buried to the open-air artworks of Corso Mazzini: pick a story and let the city lead the way.",
-    "heroCta": "Choose your story",
-    "heroSecondary": "How it works",
-    "featured": "Featured",
-    "allItineraries": "All itineraries",
-    "filterLabel": "Filter by theme",
-    "all": "All",
-    "empty": "No itineraries for this theme yet.",
-    "howTitle": "Three ways to experience an itinerary",
-    "howStoryTitle": "Story",
-    "howStoryText": "Scroll through the chapters while the map flies from stop to stop, tracing the way.",
-    "howWalkTitle": "Walk",
-    "howWalkText": "Walk the city: when you arrive, the chapter opens and a voice tells the story.",
-    "howPassportTitle": "Passport",
-    "howPassportText": "Collect a stamp at every place you visit and complete the itineraries.",
-    "passportTeaser": "Your Cosenza Passport",
-    "passportTeaserText": "Every stop you visit is a stamp. Every itinerary you complete, a seal.",
-    "openPassport": "Open the passport"
+    "heroTitle": "A city that tells its own story, one chapter at a time"
   },
   "themes": {
     "fede": "Faith",
@@ -329,5 +310,73 @@
         "cta": "Coming soon"
       }
     }
+  },
+  "threeWays": {
+    "title": "Three ways to experience an itinerary",
+    "intro": "One city, many ways to discover it.",
+    "lead1": "You choose the story.",
+    "lead2": "The city does the rest.",
+    "story": {
+      "title": "Story",
+      "text": "Scroll through the chapters: the map flies from stop to stop and draws the path.",
+      "cta": "Read “The King in the River”"
+    },
+    "walk": {
+      "title": "Walk",
+      "text": "Walk through the city: when you arrive, the chapter opens and the voice tells the story.",
+      "cta": "Try “Faith in Stone”"
+    },
+    "passport": {
+      "title": "Passport",
+      "text": "Collect a stamp at every place you visit and complete the itineraries.",
+      "cta": "Open the passport"
+    },
+    "boardNote": "Your itinerary takes shape",
+    "destination": "Arrival",
+    "startTitle": "Start with “The King in the River”",
+    "startText": "The legend of Alaric, the king buried in the Busento, as a story to scroll or to walk.",
+    "startCta": "Read the story"
+  },
+  "homeItineraries": {
+    "title": "Itineraries",
+    "intro": "Every route, a new way of seeing Cosenza.",
+    "label": "Cosenza attrattiva itineraries",
+    "prev": "Previous itinerary",
+    "next": "Next itinerary",
+    "filterLabel": "Filter by theme",
+    "all": "All",
+    "empty": "No itineraries for this theme yet.",
+    "count": "{count, plural, one {# itinerary} other {# itineraries}}"
+  },
+  "events": {
+    "title": "Events",
+    "intro": "Music and shows in the heart of Cosenza.",
+    "more": "Find out more",
+    "less": "Close",
+    "source": "Event website",
+    "demo": "Sample calendar",
+    "to": "–"
+  },
+  "sectionNav": {
+    "label": "Highlights",
+    "open": "Go to section",
+    "close": "Close the section menu",
+    "hero": "Highlights",
+    "mission": "Our mission",
+    "threeWays": "Three ways",
+    "itinerari": "Itineraries",
+    "eventi": "Events"
+  },
+  "siteFooter": {
+    "municipality": "City of Cosenza",
+    "address": "Piazza dei Bruzi, 1 · 87100 Cosenza (CS), Italy",
+    "phone": "Switchboard",
+    "pec": "Certified email",
+    "fiscal": "Tax code 00347720781 · VAT 00314410788",
+    "explore": "Explore",
+    "services": "Services",
+    "itineraries": "Itineraries",
+    "events": "Events",
+    "copyright": "© {year} Cosenza attrattiva · City of Cosenza"
   }
 }

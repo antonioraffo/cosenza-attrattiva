@@ -27,12 +27,11 @@ const chevron = (
 );
 
 /**
- * Hero della home sul modello di vivicosenza: intro "silhouette" (Duomo / Ponte Calatrava) seguita
- * dai pannelli sticky MAB, Duomo e San Domenico, collegati alle schede luogo di Cosenza attrattiva.
+ * Hero della home sul modello di vivicosenza: intro "silhouette" (Duomo / Ponte Calatrava) e,
+ * dopo la mission, i pannelli sticky MAB, Duomo e San Domenico collegati alle schede luogo.
  */
-export async function HomeHero({ locale }: { locale: string }) {
+export async function HomeIntro({ title }: { title: string }) {
   const t = await getTranslations("homeHero");
-  const places = await placesBySlugs(PANELS.map((p) => p.slug));
   const scene = (k: "duomo" | "ponte", href: string): SceneText => ({
     label: t(`${k}.label`),
     title: t(`${k}.title`),
@@ -41,16 +40,9 @@ export async function HomeHero({ locale }: { locale: string }) {
     facts: [0, 1, 2].map((i) => ({ title: t(`${k}.facts.${i}.title`), text: t(`${k}.facts.${i}.text`) })),
   });
 
-  const panels = PANELS.map((p) => {
-    const place = places.find((pl) => pl.slug === p.slug);
-    const name = place ? tr(place.name, locale).split(" – ")[0]! : p.slug;
-    return p.key === "mab"
-      ? { ...p, href: `/luoghi/${p.slug}`, title: t("mab.title"), short: t("mab.short"), kicker: t("mab.kicker"), description: t("mab.description"), image: place?.image }
-      : { ...p, href: `/luoghi/${p.slug}`, title: name, short: name, kicker: t("faithKicker"), description: place ? tr(place.summary, locale) : "", image: place?.image };
-  });
-
   return (
-    <HeroRoot label={t("heroLabel")} titles={panels.map((p) => p.title)}>
+    <div className="ca-hero ca-hero--intro">
+      <h1 className="sr-only">{title}</h1>
       <SilhouetteIntro
         scenes={{ duomo: scene("duomo", "/luoghi/duomo"), ponte: scene("ponte", "/luoghi/ponte-calatrava") }}
         labels={{
@@ -62,9 +54,26 @@ export async function HomeHero({ locale }: { locale: string }) {
           announce: { duomo: t("sceneAnnounce", { title: t("duomo.title") }), ponte: t("sceneAnnounce", { title: t("ponte.title") }) },
         }}
       />
+    </div>
+  );
+}
+
+/** Pannelli sticky MAB / Duomo / San Domenico. */
+export async function HomePanels({ locale }: { locale: string }) {
+  const t = await getTranslations("homeHero");
+  const places = await placesBySlugs(PANELS.map((p) => p.slug));
+  const panels = PANELS.map((p) => {
+    const place = places.find((pl) => pl.slug === p.slug);
+    const name = place ? tr(place.name, locale).split(" – ")[0]! : p.slug;
+    return p.key === "mab"
+      ? { ...p, href: `/luoghi/${p.slug}`, title: t("mab.title"), short: t("mab.short"), kicker: t("mab.kicker"), description: t("mab.description"), image: place?.image }
+      : { ...p, href: `/luoghi/${p.slug}`, title: name, short: name, kicker: t("faithKicker"), description: place ? tr(place.summary, locale) : "", image: place?.image };
+  });
+
+  return (
+    <HeroRoot label={t("heroLabel")} titles={panels.map((p) => p.title)}>
       {panels.map((p, i) => {
-        const Heading = i ? "h2" : "h1";
-        const id = i ? `hero-title-${i}` : "hero-title";
+        const id = `hero-title-${i}`;
         return (
           <Fragment key={p.slug}>
             <article
@@ -80,9 +89,9 @@ export async function HomeHero({ locale }: { locale: string }) {
               <div className="cs-scroll-panel-body" id={`hero-body-${i}`}>
                 <div className="cs-scroll-copy">
                   <p className="cs-scroll-eyebrow">{p.kicker}</p>
-                  <Heading id={id}>
+                  <h2 id={id}>
                     <Typewriter text={p.title} />
-                  </Heading>
+                  </h2>
                   <p className="cs-scroll-description">
                     <Typewriter text={p.description} />
                   </p>

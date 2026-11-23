@@ -22,26 +22,7 @@
     "crea": "Cosenza Crea"
   },
   "home": {
-    "heroEyebrow": "Cosenza attrattiva · Connect",
-    "heroTitle": "Una città che si racconta, un capitolo alla volta",
-    "heroText": "Dal fiume dove riposa un re alle opere d'arte sotto il cielo di Corso Mazzini: scegli una storia e lascia che sia la città a guidarti.",
-    "heroCta": "Scegli il tuo racconto",
-    "heroSecondary": "Come funziona",
-    "featured": "In evidenza",
-    "allItineraries": "Tutti gli itinerari",
-    "filterLabel": "Filtra per tema",
-    "all": "Tutti",
-    "empty": "Nessun itinerario per questo tema, per ora.",
-    "howTitle": "Tre modi di vivere un itinerario",
-    "howStoryTitle": "Racconto",
-    "howStoryText": "Scorri i capitoli: la mappa vola di tappa in tappa e disegna il cammino.",
-    "howWalkTitle": "Passeggiata",
-    "howWalkText": "Cammina per la città: quando arrivi, il capitolo si apre e la voce racconta.",
-    "howPassportTitle": "Passaporto",
-    "howPassportText": "Raccogli un timbro in ogni luogo visitato e completa gli itinerari.",
-    "passportTeaser": "Il tuo Passaporto di Cosenza",
-    "passportTeaserText": "Ogni tappa visitata è un timbro. Ogni itinerario completato, un sigillo.",
-    "openPassport": "Apri il passaporto"
+    "heroTitle": "Una città che si racconta, un capitolo alla volta"
   },
   "themes": {
     "fede": "Fede",
@@ -329,5 +310,73 @@
         "cta": "Contenuti in arrivo"
       }
     }
+  },
+  "threeWays": {
+    "title": "Tre modi di vivere un itinerario",
+    "intro": "Una città, tanti modi di scoprirla.",
+    "lead1": "Tu scegli la storia.",
+    "lead2": "La città fa il resto.",
+    "story": {
+      "title": "Racconto",
+      "text": "Scorri i capitoli: la mappa vola di tappa in tappa e disegna il cammino.",
+      "cta": "Leggi «Il re nel fiume»"
+    },
+    "walk": {
+      "title": "Passeggiata",
+      "text": "Cammina per la città: quando arrivi, il capitolo si apre e la voce racconta.",
+      "cta": "Prova «Fede di pietra»"
+    },
+    "passport": {
+      "title": "Passaporto",
+      "text": "Raccogli un timbro in ogni luogo visitato e completa gli itinerari.",
+      "cta": "Apri il passaporto"
+    },
+    "boardNote": "Il tuo itinerario prende forma",
+    "destination": "Arrivo",
+    "startTitle": "Inizia da «Il re nel fiume»",
+    "startText": "La leggenda di Alarico, il re sepolto nel Busento, in un racconto da scorrere o da camminare.",
+    "startCta": "Leggi il racconto"
+  },
+  "homeItineraries": {
+    "title": "Itinerari",
+    "intro": "Ogni percorso, un nuovo sguardo su Cosenza.",
+    "label": "Itinerari di Cosenza attrattiva",
+    "prev": "Itinerario precedente",
+    "next": "Itinerario successivo",
+    "filterLabel": "Filtra per tema",
+    "all": "Tutti",
+    "empty": "Nessun itinerario per questo tema, per ora.",
+    "count": "{count, plural, one {# itinerario} other {# itinerari}}"
+  },
+  "events": {
+    "title": "Eventi",
+    "intro": "Musica e spettacoli, nel cuore di Cosenza.",
+    "more": "Scopri di più",
+    "less": "Chiudi",
+    "source": "Sito dell'evento",
+    "demo": "Calendario dimostrativo",
+    "to": "–"
+  },
+  "sectionNav": {
+    "label": "In evidenza",
+    "open": "Vai alla sezione",
+    "close": "Chiudi il menu delle sezioni",
+    "hero": "In evidenza",
+    "mission": "La mission",
+    "threeWays": "Tre modi",
+    "itinerari": "Itinerari",
+    "eventi": "Eventi"
+  },
+  "siteFooter": {
+    "municipality": "Comune di Cosenza",
+    "address": "Piazza dei Bruzi, 1 · 87100 Cosenza (CS)",
+    "phone": "Centralino",
+    "pec": "PEC",
+    "fiscal": "C.F. 00347720781 · P.IVA 00314410788",
+    "explore": "Esplora",
+    "services": "Servizi",
+    "itineraries": "Itinerari",
+    "events": "Eventi",
+    "copyright": "© {year} Cosenza attrattiva · Comune di Cosenza"
   }
 }

@@ -54,7 +54,7 @@ export const listItineraries = cache(async () => {
       color: itineraries.color,
       featured: itineraries.featured,
       coverMediaId: itineraries.coverMediaId,
-      stops: sql<number>`(select count(*)::int from ${chapters} where ${chapters.itineraryId} = ${itineraries.id})`,
+      stops: sql<number>`(select count(*)::int from chapters c where c.itinerary_id = "itineraries"."id")`,
     })
     .from(itineraries)
     .orderBy(asc(itineraries.sort));
