@@ -63,7 +63,7 @@ export default async function LocaleLayout({
   const t = await getTranslations("nav");
 
   return (
-    <html lang={locale} className={`${jakarta.variable} ${manrope.variable}`}>
+    <html lang={locale} className={`${jakarta.variable} ${manrope.variable}`} data-scroll-behavior="smooth">
       <body className="min-h-dvh antialiased">
         <a
           href="#main"

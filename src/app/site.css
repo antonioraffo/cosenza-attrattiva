@@ -6,6 +6,8 @@
 html {
   scroll-padding-top: 100px;
 }
+/* scorrimento morbido per le ancore; data-scroll-behavior="smooth" su <html> fa sì che Next lo
+   sospenda durante i cambi di pagina (altrimenti i suoi scrollIntoView si sovrappongono) */
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
