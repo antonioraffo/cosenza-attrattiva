@@ -46,7 +46,13 @@ export async function Footer() {
               <Link href="/#itinerari">{t("itineraries")}</Link>
             </li>
             <li>
-              <Link href="/#eventi">{t("events")}</Link>
+              <Link href="/eventi">{t("calendar")}</Link>
+            </li>
+            <li>
+              <Link href="/ritorno-a-cosenza">{t("roots")}</Link>
+            </li>
+            <li>
+              <Link href="/fatto-a-cosenza">{t("crea")}</Link>
             </li>
           </ul>
         </nav>

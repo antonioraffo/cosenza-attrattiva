@@ -9,11 +9,10 @@ import { PillarCarousel } from "./PillarCarousel";
  * in un carosello orizzontale, con lo stile dei pannelli MAB/Duomo/San Domenico.
  * Colori di fondo con testo bianco ≥ 4,5:1 (docs/DESIGN-TOKENS.md).
  */
-const PILLARS: { id: Pillar; bg: string; accent: string; href: string | null }[] = [
-  { id: "vive", bg: "#9c37b5", accent: "#7a2a8e", href: "#eventi" },
-  { id: "connect", bg: "#137396", accent: "#0f7663", href: "#itinerari" },
-  // TODO(contenuti): nessuna pagina "Cosenza Crea" (botteghe, laboratori) ancora disponibile
-  { id: "crea", bg: "#a3570c", accent: "#5a2f06", href: null },
+const PILLARS: { id: Pillar; bg: string; accent: string; href: string }[] = [
+  { id: "vive", bg: "#9c37b5", accent: "#7a2a8e", href: "/eventi" },
+  { id: "connect", bg: "#137396", accent: "#0f7663", href: "/#itinerari" },
+  { id: "crea", bg: "#a3570c", accent: "#5a2f06", href: "/fatto-a-cosenza" },
 ];
 
 const arrow = (
@@ -36,14 +35,10 @@ export async function MissionSection() {
           <h3>{t(`pillars.${p.id}.title`)}</h3>
           <p className="ca-pillar-tagline">{t(`pillars.${p.id}.tagline`)}</p>
           <p className="ca-pillar-text">{t(`pillars.${p.id}.text`)}</p>
-          {p.href ? (
-            <Link className="ca-pill-action" href={`/${p.href}`}>
-              <span>{t(`pillars.${p.id}.cta`)}</span>
-              {arrow}
-            </Link>
-          ) : (
-            <span className="ca-pill-action ca-pill-action--soon">{t(`pillars.${p.id}.cta`)}</span>
-          )}
+          <Link className="ca-pill-action" href={p.href}>
+            <span>{t(`pillars.${p.id}.cta`)}</span>
+            {arrow}
+          </Link>
         </div>
         <figure className="ca-pillar-visual">
           <img src={`/brand/pillars/${p.id}.svg`} alt="" width={860} height={900} loading="lazy" decoding="async" />

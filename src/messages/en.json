@@ -19,7 +19,14 @@
     "closeMenu": "Close menu",
     "vive": "Cosenza Vive",
     "connect": "Cosenza Connect",
-    "crea": "Cosenza Crea"
+    "crea": "Cosenza Crea",
+    "subGrandiEventi": "Major events",
+    "subCalendario": "City calendar",
+    "subItinerari": "Itineraries",
+    "subRadici": "Return to Cosenza",
+    "subFatto": "Made in Cosenza",
+    "subMani": "The Hands of Cosenza",
+    "openSub": "{label} submenu"
   },
   "home": {
     "heroTitle": "Cosenza, a city to live in."
@@ -315,7 +322,7 @@
         "title": "Cosenza Crea",
         "tagline": "Gives identity",
         "text": "Craftsmanship as an economic and identity driver: workshops spread across the old town, hands-on experiences and the “Made in Cosenza” brand.",
-        "cta": "Coming soon"
+        "cta": "Discover Made in Cosenza"
       }
     }
   },
@@ -418,7 +425,10 @@
     "services": "Services",
     "itineraries": "Itineraries",
     "events": "Events",
-    "copyright": "© {year} Cosenza attrattiva · City of Cosenza"
+    "copyright": "© {year} Cosenza attrattiva · City of Cosenza",
+    "calendar": "City calendar",
+    "crea": "Made in Cosenza",
+    "roots": "Return to Cosenza"
   },
   "crea": {
     "eyebrow": "Cosenza Crea",
@@ -471,5 +481,39 @@
     "itineraryCta": "Follow “The Hands of Cosenza”",
     "eventsTitle": "Craft events",
     "quote": "Craftsmanship is not a memory of the past. It is an economy that creates jobs, a heritage that shapes identity, an experience that makes a city unique."
+  },
+  "roots": {
+    "eyebrow": "Cosenza Connect",
+    "title": "Return to Cosenza",
+    "intro": "Does your family come from here? Many families who left Cosenza now live in the United States, Canada and Argentina. Roots tourism helps you find records, homes and relatives, and plan your trip to the places of origin.",
+    "other": "La tua famiglia viene da Cosenza? Ti aiutiamo a ritrovare atti, case e parenti.",
+    "otherCta": "Leggi in italiano",
+    "otherLocale": "it",
+    "stepsTitle": "The journey to your roots",
+    "stepsIntro": "Four stages, from the first record to coming back.",
+    "itineraryCta": "Read the “Return to Cosenza” itinerary",
+    "steps": [
+      {
+        "title": "The search",
+        "text": "Names, dates and places rebuilt through records and archives."
+      },
+      {
+        "title": "The family's places",
+        "text": "Houses, churches, quarters and villages your grandparents left."
+      },
+      {
+        "title": "The community",
+        "text": "Meeting those who stayed and the city's everyday life."
+      },
+      {
+        "title": "Coming back again",
+        "text": "A lasting bond between the city and its families around the world."
+      }
+    ],
+    "placesTitle": "The quarters of the old town",
+    "placesIntro": "To read the places of the old city and their history.",
+    "contactTitle": "Start your search",
+    "contactText": "A service to help you trace your origins is among the products planned by Cosenza Connect.",
+    "contactTodo": "Contact coming soon: details to be agreed with the City."
   }
 }

@@ -5,7 +5,8 @@ import { IconSearch, IconStamp } from "@/components/ui/icons";
 import { HeaderMenu } from "./HeaderMenu";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { Logo } from "./Logo";
-import { PillarIcon, type Pillar } from "./PillarIcon";
+import { NavDropdown } from "./NavDropdown";
+import { type Pillar } from "./PillarIcon";
 import { ScrollReset } from "./ScrollReset";
 
 export const PILLARS: Pillar[] = ["vive", "connect", "crea"];
@@ -17,7 +18,22 @@ export const PILLARS: Pillar[] = ["vive", "connect", "crea"];
  */
 export async function Header() {
   const t = await getTranslations("nav");
-  const links = PILLARS.map((p) => ({ pillar: p, href: `/#${p}`, label: t(p) }));
+  // sottovoci di ogni pilastro (proposta di sintesi): Vive → eventi, Connect → itinerari e radici, Crea → Fatto a Cosenza
+  const sub: Record<Pillar, { href: string; label: string }[]> = {
+    vive: [
+      { href: "/eventi#grandi-eventi", label: t("subGrandiEventi") },
+      { href: "/eventi#calendario", label: t("subCalendario") },
+    ],
+    connect: [
+      { href: "/#itinerari", label: t("subItinerari") },
+      { href: "/ritorno-a-cosenza", label: t("subRadici") },
+    ],
+    crea: [
+      { href: "/fatto-a-cosenza", label: t("subFatto") },
+      { href: "/itinerari/le-mani-di-cosenza", label: t("subMani") },
+    ],
+  };
+  const links = PILLARS.map((p) => ({ pillar: p, href: `/#${p}`, label: t(p), items: sub[p] }));
 
   return (
     <header className="site-header" id="site-header">
@@ -29,10 +45,7 @@ export async function Header() {
 
         <nav className="site-nav" aria-label={t("main")}>
           {links.map((l) => (
-            <Link key={l.pillar} href={l.href} className="site-nav-link">
-              <PillarIcon pillar={l.pillar} size={20} />
-              <span>{l.label}</span>
-            </Link>
+            <NavDropdown key={l.pillar} pillar={l.pillar} href={l.href} label={l.label} items={l.items} toggleLabel={t("openSub", { label: l.label })} />
           ))}
         </nav>
 

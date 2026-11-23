@@ -127,7 +127,7 @@ export default async function ItineraryPage({ params }: Props) {
                     </div>
                     <div className="min-w-0">
                       <p className="eyebrow text-neutro-500">
-                        {t("chapter", { n: i + 1 })} · {c.placeName ? tr(c.placeName, locale) : t("transition")}
+                        {t("chapter", { n: i + 1 })} · {c.placeName ? tr(c.placeName, locale) : t(c.geom ? "transition" : "reading")}
                       </p>
                       <h3 className="mt-1 text-xl">{tr(c.title, locale)}</h3>
                       <p className="mt-1.5 text-[15px] leading-relaxed text-neutro-600">{excerpt(tr(c.body, locale), 26)}</p>

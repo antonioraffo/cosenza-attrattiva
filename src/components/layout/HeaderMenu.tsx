@@ -15,7 +15,7 @@ export function HeaderMenu({
   labels,
   children,
 }: {
-  links: { pillar: Pillar; href: string; label: string }[];
+  links: { pillar: Pillar; href: string; label: string; items: { href: string; label: string }[] }[];
   labels: { open: string; close: string; nav: string; passport: string };
   children?: React.ReactNode;
 }) {
@@ -68,6 +68,15 @@ export function HeaderMenu({
                 <PillarIcon pillar={l.pillar} size={22} />
                 <span>{l.label}</span>
               </Link>
+              <ul className="site-mobile-sub">
+                {l.items.map((it) => (
+                  <li key={it.href}>
+                    <Link href={it.href} onClick={() => setOpen(false)}>
+                      {it.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
         </ul>

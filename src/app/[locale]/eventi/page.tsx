@@ -46,7 +46,7 @@ export default async function EventsPage({ params }: Props) {
         </section>
 
         {majors.length > 0 && (
-          <section className="ca-section ca-section--white ca-section--tight" aria-labelledby="major-title">
+          <section id="grandi-eventi" className="ca-section ca-section--white ca-section--tight" aria-labelledby="major-title">
             <div className="site-container">
               <div className="ca-section-heading">
                 <div>

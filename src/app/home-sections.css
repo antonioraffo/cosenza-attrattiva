@@ -1654,3 +1654,61 @@ ul.ca-events-grid,
     flex-wrap: wrap;
   }
 }
+
+/* ── Ritorno a Cosenza ──────────────────────────────────────────────────── */
+.ca-roots-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 48px;
+  align-items: center;
+}
+.ca-roots-other {
+  max-width: 36em;
+  margin: 20px 0 0;
+  padding-left: 14px;
+  border-left: 3px solid var(--color-azzurro-500);
+  color: var(--color-neutro-700);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.ca-roots-photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 24px 120px 24px 24px;
+}
+.ca-roots-photo img {
+  object-fit: cover;
+}
+.ca-roots-steps {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.ca-roots-steps span {
+  color: var(--color-azzurro-700);
+}
+.ca-roots-places {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (max-width: 1199px) {
+  .ca-roots-places {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .ca-roots-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .ca-roots-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ca-roots-places,
+  .ca-roots-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
