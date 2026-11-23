@@ -101,7 +101,7 @@ test("itinerari: carosello alimentato dal database, con filtro per tema", async 
   await page.goto("/it");
   const section = page.locator("#itinerari");
   const cards = section.locator("[data-itinerary-card]");
-  await expect(cards).toHaveCount(7);
+  await expect(cards).toHaveCount(9);
   const hrefs = await cards.getByRole("link").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
   expect(hrefs).toContain("/it/itinerari/il-re-nel-fiume");
   // ogni card porta a un itinerario esistente
@@ -112,18 +112,18 @@ test("itinerari: carosello alimentato dal database, con filtro per tema", async 
   await expect(section.getByRole("button", { name: "Tutti" })).toBeInViewport();
   await section.getByRole("button", { name: "Fede" }).click();
   await expect(section.getByRole("button", { name: "Fede" })).toHaveAttribute("aria-pressed", "true");
-  await expect.poll(() => cards.count()).toBeLessThan(7);
+  await expect.poll(() => cards.count()).toBeLessThan(9);
 });
 
 test("eventi: quattro card con dettagli apribili", async ({ page }) => {
   await page.goto("/it");
-  const cards = page.locator("#eventi article");
+  const cards = page.locator("#eventi .ca-events-grid article");
   await expect(cards).toHaveCount(4);
   const toggle = cards.first().getByRole("button", { name: /Scopri di più/ });
   await toggle.scrollIntoViewIfNeeded();
   await toggle.click();
   await expect(cards.first().getByRole("button", { name: /Chiudi/ })).toHaveAttribute("aria-expanded", "true");
-  await expect(cards.first().getByRole("link", { name: /Sito dell'evento/ })).toBeVisible();
+  await expect(cards.first().getByRole("link", { name: /Dettagli/ })).toBeVisible();
 });
 
 test("cambio lingua IT → EN", async ({ page }, info) => {
