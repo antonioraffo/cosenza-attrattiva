@@ -1,55 +1,59 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { features } from "@/lib/env";
-import { IconStamp } from "@/components/ui/icons";
+import { IconSearch, IconStamp } from "@/components/ui/icons";
+import { HeaderMenu } from "./HeaderMenu";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { Logo } from "./Logo";
+import { PillarIcon, type Pillar } from "./PillarIcon";
 
-/** Header. `overlay` = trasparente sopra un'immagine hero. */
-export async function Header({ overlay = false }: { overlay?: boolean }) {
+export const PILLARS: Pillar[] = ["vive", "connect", "crea"];
+
+/**
+ * Header di sito sul modello di vivicosenza: barra bianca fissa con ombra (80/76/72 px),
+ * logo a sinistra, tre voci dei pilastri (icona + etichetta) e azioni a destra; sotto 960 px
+ * le voci passano nel menu a hamburger (HeaderMenu).
+ */
+export async function Header() {
   const t = await getTranslations("nav");
+  const links = PILLARS.map((p) => ({ pillar: p, href: `/#${p}`, label: t(p) }));
+
   return (
-    <header
-      className={
-        overlay
-          ? "absolute inset-x-0 top-0 z-30 bg-gradient-to-b from-black/50 to-transparent"
-          : "sticky top-0 z-30 border-b border-neutro-200/70 bg-neutro-50/85 backdrop-blur"
-      }
-    >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 md:px-8">
-        <Link href="/" className="rounded-lg" aria-label={`Cosenza attrattiva – ${t("home")}`}>
-          <Logo light={overlay} />
+    <header className="site-header" id="site-header">
+      <div className="site-container site-header-inner">
+        <Link href="/" className="site-brand" aria-label={`Cosenza attrattiva – ${t("home")}`}>
+          <Logo className="site-brand-logo" />
         </Link>
-        <nav aria-label={t("menu")} className="flex items-center gap-1">
-          <Link
-            href="/#itinerari"
-            className={`hidden min-h-11 items-center rounded-full px-3 text-sm font-medium sm:inline-flex ${
-              overlay ? "text-white hover:bg-white/15" : "text-neutro-700 hover:bg-neutro-100"
-            }`}
-          >
-            {t("itineraries")}
-          </Link>
+
+        <nav className="site-nav" aria-label={t("main")}>
+          {links.map((l) => (
+            <Link key={l.pillar} href={l.href} className="site-nav-link">
+              <PillarIcon pillar={l.pillar} size={20} />
+              <span>{l.label}</span>
+            </Link>
+          ))}
+        </nav>
+
+        <div className="site-header-actions">
           {features.assistant && (
-            <Link
-              href="/chiedi"
-              className={`hidden min-h-11 items-center rounded-full px-3 text-sm font-medium md:inline-flex ${
-                overlay ? "text-white hover:bg-white/15" : "text-neutro-700 hover:bg-neutro-100"
-              }`}
-            >
-              {t("ask")}
+            <Link href="/chiedi" className="site-icon-button" aria-label={t("ask")} title={t("ask")}>
+              <IconSearch size={22} />
             </Link>
           )}
-          <Link
-            href="/passaporto"
-            className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium ${
-              overlay ? "text-white hover:bg-white/15" : "text-neutro-700 hover:bg-neutro-100"
-            }`}
-          >
+          <span className="site-header-locale">
+            <LocaleSwitcher />
+          </span>
+          <Link href="/passaporto" className="site-header-cta">
             <IconStamp size={18} />
             <span>{t("passport")}</span>
           </Link>
-          <LocaleSwitcher light={overlay} />
-        </nav>
+          <HeaderMenu
+            links={links}
+            labels={{ open: t("openMenu"), close: t("closeMenu"), nav: t("mobileNav"), passport: t("passport") }}
+          >
+            <LocaleSwitcher />
+          </HeaderMenu>
+        </div>
       </div>
     </header>
   );

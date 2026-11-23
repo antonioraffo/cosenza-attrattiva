@@ -22,7 +22,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   return (
     <>
-      <Header overlay />
+      <Header />
       <main id="main">
         {/* ── Hero ─────────────────────────────────────────────── */}
         <section className="grain relative isolate flex min-h-[100svh] items-end overflow-hidden bg-neutro-950 text-white">

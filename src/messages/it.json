@@ -12,7 +12,14 @@
     "switchTo": "English",
     "skip": "Vai al contenuto",
     "home": "Home",
-    "menu": "Menu"
+    "menu": "Menu",
+    "main": "Navigazione principale",
+    "mobileNav": "Navigazione mobile",
+    "openMenu": "Apri menu",
+    "closeMenu": "Chiudi menu",
+    "vive": "Cosenza Vive",
+    "connect": "Cosenza Connect",
+    "crea": "Cosenza Crea"
   },
   "home": {
     "heroEyebrow": "Cosenza attrattiva · Connect",

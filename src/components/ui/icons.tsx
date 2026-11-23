@@ -172,3 +172,14 @@ export const IconLocate = (p: P) => (
     <circle cx="12" cy="12" r="5" />
   </svg>
 );
+export const IconSearch = (p: P) => (
+  <svg {...base({ strokeWidth: 1.6, ...p })}>
+    <circle cx="10.5" cy="10.5" r="6.5" />
+    <path d="m16 16 4.5 4.5" />
+  </svg>
+);
+export const IconMenu = (p: P) => (
+  <svg {...base({ strokeWidth: 1.7, ...p })}>
+    <path d="M3 6h18M3 12h18M3 18h18" />
+  </svg>
+);

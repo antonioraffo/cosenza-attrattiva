@@ -21,7 +21,7 @@ export function LocaleSwitcher({ light = false }: { light?: boolean }) {
         // @ts-expect-error -- pathname dinamico con gli stessi parametri della pagina corrente
         router.replace({ pathname, params }, { locale: other, scroll: false })
       }
-      className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium transition ${
+      className={`inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full px-3 text-sm font-semibold transition ${
         light ? "text-white hover:bg-white/15" : "text-neutro-700 hover:bg-neutro-100"
       }`}
     >

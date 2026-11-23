@@ -43,7 +43,7 @@ export default async function ItineraryPage({ params }: Props) {
 
   return (
     <>
-      <Header overlay />
+      <Header />
       <main id="main">
         <section className="relative isolate flex min-h-[78svh] items-end overflow-hidden bg-neutro-950 text-white">
           <div className="absolute inset-0 -z-10">

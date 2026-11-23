@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "maplibre-gl/dist/maplibre-gl.css";
+@import "./site.css";
 
 /*
  * Design token "Cosenza attrattiva" (vedi docs/DESIGN-TOKENS.md).
