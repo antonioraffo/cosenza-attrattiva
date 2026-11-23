@@ -9,10 +9,14 @@ Demo per il Comune di Cosenza, masterplan *Cosenza Città Attrattiva* – pilast
 - **Scheda luogo**: galleria, "Ieri e oggi", curiosità, orari e accessibilità, itinerari collegati
 - **PWA** installabile con download offline dell'itinerario (testi, foto, mappa)
 - **IT / EN**, WCAG 2.1 AA, nessun tracciamento della posizione
+- **Home "Cosenza attrattiva"** sull'impianto grafico di vivi-cosenza: intro con il Duomo disegnato allo scroll,
+  mission del masterplan con le tre aree **Vive / Connect / Crea**, pannelli MAB–Duomo–San Domenico, "tre modi di
+  vivere l'itinerario", itinerari dal database, eventi
 - **Fase 2** (feature flag): Street View con hotspot, volo 3D fotorealistico, AR geolocalizzata, "Chiedi a Cosenza"
 
 Documenti: [Architettura](docs/ARCHITECTURE.md) · [Scaletta della demo](docs/DEMO-SCRIPT.md) ·
-[Coordinate da verificare](TODO-coordinate.md) · [Asset mappa](scripts/map/README.md)
+[Design token](docs/DESIGN-TOKENS.md) · [Analisi di vivi-cosenza](docs/reference/vivicosenza/ANALISI.md) ·
+[Confronto visivo](docs/reference/compare/) · [Coordinate da verificare](TODO-coordinate.md) · [Asset mappa](scripts/map/README.md)
 
 <p>
   <img src="docs/screenshots/home-mobile.jpg" width="180" alt="Home su smartphone">
@@ -51,6 +55,9 @@ valido, senza avvisi.
 | `make test` | Test unitari Vitest (geo, geofence, WKB) |
 | `make e2e` | Test Playwright (mobile 375px + desktop) contro il dominio HTTPS |
 | `make prod-local` | Build di produzione servita dallo stesso proxy (per Lighthouse) |
+| `make lighthouse` | Lighthouse mobile su home, itinerario e luogo (`LH_PATHS="/it"` per una sola pagina) |
+| `make reference` | Analisi del sito di riferimento vivi-cosenza (protetto: `REF_PASSWORD` o `REF_COOKIE` in `.env`) |
+| `make compare` | Screenshot della home per il confronto con vivi-cosenza (`w=375,768,1440`), poi `python3 scripts/reference/compose-compare.py` |
 | `make dns` | DNS locale per testare da smartphone in LAN |
 | `make help` | Elenco completo |
 
@@ -82,13 +89,34 @@ browser ──HTTPS──▶ proxy (Caddy, :80→:443, cert mkcert)
 | Controllo | Comando | Stato |
 |---|---|---|
 | Test unitari (geo, geofence con isteresi, WKB) | `make test` | 23 ✔ |
-| E2E Playwright, mobile 375px + desktop, contro il dominio HTTPS con CA verificata dal browser | `make e2e` | ✔ |
-| E2E sulla build di produzione, incluso offline | `make prod-local && make e2e-prod` | ✔ |
+| E2E Playwright, mobile 375px + desktop, contro il dominio HTTPS con CA verificata dal browser | `make e2e` | 36 ✔ |
+| E2E sulla build di produzione, incluso offline | `make prod-local && make e2e-prod` | 37 ✔ |
 | Accessibilità axe WCAG 2.1 AA (home, itinerario, luogo, passaporto) | incluso in `make e2e` | 0 violazioni gravi |
-| Lighthouse mobile (build di produzione) | `make prod-local && make lighthouse` | Performance 91–92, Accessibility 100, Best practices 100, SEO 100 |
+| Lighthouse mobile (build di produzione, container dev fermo) | `make prod-local && make lighthouse` | Performance 94–97, Accessibility 100, Best practices 100, SEO 100 |
 | Typecheck / lint | `make typecheck` / `make lint` | ✔ |
 
 Il container e2e (`docker/e2e`) registra la CA mkcert nell'NSS di Chromium: i test non ignorano gli errori TLS.
+
+Lighthouse su Docker Desktop è sensibile al carico della macchina: misurare dopo `docker compose stop app`
+(il container dev compete per la CPU) e scartare il primo giro dopo una build.
+
+## Home e design system
+
+La home riprende struttura, tipografia (Plus Jakarta Sans + Manrope, self-hosted in `src/fonts/`),
+spaziature ed effetti di vivi-cosenza, con il marchio e la palette di Cosenza attrattiva
+([design token](docs/DESIGN-TOKENS.md), contrasti AA verificati). Gli effetti allo scroll sono porting
+fedeli del sito di riferimento (`src/components/home/effects/`) e si disattivano con `prefers-reduced-motion`.
+
+| Sezione | Componente | Dati |
+|---|---|---|
+| Header e menu Vive / Connect / Crea | `layout/Header`, `HeaderMenu`, `PillarIcon` | — |
+| Intro silhouette (Duomo / Ponte Calatrava) | `home/SilhouetteIntro`, `effects/silhouette.ts` | disegni in `public/home/` (ottimizzati con `scripts/optimize-silhouette.mjs`), testi in `messages` |
+| Mission e tre aree | `home/MissionSection`, `PillarCarousel` | testi dal masterplan (`materiale/`) |
+| Pannelli MAB, Duomo, San Domenico | `home/HomeHero` (`HomePanels`), `effects/panels.ts` | luoghi dal DB |
+| Tre modi di vivere l'itinerario | `home/ThreeWays`, `effects/lower.ts` | foto dal DB |
+| Itinerari | `home/ItinerariesSection`, `ItineraryCarousel` | 7 itinerari dal DB |
+| Eventi | `home/EventsSection`, `EventCard` | `src/content/events.ts` (**dati dimostrativi**) |
+| Footer | `layout/Footer` | recapiti del Comune |
 
 ## Contenuti
 

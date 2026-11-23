@@ -13,12 +13,21 @@ in modalità dispositivo (375 px). L'URL è quello stampato da `make up`
 4. Svuota il Passaporto (pagina Passaporto → *Azzera passaporto*) per mostrarlo dal primo timbro.
 5. Volume alto: la narrazione vocale fa parte dell'effetto.
 
-## 1. L'apertura (2 min) – *"una città che si racconta"*
+## 1. L'apertura (3 min) – *"una città da vivere"*
 
-- **Home**: foto a tutto schermo del centro storico, il marchio ufficiale *Cosenza attrattiva*.
-- Messaggio: non un elenco di POI, ma **sette storie** da vivere. Scorri le card in evidenza.
-- Tocca il filtro **Fede** → la griglia si ricompone. Torna su **Tutti**.
-- Cambia lingua **EN** in alto: tutto il prodotto, contenuti compresi, è bilingue. Torna a IT.
+- **Home**: si apre sul marchio *Cosenza attrattiva* sopra il disegno al tratto del Duomo. Scorri piano:
+  il disegno si traccia, compaiono le curiosità (1222 e Federico II, la Stauroteca, la Madonna del Pilerio)
+  e il titolo. Il selettore in basso passa al **Ponte Calatrava**.
+- **Menu**: solo tre voci, i pilastri del masterplan: **Cosenza Vive**, **Connect**, **Crea**.
+- **La mission**: il testo del masterplan e le tre aree in un carosello orizzontale (frecce, swipe, tastiera).
+  Messaggio: *Connect porta persone, Vive genera economia, Crea dà identità*. Questa app è Connect.
+- Continua a scorrere: i pannelli **MAB, Duomo e San Domenico** si impilano in alto come linguette,
+  la foto si allarga e il testo si scrive. Ogni pannello porta alla scheda del luogo.
+- Arriva il foglio **"Tre modi di vivere un itinerario"** (racconto, passeggiata, passaporto) e, sotto, gli
+  **itinerari**: sette storie dal database. Tocca il filtro **Fede**, poi torna su **Tutti**.
+- **Eventi** (calendario dimostrativo, pilastro Vive) e footer con i recapiti del Comune.
+- La pillola **"In evidenza"** in basso porta a ogni sezione.
+- Cambia lingua **EN** (in alto su desktop, nel menu su smartphone): tutto è bilingue. Torna a IT.
 
 ## 2. Il racconto (4 min) – *scrollytelling* "Il re nel fiume"
 
@@ -60,7 +69,7 @@ in modalità dispositivo (375 px). L'URL è quello stampato da `make up`
 
 ## 6. Chiusura (2 min) – dove può andare il progetto
 
-- **Chiedi a Cosenza** (menu): oggi risponde citando i testi degli itinerari; è già predisposto per un
+- **Chiedi a Cosenza** (lente in alto): oggi risponde citando i testi degli itinerari; è già predisposto per un
   assistente conversazionale con le fonti del Comune.
 - Contenuti gestiti come dati: nuovi itinerari, lingue (DE, FR…) e audio professionali si aggiungono
   senza sviluppo. Coerente con il masterplan: pilastro **Connect**, integrazione con **Crea**
