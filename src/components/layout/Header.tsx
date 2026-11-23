@@ -6,6 +6,7 @@ import { HeaderMenu } from "./HeaderMenu";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { Logo } from "./Logo";
 import { PillarIcon, type Pillar } from "./PillarIcon";
+import { ScrollReset } from "./ScrollReset";
 
 export const PILLARS: Pillar[] = ["vive", "connect", "crea"];
 
@@ -20,6 +21,7 @@ export async function Header() {
 
   return (
     <header className="site-header" id="site-header">
+      <ScrollReset />
       <div className="site-container site-header-inner">
         <Link href="/" className="site-brand" aria-label={`Cosenza attrattiva – ${t("home")}`}>
           <Logo className="site-brand-logo" />

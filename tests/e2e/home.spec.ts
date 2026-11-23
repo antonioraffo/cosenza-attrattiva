@@ -134,3 +134,13 @@ test("cambio lingua IT → EN", async ({ page }, info) => {
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page.getByRole("heading", { name: "A city to live in" })).toBeAttached();
 });
+
+test("dalla card di un itinerario la nuova pagina si apre in cima", async ({ page }) => {
+  await page.goto("/it#itinerari");
+  const card = page.locator("[data-itinerary-card] a").first();
+  await expect(card).toBeInViewport();
+  await card.click();
+  await expect(page).toHaveURL(/\/it\/itinerari\/[^/#]+$/);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+  await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
+});
