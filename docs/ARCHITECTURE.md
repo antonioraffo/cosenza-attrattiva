@@ -65,7 +65,7 @@ calcola lunghezze e frazioni e genera `TODO-coordinate.md` con le coordinate da 
 |---|---|---|
 | `NEXT_PUBLIC_FEATURE_STREETVIEW` | Street View con hotspot sui luoghi che hanno `streetview` | chiave Google (Maps JavaScript API) + consenso |
 | `NEXT_PUBLIC_FEATURE_3D` | "Volo 3D" stile Earth Voyager nel racconto | motore scelto da `NEXT_PUBLIC_FLY3D_PROVIDER` |
-| `NEXT_PUBLIC_FLY3D_PROVIDER` | `maplibre` (predefinito): rilievo da Terrain Tiles locali (`public/map/terrain`, `scripts/map/terrain.sh`), edifici OSM estrusi, camera a drone · `google`: Photorealistic 3D Tiles con CesiumJS da CDN | `maplibre`: nessuno · `google`: chiave (Map Tiles API), consenso, account di fatturazione non SEE |
+| `NEXT_PUBLIC_FLY3D_PROVIDER` | `google3d` (predefinito): `Map3DElement` della Maps JavaScript API (`features/fly3d/Google3DFlight`) · `maplibre`: rilievo da Terrain Tiles locali (`public/map/terrain`, `scripts/map/terrain.sh`), edifici OSM estrusi · `google`: Photorealistic 3D Tiles con CesiumJS da CDN | `google3d`: chiave (Maps JavaScript API) + consenso · `maplibre`: nessuno · `google`: chiave (Map Tiles API), consenso, account di fatturazione non SEE |
 | `NEXT_PUBLIC_FEATURE_AR` | AR geolocalizzata (fotocamera + bussola + GPS) sui luoghi con `ar` | HTTPS; su iOS permesso sensori su gesto |
 | `NEXT_PUBLIC_FEATURE_ASSISTANT` | "Chiedi a Cosenza": `POST /api/ask` | stub full-text Postgres; interfaccia `AnswerProvider` pronta per LLM + RAG |
 | `NEXT_PUBLIC_DEMO_TOOLS` | Simulatore di posizione nella passeggiata e nell'AR | — |

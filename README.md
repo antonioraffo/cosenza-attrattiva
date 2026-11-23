@@ -133,7 +133,7 @@ media con crediti, quartieri). `make seed` li valida e li carica in modo idempot
 
 Copia `.env.example` in `.env` (lo fa `make setup`). Le variabili non impostate usano i default
 di `docker-compose.yml`. `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` è opzionale: senza chiave l'app usa
-solo la mappa open source e nasconde Street View (il volo 3D MapLibre resta disponibile).
+solo la mappa open source, nasconde Street View e usa il volo 3D MapLibre.
 
 **Chiave Google**: abilita *Maps JavaScript API* e *Map Tiles API*; restrizione per referrer HTTP con
 `https://cosenzaattrattiva.test/*` **e**, finché si usa la porta 8443, `https://cosenzaattrattiva.test:8443/*`.
@@ -142,13 +142,18 @@ solo la mappa open source e nasconde Street View (il volo 3D MapLibre resta disp
 |---|---|
 | `NEXT_PUBLIC_FEATURE_STREETVIEW`, `_3D`, `_AR`, `_ASSISTANT` | `true` |
 | `NEXT_PUBLIC_DEMO_TOOLS` (simulatore di posizione) | `true` in dev, impostare `false` in produzione |
-| `NEXT_PUBLIC_FLY3D_PROVIDER` (motore del volo 3D) | `maplibre` |
+| `NEXT_PUBLIC_FLY3D_PROVIDER` (motore del volo 3D) | `google3d` |
 
-**Volo 3D**: `NEXT_PUBLIC_FLY3D_PROVIDER=maplibre` usa rilievo ed edifici 3D dai dati locali (nessuna chiave,
-nessun consenso, funziona anche offline dopo il primo volo); `google` usa le Photorealistic 3D Tiles con CesiumJS.
-Google non le fornisce agli account di fatturazione dello Spazio economico europeo: dal 23/11/2026 la chiave del
-progetto `cosenza-attrattiva` riceve 403. Per cambiare motore basta la variabile in `.env` e `make up`
+**Volo 3D**: il motore si sceglie con `NEXT_PUBLIC_FLY3D_PROVIDER` in `.env`, poi `make up`
 (per la build di produzione `make prod-local`, perché la variabile entra nel bundle).
+
+| Valore | Motore | Requisiti |
+|---|---|---|
+| `google3d` (predefinito) | 3D Maps della Maps JavaScript API, fotorealistico | chiave Google, consenso; disponibile anche per account di fatturazione europei |
+| `maplibre` | rilievo (Terrain Tiles locali) ed edifici OSM estrusi | nessuno; funziona offline dopo il primo volo |
+| `google` | Photorealistic 3D Tiles (Map Tiles API) con CesiumJS | **non disponibile** per account di fatturazione dello Spazio economico europeo (403, confermato dal supporto Google il 23/11/2026) |
+
+Senza chiave Google si usa comunque `maplibre`.
 
 ### Porte del proxy
 
