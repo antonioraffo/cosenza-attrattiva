@@ -251,12 +251,12 @@
 .ca-place-card:has(> .ca-save-icon) > div {
   padding-right: 44px;
 }
-.ca-place-card h3 {
+.ca-place-name {
   margin: 0 0 4px;
   font-size: 17px;
   line-height: 1.25;
 }
-.ca-place-card h3 a::after {
+.ca-place-name a::after {
   content: "";
   position: absolute;
   inset: 0;

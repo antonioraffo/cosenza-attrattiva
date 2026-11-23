@@ -124,11 +124,11 @@ export function ExploreView({ places, origin }: { places: ExplorePlace[]; origin
             >
               {p.image ? <img src={p.image.url} alt="" width={112} height={92} loading="lazy" /> : <span aria-hidden="true" className="ca-place-noimg" />}
               <div>
-                <h3>
+                <h2 className="ca-place-name">
                   <Link href={`/luoghi/${p.slug}`} onFocus={() => setActive(p.slug)}>
                     {p.name}
                   </Link>
-                </h3>
+                </h2>
                 <p>{p.summary}</p>
                 <p className="ca-place-meta">
                   <span className="ca-pillar-tag" data-pillar={p.pillar}>
