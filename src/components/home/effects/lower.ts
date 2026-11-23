@@ -10,19 +10,10 @@
  * Tutto deriva dalla posizione di scroll: tornando indietro l'effetto si inverte.
  */
 
+import { typewriter } from "./typewriter";
+
 const clamp = (v: number) => Math.max(0, Math.min(1, v));
 const smooth = (v: number) => v * v * (3 - 2 * v);
-
-function writer(element: Element) {
-  const characters = [...element.querySelectorAll<HTMLElement>(".home-typewriter-character")];
-  let last = -1;
-  return (progress: number) => {
-    const count = Math.min(characters.length, Math.floor(clamp(progress) * (characters.length + 1)));
-    if (count === last) return;
-    last = count;
-    characters.forEach((c, i) => (c.style.opacity = i < count ? "1" : "0"));
-  };
-}
 
 export function initializeLowerEffects(content: HTMLElement): () => void {
   const doc = content.ownerDocument;
@@ -33,8 +24,8 @@ export function initializeLowerEffects(content: HTMLElement): () => void {
   const itineraries = content.querySelector<HTMLElement>("#itinerari");
   const rows = [...(stage?.querySelectorAll<HTMLElement>("[data-explore-row]") ?? [])];
   const titles = [...content.querySelectorAll<HTMLElement>("h2")]
-    .filter((h) => h.querySelector(".home-typewriter-character"))
-    .map((heading) => ({ heading, write: writer(heading) }));
+    .filter((h) => h.querySelector("[data-typewriter]"))
+    .map((heading) => ({ heading, write: typewriter(heading) }));
   doc.body.classList.add("home-scroll-effects-active");
   const listeners: (() => void)[] = [];
   let frame: number | undefined;
@@ -108,6 +99,32 @@ export function initializeLowerEffects(content: HTMLElement): () => void {
     const reveal = (event.target as Element).closest?.("[data-reveal]") as HTMLElement | null;
     reveal?.classList.add("is-revealed");
   });
+  // Gli itinerari stanno fermi sotto il foglio: un'ancora #itinerari deve arrivare al punto in cui
+  // il foglio è uscito (come homeScrollTarget nel riferimento), non alla posizione naturale.
+  const itinerariesTarget = () => {
+    if (!stage || reduce.matches) return null;
+    const headerHeight = doc.querySelector("#site-header .site-header-inner")?.getBoundingClientRect().height || 80;
+    return Math.max(0, Math.ceil(view.scrollY + stage.getBoundingClientRect().bottom - headerHeight - 16));
+  };
+  const goToItineraries = (behavior: ScrollBehavior) => {
+    const top = itinerariesTarget();
+    if (top !== null) view.scrollTo({ top, behavior });
+  };
+  listen(
+    doc,
+    "click",
+    (event) => {
+      const a = (event.target as Element).closest?.("a[href]") as HTMLAnchorElement | null;
+      if (!a || a.hash !== "#itinerari" || a.pathname !== view.location.pathname || itinerariesTarget() === null) return;
+      event.preventDefault();
+      event.stopPropagation();
+      view.history.pushState(view.history.state, "", a.href);
+      goToItineraries(reduce.matches ? "instant" : "smooth");
+    },
+    { capture: true },
+  );
+  listen(view, "hashchange", () => view.location.hash === "#itinerari" && goToItineraries("instant"));
+  if (view.location.hash === "#itinerari") view.requestAnimationFrame(() => goToItineraries("instant"));
   listen(view, "scroll", schedule, { passive: true });
   listen(view, "resize", schedule);
   listen(view, "hashchange", schedule);

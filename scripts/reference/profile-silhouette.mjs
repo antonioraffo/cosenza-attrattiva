@@ -1,0 +1,34 @@
+// Misura il costo di parsing/inserimento del disegno silhouette con CPU rallentata 4× (come Lighthouse mobile).
+import { chromium } from "@playwright/test";
+const base = process.env.BASE_URL ?? "https://cosenzaattrattiva.test:8443";
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 412, height: 823 } });
+const cdp = await page.context().newCDPSession(page);
+await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
+await page.goto(`${base}/it`, { waitUntil: "load" });
+const r = await page.evaluate(async () => {
+  const t = {};
+  let s = performance.now();
+  const txt = await (await fetch("/home/duomo-silhouette-lines.svg")).text();
+  t.fetch = performance.now() - s; s = performance.now();
+  const xml = new DOMParser().parseFromString(txt, "image/svg+xml");
+  t.parse = performance.now() - s; s = performance.now();
+  const host = document.createElement("div");
+  host.style.cssText = "position:fixed;inset:0;opacity:0;pointer-events:none";
+  host.className = "ca-hero";
+  document.body.append(host);
+  host.replaceChildren(document.importNode(xml.documentElement, true));
+  t.import = performance.now() - s; s = performance.now();
+  host.getBoundingClientRect(); host.querySelector("svg").getScreenCTM();
+  t.layout = performance.now() - s; s = performance.now();
+  const strokes = [...host.querySelectorAll("[data-silhouette-stroke]")].map((e) => ({ e, a: Number(e.dataset.start) }));
+  t.query = performance.now() - s; s = performance.now();
+  strokes.forEach(({ e }) => { e.style.strokeDashoffset = "0.5"; e.style.opacity = "1"; });
+  host.getBoundingClientRect();
+  t.styleAll = performance.now() - s;
+  return Object.fromEntries(Object.entries(t).map(([k, v]) => [k, Math.round(v)]));
+});
+console.log(r);
+const longs = await page.evaluate(() => performance.getEntriesByType("longtask").map((e) => Math.round(e.duration)));
+console.log("longtask (page load):", longs);
+await browser.close();

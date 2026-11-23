@@ -11,12 +11,17 @@ test("passeggiata simulata: arrivo alla tappa, audio e timbro nel passaporto", a
 
   await page.getByRole("button", { name: /Simulatore di posizione/ }).click();
   await page.getByRole("button", { name: "1", exact: true }).click();
-  await page.getByRole("button", { name: /Percorri l'itinerario/ }).click();
-
   const arrival = page.getByRole("dialog", { name: /.+/ }).filter({ hasText: "Sei arrivato" });
+  // il salto porta 60 m prima della tappa: se è già nel raggio di arrivo la scheda si apre subito
+  // e copre il simulatore, altrimenti si fa camminare la posizione fino alla tappa
+  await page.waitForTimeout(1500);
+  if (!(await arrival.isVisible())) {
+    await page.getByRole("button", { name: /Percorri l'itinerario/ }).click({ timeout: 5_000 }).catch(() => {});
+  }
   await expect(arrival).toBeVisible({ timeout: 30_000 });
   // ferma il simulatore: nel browser headless il WebGL software satura la CPU
-  await page.getByRole("button", { name: "Pausa" }).filter({ hasText: "Pausa" }).click();
+  const pause = page.getByRole("button", { name: "Pausa" }).filter({ hasText: "Pausa" });
+  if (await pause.isVisible()) await pause.click({ force: true });
   await expect(page.getByText("Timbro aggiunto al Passaporto")).toBeVisible();
 
   // il timbro è salvato nel passaporto locale (la pagina Passaporto ha un test dedicato)

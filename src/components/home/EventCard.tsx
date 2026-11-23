@@ -33,7 +33,7 @@ export function EventCard({
     <article
       className={`ca-event-card${expanded ? " is-open" : ""}`}
       aria-labelledby={`${id}-title`}
-      onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)}
+      onPointerEnter={(e) => e.pointerType === "mouse" && window.matchMedia("(hover: hover) and (pointer: fine)").matches && setHover(true)}
       onPointerLeave={() => setHover(false)}
     >
       <div className="ca-event-surface">

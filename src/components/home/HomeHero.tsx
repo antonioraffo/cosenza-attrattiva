@@ -12,7 +12,7 @@ import { Typewriter } from "./Typewriter";
 const PANELS = [
   { slug: "mab-ettore-e-andromaca", key: "mab", color: "#0f7663", ink: "#fff" },
   { slug: "duomo", key: "duomo", color: "#9c37b5", ink: "#fff" },
-  { slug: "san-domenico", key: "sanDomenico", color: "#f0c9a0", ink: "#211e1c" },
+  { slug: "san-domenico", key: "sanDomenico", color: "#a3570c", ink: "#fff" },
 ] as const;
 
 const arrow = (

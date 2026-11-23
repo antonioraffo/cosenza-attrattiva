@@ -6,19 +6,9 @@
  * il JavaScript segue solo lo scroll e aggiorna variabili CSS.
  */
 
-const clamp = (v: number) => Math.max(0, Math.min(1, v));
+import { typewriter as writer } from "./typewriter";
 
-/** Typewriter su markup già spezzato in caratteri (vedi <Typewriter>). */
-function writer(element: Element | null) {
-  const characters = element ? [...element.querySelectorAll<HTMLElement>(".home-typewriter-character")] : [];
-  let lastCount = -1;
-  return (progress: number) => {
-    const count = Math.min(characters.length, Math.floor(clamp(progress) * (characters.length + 1)));
-    if (count === lastCount) return;
-    lastCount = count;
-    characters.forEach((c, i) => (c.style.opacity = i < count ? "1" : "0"));
-  };
-}
+const clamp = (v: number) => Math.max(0, Math.min(1, v));
 
 export function initializePanels(hero: HTMLElement, titles: string[]): () => void {
   const doc = hero.ownerDocument;

@@ -15,7 +15,7 @@ I token sono definiti in `src/app/globals.css`: scale Tailwind in `@theme` (clas
 | Colore del marchio | — | primario-500 `#128771` | logo, decori, testo ≥ 24 px |
 | Pannello 1 (MAB) | `#962d30` | primario-600 `#0f7663`, testo bianco | |
 | Pannello 2 (Duomo) | `#99515d` | viola-500 `#9c37b5`, testo bianco | il viola del logo regge già il bianco |
-| Pannello 3 (San Domenico) | `#c8a08d`, testo `#2d2d2d` | arancio-200 `#f0c9a0`, testo neutro-900 | tono chiaro come nel riferimento |
+| Pannello 3 (San Domenico) | `#c8a08d`, testo `#2d2d2d` | arancio-700 `#a3570c`, testo bianco | scostamento: nel riferimento l'eyebrow bianco cade sul fondo chiaro prima che la foto si espanda (axe: contrasto insufficiente); con il tono scuro il testo bianco resta AA (5,35:1) in ogni fase |
 | Pilastro Vive | — | viola-500 `#9c37b5` | badge "VIVE" del logo |
 | Pilastro Connect | — | azzurro-700 `#137396` (decoro: azzurro-500 `#1a98c4`) | badge "CONNECT" |
 | Pilastro Crea | — | arancio-700 `#a3570c` per testo, arancio-500 `#dd7b19` come fondo con testo scuro | badge "CREA" |

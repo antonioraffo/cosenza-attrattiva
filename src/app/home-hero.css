@@ -290,3 +290,12 @@
 @media (prefers-reduced-motion: reduce) {
   .home-typewriter-character { opacity: 1 !important; }
 }
+
+/* Tratti animati: valori iniziali (prima nel file SVG, vedi scripts/optimize-silhouette.mjs).
+   Il JavaScript aggiorna stroke-dashoffset e opacity in linea. */
+.ca-hero [data-silhouette-stroke] {
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
