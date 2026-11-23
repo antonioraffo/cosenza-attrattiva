@@ -419,5 +419,57 @@
     "itineraries": "Itinerari",
     "events": "Eventi",
     "copyright": "© {year} Cosenza attrattiva · Comune di Cosenza"
+  },
+  "crea": {
+    "eyebrow": "Cosenza Crea",
+    "title": "Fatto a Cosenza",
+    "intro": "L'artigianato è una delle espressioni più autentiche dell'identità di una comunità: ogni bottega custodisce competenze, tradizioni e creatività. Cosenza Crea vuole farne una parte stabile della vita della città, integrata con il commercio, il turismo e il centro storico.",
+    "crafts": "I mestieri",
+    "craftsLabel": "Scegli un mestiere",
+    "photoTodo": "Foto delle botteghe da fornire",
+    "craft": {
+      "ceramica": {
+        "name": "Ceramica",
+        "text": "Tornio, smalti e decoro a mano. A Cosenza la terra lavorata ha dato il nome al ponte dei Pignatari, dagli artigiani che modellavano le pignatte."
+      },
+      "legno": {
+        "name": "Legno",
+        "text": "Intaglio, tornitura e piccoli mobili: un mestiere fatto di tempo e mani esperte."
+      },
+      "tessile": {
+        "name": "Tessile",
+        "text": "Tessuti lavorati al telaio, dalla fibra al filo al disegno."
+      },
+      "oreficeria": {
+        "name": "Oreficeria",
+        "text": "Metalli preziosi lavorati a mano, nella città che chiamava il primo tratto di Corso Telesio «strada dei mercanti e degli orefici»."
+      },
+      "prodotti": {
+        "name": "Prodotti locali",
+        "text": "I sapori del territorio, dalle cucine alle cantine di Donnici."
+      }
+    },
+    "brandTitle": "Il marchio «Fatto a Cosenza»",
+    "brandIntro": "Un marchio per i prodotti delle botteghe, perché diventino souvenir autentici.",
+    "brand": [
+      {
+        "title": "Qualità certificata",
+        "text": "Una selezione degli artigiani e dei prodotti, con regole condivise."
+      },
+      {
+        "title": "Il racconto del territorio",
+        "text": "Ogni prodotto porta con sé la storia di chi lo fa e del luogo da cui viene."
+      },
+      {
+        "title": "Confezioni riconoscibili",
+        "text": "Un'immagine comune, che si riconosce in città e fuori."
+      }
+    ],
+    "workshopsTitle": "Botteghe diffuse nel centro storico",
+    "workshopsText": "Il programma prevede una rete di botteghe nel centro storico, anche nei locali oggi sfitti, che diventino tappe dei percorsi in città e luoghi di esperienza: laboratori, dimostrazioni, incontri con gli artigiani.",
+    "workshopsTodo": "L'elenco delle botteghe arriverà dall'Albo Artigiani Cosenza Crea.",
+    "itineraryCta": "Segui «Le mani di Cosenza»",
+    "eventsTitle": "Gli appuntamenti dell'artigianato",
+    "quote": "L'artigianato non è un ricordo del passato. È un'economia che genera lavoro, un patrimonio che produce identità, un'esperienza che rende una città unica."
   }
 }

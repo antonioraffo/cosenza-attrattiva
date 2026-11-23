@@ -1496,3 +1496,161 @@ ul.ca-events-grid,
     flex-shrink: 0;
   }
 }
+
+/* ── Pagine dei pilastri: badge, Crea (sezione scura come nel prototipo) ── */
+.ca-pillar-badge {
+  display: inline-block;
+  margin: 0 0 16px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.ca-pillar-badge--crea {
+  background: var(--color-arancio-700);
+}
+.ca-pillar-badge--connect {
+  background: var(--color-azzurro-700);
+}
+.ca-crea-hero {
+  padding-block: 72px;
+  background: var(--color-neutro-900);
+  color: #fff;
+}
+.ca-crea-hero .ca-page-title {
+  color: #fff;
+}
+.ca-crea-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+.ca-crea-intro {
+  max-width: 36em;
+  margin: 18px 0 0;
+  color: rgb(255 255 255 / 0.85);
+  font-size: 18px;
+  line-height: 1.65;
+}
+.ca-chip--dark {
+  border-color: rgb(255 255 255 / 0.35);
+  background: transparent;
+  color: #fff;
+}
+.ca-chip--dark:hover {
+  border-color: #fff;
+}
+.ca-chip--dark[aria-selected="true"] {
+  border-color: var(--color-arancio-500);
+  background: var(--color-arancio-500);
+  color: var(--color-neutro-950);
+}
+.ca-crafts-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  gap: 24px;
+  align-items: center;
+  margin-top: 20px;
+  padding: 24px;
+  border: 1px solid rgb(255 255 255 / 0.15);
+  border-radius: 20px;
+}
+.ca-crafts-panel:focus-visible {
+  outline: 3px solid var(--ca-focus);
+}
+.ca-crafts-text {
+  margin: 0;
+  color: rgb(255 255 255 / 0.9);
+  font-size: 17px;
+  line-height: 1.6;
+}
+.ca-crafts-text strong {
+  color: var(--color-arancio-300);
+}
+.ca-crafts-visual {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 18px;
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.06);
+}
+.ca-crafts-visual figcaption {
+  color: rgb(255 255 255 / 0.66);
+  font-size: 12px;
+  text-align: center;
+}
+.ca-brand-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ca-brand-points li {
+  padding: 24px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow:
+    0 3px 8px rgb(33 30 28 / 0.03),
+    0 12px 28px rgb(33 30 28 / 0.09);
+}
+.ca-brand-points span {
+  color: var(--color-arancio-700);
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 600;
+}
+.ca-brand-points h3 {
+  margin: 8px 0 6px;
+  font-size: 21px;
+}
+.ca-brand-points p {
+  margin: 0;
+  color: var(--color-neutro-500);
+  line-height: 1.6;
+}
+.ca-workshops {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+.ca-crea-quote {
+  padding-block: 72px;
+  background: var(--color-arancio-50);
+}
+.ca-crea-quote p {
+  max-width: 30em;
+  margin: 0;
+  color: var(--color-neutro-900);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.6vw, 36px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+}
+@media (max-width: 960px) {
+  .ca-crea-grid,
+  .ca-brand-points {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ca-workshops {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+@media (max-width: 640px) {
+  .ca-crafts-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ca-crafts-tabs {
+    flex-wrap: wrap;
+  }
+}

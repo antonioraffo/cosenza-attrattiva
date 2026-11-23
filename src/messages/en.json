@@ -419,5 +419,57 @@
     "itineraries": "Itineraries",
     "events": "Events",
     "copyright": "© {year} Cosenza attrattiva · City of Cosenza"
+  },
+  "crea": {
+    "eyebrow": "Cosenza Crea",
+    "title": "Made in Cosenza",
+    "intro": "Craftsmanship is one of the most authentic expressions of a community's identity: every workshop holds skills, traditions and creativity. Cosenza Crea wants to make it a lasting part of city life, integrated with retail, tourism and the old town.",
+    "crafts": "The crafts",
+    "craftsLabel": "Choose a craft",
+    "photoTodo": "Workshop photos to be provided",
+    "craft": {
+      "ceramica": {
+        "name": "Ceramics",
+        "text": "Wheel, glazes and hand decoration. In Cosenza, worked clay gave its name to the Pignatari bridge, after the craftsmen who shaped terracotta pots."
+      },
+      "legno": {
+        "name": "Wood",
+        "text": "Carving, turning and small furniture: a craft of time and skilled hands."
+      },
+      "tessile": {
+        "name": "Textiles",
+        "text": "Fabrics woven on the loom, from fibre to thread to pattern."
+      },
+      "oreficeria": {
+        "name": "Goldsmithing",
+        "text": "Precious metals worked by hand, in the city that called the first stretch of Corso Telesio “the street of merchants and goldsmiths”."
+      },
+      "prodotti": {
+        "name": "Local produce",
+        "text": "The flavours of the territory, from kitchens to the wineries of Donnici."
+      }
+    },
+    "brandTitle": "The “Made in Cosenza” brand",
+    "brandIntro": "A brand for workshop products, so they become authentic souvenirs.",
+    "brand": [
+      {
+        "title": "Certified quality",
+        "text": "A selection of craftspeople and products, with shared rules."
+      },
+      {
+        "title": "The story of the place",
+        "text": "Every product carries the story of its maker and where it comes from."
+      },
+      {
+        "title": "Recognisable packaging",
+        "text": "A shared look, recognisable in the city and beyond."
+      }
+    ],
+    "workshopsTitle": "Workshops across the old town",
+    "workshopsText": "The programme plans a network of workshops in the old town, including in today's empty shops, that become stops on city routes and places to experience: workshops, demonstrations, meetings with craftspeople.",
+    "workshopsTodo": "The list of workshops will come from the Cosenza Crea register of craftspeople.",
+    "itineraryCta": "Follow “The Hands of Cosenza”",
+    "eventsTitle": "Craft events",
+    "quote": "Craftsmanship is not a memory of the past. It is an economy that creates jobs, a heritage that shapes identity, an experience that makes a city unique."
   }
 }

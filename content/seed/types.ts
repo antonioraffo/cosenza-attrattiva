@@ -127,3 +127,37 @@ export interface SeedNeighborhood {
   /** Anello chiuso [lng, lat][] (primo = ultimo), approssimativo. */
   polygon: LngLat[];
 }
+
+export type EventCategory = "cultura" | "spettacolo" | "tradizioni" | "shopping-notti" | "artigianato";
+export type Pillar = "vive" | "connect" | "crea";
+
+export interface SeedEvent {
+  slug: string;
+  title: L;
+  /** Una frase per le card. */
+  summary: L;
+  /** Markdown, per la pagina dell'evento. */
+  description: L;
+  category: EventCategory;
+  pillar: Pillar;
+  /** Grande evento: evento di grande rilevanza, in evidenza con una pagina dedicata. */
+  major: boolean;
+  /** Date ISO (YYYY-MM-DD); se mancano vale `period`. */
+  start?: string;
+  end?: string;
+  /** Mese indicativo 1–12, per ordinare gli eventi senza data. */
+  month?: number;
+  /** Etichetta del periodo quando la data non è nota (es. "Luglio", "Data da annunciare"). */
+  period?: L;
+  schedule?: L;
+  venue?: string;
+  /** slug del luogo (SeedPlace) dove si svolge */
+  place?: string;
+  /** Posizione se il luogo non è tra i SeedPlace */
+  at?: LngLat;
+  /** Chiave SeedMedia della copertina */
+  cover?: string;
+  sourceUrl?: string;
+  /** Dati dimostrativi o da verificare con il Comune */
+  demo: boolean;
+}
