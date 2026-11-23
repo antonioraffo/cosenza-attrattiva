@@ -38,12 +38,14 @@ export async function GET(_req: Request, ctx: { params: Promise<{ slug: string }
     `/${l}`,
     `/${l}/itinerari/${it.slug}`,
     `/${l}/itinerari/${it.slug}/racconto`,
-    `/${l}/itinerari/${it.slug}/passeggiata`,
+    // la passeggiata esiste solo con almeno due tappe geolocalizzate (altrimenti reindirizza)
+    ...(it.locatedCount >= 2 ? [`/${l}/itinerari/${it.slug}/passeggiata`] : []),
     `/${l}/passaporto`,
     ...placeSlugs.map((s) => `/${l}/luoghi/${s}`),
   ]);
   const images = [
     it.cover?.url,
+    ...it.chapters.map((c) => c.image?.url),
     ...places.flatMap((p) => [...p.gallery.map((g) => g.url), p.historic?.url]),
   ].filter((u): u is string => Boolean(u));
 

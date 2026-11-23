@@ -81,22 +81,27 @@ export function validateContent(c: Content): { errors: string[]; warnings: strin
   }
   for (const it of c.itineraries) {
     if (!mediaKeys.has(it.cover)) warnings.push(`itinerario ${it.slug}: copertina ${it.cover} assente`);
+    const located = it.chapters.filter((ch) => ch.place !== null || ch.at).length;
+    if (located < 2 && !it.durationMin) errors.push(`itinerario ${it.slug}: meno di due tappe geolocalizzate, serve "durationMin"`);
+    for (const ch of it.chapters) if (ch.image && !mediaKeys.has(ch.image)) warnings.push(`itinerario ${it.slug}: immagine ${ch.image} assente`);
     it.chapters.forEach((ch, i) => {
-      if (ch.place === null && !ch.at) errors.push(`itinerario ${it.slug} cap. ${i + 1}: transizione senza "at"`);
+      if (ch.place === null && ch.at === undefined)
+        errors.push(`itinerario ${it.slug} cap. ${i + 1}: capitolo senza luogo: indicare "at" (punto) oppure "at: null" (non geolocalizzato)`);
+      if ((ch.place !== null || ch.at) && !ch.camera) errors.push(`itinerario ${it.slug} cap. ${i + 1}: manca "camera"`);
       if (ch.place !== null && !placeSlugs.has(ch.place)) errors.push(`itinerario ${it.slug} cap. ${i + 1}: luogo ${ch.place} inesistente`);
     });
   }
   return { errors, warnings };
 }
 
-/** Punto di un capitolo: coordinate del luogo, o `at` per le transizioni. */
-export function chapterPoint(c: Content, ch: SeedItinerary["chapters"][number]): LngLat {
+/** Punto di un capitolo: coordinate del luogo, `at` per le transizioni, null se non geolocalizzato. */
+export function chapterPoint(c: Content, ch: SeedItinerary["chapters"][number]): LngLat | null {
   if (ch.place) {
     const p = c.places.find((x) => x.slug === ch.place);
     if (!p) throw new Error(`luogo ${ch.place} inesistente`);
     return [p.lng, p.lat];
   }
-  return ch.at!;
+  return ch.at ?? null;
 }
 
 export async function readRoute(slug: string): Promise<LngLat[] | null> {

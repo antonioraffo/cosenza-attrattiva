@@ -16,7 +16,9 @@ await mkdir(path.join(CONTENT_DIR, "routes"), { recursive: true });
 
 for (const it of content.itineraries) {
   if (only && it.slug !== only) continue;
-  const pts = it.chapters.map((ch) => chapterPoint(content, ch));
+  // solo le tappe geolocalizzate; sotto due non c'è percorso
+  const pts = it.chapters.map((ch) => chapterPoint(content, ch)).filter((p): p is [number, number] => p !== null);
+  if (pts.length < 2) continue;
   const coords = pts.map(([lng, lat]) => `${lng.toFixed(6)},${lat.toFixed(6)}`).join(";");
   const res = await fetch(`${OSRM}/${coords}?overview=full&geometries=geojson`, {
     headers: { "User-Agent": "CosenzaAttrattivaDemo/0.1 (local tourism demo)" },

@@ -15,7 +15,7 @@ test("certificato TLS valido e firmato dalla CA locale", async ({ baseURL }) => 
 test("HTTP reindirizza a HTTPS", async ({ request, baseURL }) => {
   test.skip(test.info().project.name !== "desktop", "una sola volta");
   const u = new URL(baseURL!);
-  const httpPort = u.port === "8443" ? "8080" : "80";
+  const httpPort = process.env.HTTP_PORT ?? (u.port === "8443" ? "8080" : "80");
   const res = await request.get(`http://${u.hostname}:${httpPort}/it`, { maxRedirects: 0 });
   expect(res.status()).toBe(308);
   expect(res.headers()["location"]).toMatch(/^https:\/\//);

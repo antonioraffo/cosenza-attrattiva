@@ -58,7 +58,15 @@
     "offlineUnsupported": "Offline not supported by this browser",
     "share": "Share",
     "backToItinerary": "Back to itinerary",
-    "routeMap": "Route map"
+    "routeMap": "Route map",
+    "reading": "Reading",
+    "kindApiedi": "On foot",
+    "kindMisto": "Mixed",
+    "kindTematico": "Thematic",
+    "kindHint": "Some stops are stories without a point on the map.",
+    "kindHintTematico": "Thematic itinerary: the stops are stories, not points on the map.",
+    "readingsTitle": "To read along the way",
+    "noWalk": "This itinerary does not have enough stops on the map for a walk: read it as a story."
   },
   "story": {
     "progress": "Chapter {current} of {total}",

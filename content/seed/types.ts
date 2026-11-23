@@ -84,14 +84,19 @@ export interface SeedPlace {
 }
 
 export interface SeedChapter {
-  /** slug del luogo, oppure null per un capitolo di transizione (allora `at` è obbligatorio). */
+  /**
+   * slug del luogo, oppure null per un capitolo senza luogo: con `at` è una transizione su mappa,
+   * con `at: null` è una tappa non geolocalizzata (racconto, tema, prodotto).
+   */
   place: string | null;
-  at?: LngLat;
+  at?: LngLat | null;
   title: L;
   /** Markdown, 120–250 parole, seconda persona, presente, evocativo. */
   body: L;
-  /** Camera per il flyTo: zoom 15–18 in città, bearing -180..180, pitch 0–60. */
-  camera: { zoom: number; bearing: number; pitch: number };
+  /** Camera per il flyTo (zoom 15–18 in città, bearing -180..180, pitch 0–60); assente senza posizione. */
+  camera?: { zoom: number; bearing: number; pitch: number };
+  /** Immagine del capitolo (chiave SeedMedia), usata soprattutto per le tappe senza luogo. */
+  image?: string;
 }
 
 export interface SeedItinerary {
@@ -107,6 +112,11 @@ export interface SeedItinerary {
   /** Chiave SeedMedia della copertina */
   cover: string;
   featured: boolean;
+  /**
+   * Durata dichiarata in minuti: obbligatoria quando le tappe geolocalizzate sono meno di due
+   * (itinerario tematico, o misto senza percorso); altrimenti è calcolata dal percorso.
+   */
+  durationMin?: number;
   chapters: SeedChapter[];
 }
 

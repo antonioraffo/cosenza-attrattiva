@@ -51,6 +51,7 @@ export const listItineraries = cache(async () => {
       difficulty: itineraries.difficulty,
       durationMin: itineraries.durationMin,
       lengthM: itineraries.lengthM,
+      kind: itineraries.kind,
       color: itineraries.color,
       featured: itineraries.featured,
       coverMediaId: itineraries.coverMediaId,
@@ -78,6 +79,7 @@ export const getItinerary = cache(async (slug: string) => {
       camera: chapters.camera,
       geom: chapters.geom,
       routeFraction: chapters.routeFraction,
+      imageMediaId: chapters.imageMediaId,
       placeId: chapters.placeId,
       placeSlug: places.slug,
       placeName: places.name,
@@ -91,9 +93,10 @@ export const getItinerary = cache(async (slug: string) => {
     .where(eq(chapters.itineraryId, it.id))
     .orderBy(asc(chapters.position));
 
-  const [covers, itCover] = await Promise.all([
+  const [covers, itCover, chapterImages] = await Promise.all([
     coverByPlace(rows.map((r) => r.placeId).filter((x): x is number => x !== null)),
     mediaByIds([it.coverMediaId]),
+    mediaByIds(rows.map((r) => r.imageMediaId)),
   ]);
 
   return {
@@ -101,10 +104,13 @@ export const getItinerary = cache(async (slug: string) => {
     cover: it.coverMediaId ? (itCover.get(it.coverMediaId) ?? null) : null,
     chapters: rows.map((r) => ({
       ...r,
-      geom: r.geom as Position,
+      /** null = tappa non geolocalizzata */
+      geom: (r.geom as Position | null) ?? null,
       geofenceRadiusM: r.geofenceRadiusM ?? 30,
-      image: r.placeId ? (covers.get(r.placeId) ?? null) : null,
+      image: (r.imageMediaId ? chapterImages.get(r.imageMediaId) : null) ?? (r.placeId ? (covers.get(r.placeId) ?? null) : null),
     })),
+    /** Tappe con posizione: servono almeno due per la passeggiata e il volo 3D. */
+    locatedCount: rows.filter((r) => r.geom !== null).length,
   };
 });
 

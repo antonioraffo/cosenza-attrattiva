@@ -58,7 +58,15 @@
     "offlineUnsupported": "Offline non supportato da questo browser",
     "share": "Condividi",
     "backToItinerary": "Torna all'itinerario",
-    "routeMap": "Mappa del percorso"
+    "routeMap": "Mappa del percorso",
+    "reading": "Lettura",
+    "kindApiedi": "A piedi",
+    "kindMisto": "Misto",
+    "kindTematico": "Tematico",
+    "kindHint": "Alcune tappe sono racconti senza un punto sulla mappa.",
+    "kindHintTematico": "Itinerario tematico: le tappe sono racconti, non punti sulla mappa.",
+    "readingsTitle": "Da leggere lungo la strada",
+    "noWalk": "Questo itinerario non ha abbastanza tappe sulla mappa per la passeggiata: leggilo come racconto."
   },
   "story": {
     "progress": "Capitolo {current} di {total}",

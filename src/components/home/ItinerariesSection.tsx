@@ -48,8 +48,17 @@ export async function ItinerariesSection({ locale }: { locale: string }) {
             <p className="ca-itinerary-summary">{tr(it.subtitle, locale)}</p>
             <p className="ca-itinerary-stats">
               <span>{await formatDuration(it.durationMin)}</span>
-              <span aria-hidden="true">·</span>
-              <span>{formatKm(it.lengthM, locale)}</span>
+              {it.lengthM ? (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>{formatKm(it.lengthM, locale)}</span>
+                </>
+              ) : (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>{ti(it.kind === "tematico" ? "kindTematico" : "kindMisto")}</span>
+                </>
+              )}
             </p>
           </div>
         </article>

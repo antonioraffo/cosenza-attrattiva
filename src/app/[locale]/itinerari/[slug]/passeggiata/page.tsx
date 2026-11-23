@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { tr } from "@/lib/i18n";
 import { mdToHtml } from "@/lib/markdown";
@@ -22,25 +22,38 @@ export default async function WalkPage({ params }: Props) {
   const it = await getItinerary(slug);
   if (!it) notFound();
 
-  const chapters: WalkChapter[] = it.chapters.map((c) => ({
-    id: c.id,
-    title: tr(c.title, locale),
-    html: mdToHtml(tr(c.body, locale)),
-    plain: stripMarkdown(tr(c.body, locale)),
-    audioSrc: c.audioUrl ? tr(c.audioUrl, locale) || null : null,
-    placeSlug: c.placeSlug,
-    placeName: c.placeName ? tr(c.placeName, locale) : null,
-    image: c.image ? { url: c.image.url, alt: tr(c.image.alt, locale) } : null,
-    position: c.geom,
-    radiusM: c.placeSlug ? c.geofenceRadiusM : 30,
-  }));
+  // la passeggiata usa solo le tappe geolocalizzate; senza almeno due si legge come racconto
+  if (it.locatedCount < 2) redirect(`/${locale}/itinerari/${slug}/racconto`);
+
+  const chapters: WalkChapter[] = [];
+  for (const c of it.chapters) {
+    const html = mdToHtml(tr(c.body, locale));
+    if (!c.geom) {
+      // tappa non geolocalizzata: "lettura" agganciata all'ultima tappa sulla mappa
+      chapters.at(-1)?.readings.push({ id: c.id, title: tr(c.title, locale), html });
+      continue;
+    }
+    chapters.push({
+      id: c.id,
+      title: tr(c.title, locale),
+      html,
+      plain: stripMarkdown(tr(c.body, locale)),
+      audioSrc: c.audioUrl ? tr(c.audioUrl, locale) || null : null,
+      placeSlug: c.placeSlug,
+      placeName: c.placeName ? tr(c.placeName, locale) : null,
+      image: c.image ? { url: c.image.url, alt: tr(c.image.alt, locale) } : null,
+      position: c.geom,
+      radiusM: c.placeSlug ? c.geofenceRadiusM : 30,
+      readings: [],
+    });
+  }
 
   return (
     <WalkView
       slug={it.slug}
       title={tr(it.title, locale)}
       color={it.color}
-      route={it.route}
+      route={it.route ?? chapters.map((c) => c.position)}
       chapters={chapters}
     />
   );

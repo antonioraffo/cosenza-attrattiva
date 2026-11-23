@@ -126,10 +126,15 @@ await db.transaction(async (tx) => {
   const rank = (slug: string) => (ORDER.includes(slug) ? ORDER.indexOf(slug) : ORDER.length);
   const ordered = [...content.itineraries].sort((a, b) => rank(a.slug) - rank(b.slug));
   for (const [sort, it] of ordered.entries()) {
+    // tappe con posizione (luoghi e transizioni) e tappe non geolocalizzate (null)
     const stops = it.chapters.map((ch) => chapterPoint(content, ch));
-    const route = (await readRoute(it.slug)) ?? stops; // fallback: linea spezzata tra le tappe
-    const lengthM = Math.round(lineLengthM(route));
-    const durationMin = Math.round((lengthM / WALK_M_PER_MIN + stops.length * MIN_PER_STOP) / 5) * 5;
+    const located = stops.filter((p): p is LngLat => p !== null);
+    // percorso solo con almeno due tappe geolocalizzate (fallback: linea spezzata tra le tappe)
+    const route = located.length >= 2 ? ((await readRoute(it.slug)) ?? located) : null;
+    const lengthM = route ? Math.round(lineLengthM(route)) : null;
+    const durationMin =
+      it.durationMin ?? Math.round(((lengthM ?? 0) / WALK_M_PER_MIN + stops.length * MIN_PER_STOP) / 5) * 5;
+    const kind = located.length === stops.length ? "a-piedi" : located.length === 0 ? "tematico" : "misto";
 
     const values = {
       slug: it.slug,
@@ -140,6 +145,7 @@ await db.transaction(async (tx) => {
       difficulty: it.difficulty,
       durationMin,
       lengthM,
+      kind: kind as "a-piedi" | "misto" | "tematico",
       color: it.color,
       coverMediaId: mediaIds.get(it.cover) ?? null,
       route,
@@ -157,22 +163,30 @@ await db.transaction(async (tx) => {
     let prevAlong = 0;
     await tx.insert(s.chapters).values(
       it.chapters.map((ch, i) => {
-        // la proiezione è monotona: un percorso può ripassare vicino a una tappa precedente
-        const along = Math.max(prevAlong, locateOnLine(route, stops[i]!).alongM);
-        prevAlong = along;
+        const point = stops[i] ?? null;
+        let routeFraction: number | null = null;
+        if (point && route && lengthM) {
+          // la proiezione è monotona: un percorso può ripassare vicino a una tappa precedente
+          const along = Math.max(prevAlong, locateOnLine(route, point).alongM);
+          prevAlong = along;
+          routeFraction = Math.min(1, along / lengthM);
+        }
         return {
           itineraryId: row!.id,
           placeId: ch.place ? placeIds.get(ch.place)! : null,
           position: i,
           title: ch.title,
           body: ch.body,
-          camera: ch.camera,
-          geom: stops[i]!,
-          routeFraction: lengthM > 0 ? Math.min(1, along / lengthM) : 0,
+          camera: point ? (ch.camera ?? null) : null,
+          geom: point,
+          routeFraction,
+          imageMediaId: ch.image ? (mediaIds.get(ch.image) ?? null) : null,
         };
       }),
     );
-    console.log(`  ✔ ${it.slug}: ${it.chapters.length} capitoli, ${(lengthM / 1000).toFixed(1)} km, ~${durationMin} min`);
+    console.log(
+      `  ✔ ${it.slug} (${kind}): ${it.chapters.length} capitoli, ${lengthM ? `${(lengthM / 1000).toFixed(1)} km` : "senza percorso"}, ~${durationMin} min`,
+    );
   }
 
   /* rimuove contenuti non più presenti nel seed */

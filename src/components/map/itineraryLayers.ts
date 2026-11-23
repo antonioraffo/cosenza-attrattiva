@@ -8,11 +8,11 @@ export interface StopFeature {
   name: string;
 }
 
-const line = (coordinates: LngLat[]) => ({
-  type: "Feature" as const,
-  properties: {},
-  geometry: { type: "LineString" as const, coordinates },
-});
+/** Linea GeoJSON; con meno di due punti (itinerario senza percorso) una collezione vuota. */
+const line = (coordinates: LngLat[]) =>
+  coordinates.length >= 2
+    ? { type: "Feature" as const, properties: {}, geometry: { type: "LineString" as const, coordinates } }
+    : { type: "FeatureCollection" as const, features: [] };
 
 /** Aggiunge percorso (fatto/rimanente) e tappe numerate. Idempotente. */
 export function addItineraryLayers(map: MLMap, route: LngLat[], stops: StopFeature[], color: string) {
@@ -111,13 +111,14 @@ export function addItineraryLayers(map: MLMap, route: LngLat[], stops: StopFeatu
 
 /** Aggiorna il tratto percorso fino a `fraction` (0–1) e lo stato delle tappe. */
 export function setItineraryProgress(map: MLMap, route: LngLat[], fraction: number, stops: StopFeature[], activeIndex: number) {
+  stops.forEach((s, i) => {
+    map.setFeatureState({ source: "stops", id: s.id }, { active: i === activeIndex, done: i < activeIndex });
+  });
+  if (route.length < 2) return;
   const total = lineLengthM(route);
   const [done, rest] = splitLineAt(route, total * Math.max(0, Math.min(1, fraction)));
   (map.getSource("route-done") as GeoJSONSource | undefined)?.setData(line(done));
   (map.getSource("route-rest") as GeoJSONSource | undefined)?.setData(line(rest.length > 1 ? rest : route.slice(-1)));
-  stops.forEach((s, i) => {
-    map.setFeatureState({ source: "stops", id: s.id }, { active: i === activeIndex, done: i < activeIndex });
-  });
 }
 
 export function reducedMotion() {

@@ -34,12 +34,11 @@ export default async function ItineraryPage({ params }: Props) {
   const t = await getTranslations("itinerary");
   const tt = await getTranslations("themes");
 
-  const stops = it.chapters.map((c, i) => ({
-    id: c.id,
-    position: c.geom,
-    label: String(i + 1),
-    name: c.placeName ? tr(c.placeName, locale) : tr(c.title, locale),
-  }));
+  // sulla mappa solo le tappe geolocalizzate, numerate come nel racconto
+  const stops = it.chapters.flatMap((c, i) =>
+    c.geom ? [{ id: c.id, position: c.geom, label: String(i + 1), name: c.placeName ? tr(c.placeName, locale) : tr(c.title, locale) }] : [],
+  );
+  const canWalk = it.locatedCount >= 2;
 
   return (
     <>
@@ -53,6 +52,9 @@ export default async function ItineraryPage({ params }: Props) {
           <div className="mx-auto w-full max-w-5xl px-4 pt-28 pb-10 md:px-8">
             <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: it.color }}>
               {tt(it.theme)}
+            </span>
+            <span className="ml-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur">
+              {t(it.kind === "tematico" ? "kindTematico" : it.kind === "misto" ? "kindMisto" : "kindApiedi")}
             </span>
             <h1 className="mt-4 text-5xl leading-[1.08] tracking-[-0.045em] md:text-7xl">{tr(it.title, locale)}</h1>
             <p className="mt-3 max-w-2xl text-xl text-neutro-100/90">{tr(it.subtitle, locale)}</p>
@@ -78,25 +80,32 @@ export default async function ItineraryPage({ params }: Props) {
             >
               <IconBook size={18} /> {t("readStory")}
             </Link>
-            <Link
-              href={`/itinerari/${it.slug}/passeggiata`}
-              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-primario-700 px-6 font-semibold text-white transition hover:bg-primario-600"
-            >
-              <IconWalk size={18} /> {t("startWalk")}
-            </Link>
+            {canWalk && (
+              <Link
+                href={`/itinerari/${it.slug}/passeggiata`}
+                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-primario-700 px-6 font-semibold text-white transition hover:bg-primario-600"
+              >
+                <IconWalk size={18} /> {t("startWalk")}
+              </Link>
+            )}
             <OfflineButton slug={it.slug} />
           </div>
 
+          {it.kind !== "a-piedi" && (
+            <p className="mt-6 max-w-3xl text-neutro-600">{t(it.kind === "tematico" ? "kindHintTematico" : "kindHint")}</p>
+          )}
           <p className="mt-10 max-w-3xl font-display text-2xl leading-relaxed text-neutro-800">{tr(it.intro, locale)}</p>
 
+{stops.length > 0 && (
           <section aria-labelledby="map-title" className="mt-12">
             <h2 id="map-title" className="sr-only">
               {t("routeMap")}
             </h2>
             <div className="h-[340px] overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-card)] md:h-[440px]">
-              <RouteOverviewMap route={it.route} stops={stops} color={it.color} label={t("routeMap")} />
+              <RouteOverviewMap route={it.route ?? stops.map((st) => st.position)} stops={stops} color={it.color} label={t("routeMap")} />
             </div>
           </section>
+          )}
 
           <section aria-labelledby="chapters-title" className="mt-14">
             <h2 id="chapters-title" className="text-3xl">

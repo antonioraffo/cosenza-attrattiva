@@ -80,6 +80,10 @@ export const placeCategoryEnum = pgEnum("place_category", [
   "scienza",
 ]);
 export const mediaKindEnum = pgEnum("media_kind", ["image", "historic", "audio"]);
+/** Tipo di itinerario in base a quante tappe hanno una posizione (calcolato dal seed). */
+export const itineraryKindEnum = pgEnum("itinerary_kind", ["a-piedi", "misto", "tematico"]);
+export const pillarEnum = pgEnum("pillar", ["vive", "connect", "crea"]);
+export const eventCategoryEnum = pgEnum("event_category", ["cultura", "spettacolo", "tradizioni", "shopping-notti", "artigianato"]);
 
 /* ── Tabelle ────────────────────────────────────────────────────────────── */
 
@@ -168,11 +172,15 @@ export const itineraries = pgTable(
     intro: jsonb("intro").$type<Localized>().notNull(),
     theme: themeEnum("theme").notNull(),
     difficulty: difficultyEnum("difficulty").notNull(),
+    /** Calcolata dal percorso; per gli itinerari senza percorso è la durata dichiarata dalla redazione. */
     durationMin: integer("duration_min").notNull(),
-    lengthM: integer("length_m").notNull(),
+    /** Lunghezza del percorso: assente negli itinerari tematici. */
+    lengthM: integer("length_m"),
+    kind: itineraryKindEnum("kind").notNull().default("a-piedi"),
     color: text("color").notNull(),
     coverMediaId: integer("cover_media_id").references(() => media.id, { onDelete: "set null" }),
-    route: lineString("route").notNull(),
+    /** Percorso pedonale: presente solo con almeno due tappe geolocalizzate. */
+    route: lineString("route"),
     featured: boolean("featured").notNull().default(false),
     sort: smallint("sort").notNull().default(0),
     ...timestamps,
@@ -192,14 +200,53 @@ export const chapters = pgTable(
     title: jsonb("title").$type<Localized>().notNull(),
     body: jsonb("body").$type<Localized>().notNull(),
     audioUrl: jsonb("audio_url").$type<Partial<Localized> | null>(),
-    camera: jsonb("camera").$type<Camera>().notNull(),
-    /** Punto del capitolo: coincide col luogo, oppure punto libero per le transizioni. */
-    geom: point("geom").notNull(),
+    camera: jsonb("camera").$type<Camera | null>(),
+    /**
+     * Punto del capitolo: coincide col luogo, oppure punto libero per le transizioni.
+     * Assente per le tappe non geolocalizzate (racconti, temi, prodotti).
+     */
+    geom: point("geom"),
     /** Posizione lungo il percorso (0–1): separa il tratto "fatto" dal "rimanente". */
-    routeFraction: real("route_fraction").notNull(),
+    routeFraction: real("route_fraction"),
+    /** Immagine propria del capitolo (per le tappe senza luogo); altrimenti si usa quella del luogo. */
+    imageMediaId: integer("image_media_id").references(() => media.id, { onDelete: "set null" }),
     ...timestamps,
   },
   (t) => [uniqueIndex("chapters_itinerary_position_idx").on(t.itineraryId, t.position)],
+);
+
+/**
+ * Eventi della città (pilastro Vive). `major` = grande evento: un evento di grande rilevanza
+ * (richiamo oltre la città, visibilità, valore identitario), messo in evidenza con una pagina dedicata.
+ * Le date possono mancare: allora vale `period` (es. "Luglio", "Data da annunciare").
+ */
+export const events = pgTable(
+  "events",
+  {
+    id: serial("id").primaryKey(),
+    slug: text("slug").notNull().unique(),
+    title: jsonb("title").$type<Localized>().notNull(),
+    summary: jsonb("summary").$type<Localized>().notNull(),
+    description: jsonb("description").$type<Localized>().notNull(),
+    category: eventCategoryEnum("category").notNull(),
+    pillar: pillarEnum("pillar").notNull().default("vive"),
+    major: boolean("major").notNull().default(false),
+    startDate: text("start_date"),
+    endDate: text("end_date"),
+    /** Mese indicativo (1–12) per ordinare gli eventi senza data esatta. */
+    month: smallint("month"),
+    period: jsonb("period").$type<Localized | null>(),
+    schedule: jsonb("schedule").$type<Localized | null>(),
+    venue: text("venue"),
+    placeId: integer("place_id").references(() => places.id, { onDelete: "set null" }),
+    geom: point("geom"),
+    coverMediaId: integer("cover_media_id").references(() => media.id, { onDelete: "set null" }),
+    sourceUrl: text("source_url"),
+    /** Dati dimostrativi o da verificare con il Comune. */
+    demo: boolean("demo").notNull().default(false),
+    ...timestamps,
+  },
+  (t) => [index("events_geom_idx").using("gist", t.geom)],
 );
 
 export type Place = typeof places.$inferSelect;
@@ -207,3 +254,4 @@ export type Itinerary = typeof itineraries.$inferSelect;
 export type Chapter = typeof chapters.$inferSelect;
 export type Media = typeof media.$inferSelect;
 export type Neighborhood = typeof neighborhoods.$inferSelect;
+export type CityEvent = typeof events.$inferSelect;

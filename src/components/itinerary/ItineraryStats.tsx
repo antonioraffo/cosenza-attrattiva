@@ -17,7 +17,8 @@ export async function ItineraryStats({
   variant = "compact",
 }: {
   durationMin: number;
-  lengthM: number;
+  /** assente negli itinerari senza percorso */
+  lengthM: number | null;
   difficulty: "facile" | "media" | "impegnativa";
   stops: number;
   locale: string;
@@ -27,7 +28,7 @@ export async function ItineraryStats({
   const td = await getTranslations("difficulty");
   const items = [
     { icon: IconClock, label: t("duration"), value: await formatDuration(durationMin) },
-    { icon: IconRoute, label: t("length"), value: formatKm(lengthM, locale) },
+    ...(lengthM ? [{ icon: IconRoute, label: t("length"), value: formatKm(lengthM, locale) }] : []),
     { icon: IconMountain, label: t("difficulty"), value: td(difficulty) },
     { icon: IconPin, label: null, value: t("stops", { count: stops }) },
   ];

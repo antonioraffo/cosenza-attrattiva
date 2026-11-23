@@ -30,6 +30,8 @@ export interface WalkChapter {
   image: { url: string; alt: string } | null;
   position: LngLat;
   radiusM: number;
+  /** Tappe non geolocalizzate che seguono questa: si leggono all'arrivo */
+  readings: { id: number; title: string; html: string }[];
 }
 
 /** Marker HTML della posizione: punto, alone di precisione e cono di direzione. */
@@ -340,7 +342,22 @@ export function WalkView({
                 </p>
               )}
               {expanded ? (
-                <div className="prose-story mt-5 text-neutro-800" dangerouslySetInnerHTML={{ __html: arrived.html }} />
+                <>
+                  <div className="prose-story mt-5 text-neutro-800" dangerouslySetInnerHTML={{ __html: arrived.html }} />
+                  {arrived.readings.length > 0 && (
+                    <section aria-labelledby="readings-title" className="mt-6 border-t border-neutro-200 pt-5">
+                      <h3 id="readings-title" className="eyebrow text-primario-600">
+                        {ti("readingsTitle")}
+                      </h3>
+                      {arrived.readings.map((r) => (
+                        <details key={r.id} className="mt-3 rounded-2xl bg-neutro-100 px-4 py-3">
+                          <summary className="min-h-11 cursor-pointer content-center font-display text-lg font-semibold">{r.title}</summary>
+                          <div className="prose-story mt-2 text-neutro-800" dangerouslySetInnerHTML={{ __html: r.html }} />
+                        </details>
+                      ))}
+                    </section>
+                  )}
+                </>
               ) : (
                 <p className="mt-3 line-clamp-3 leading-relaxed text-neutro-700">{arrived.plain}</p>
               )}
