@@ -8,6 +8,7 @@ import { Logo } from "./Logo";
 import { NavDropdown } from "./NavDropdown";
 import { type Pillar } from "./PillarIcon";
 import { ScrollReset } from "./ScrollReset";
+import { MyItineraryButton, MyItineraryDrawer } from "@/components/mine/MyItineraryButton";
 
 export const PILLARS: Pillar[] = ["vive", "connect", "crea"];
 
@@ -25,6 +26,7 @@ export async function Header() {
       { href: "/eventi#calendario", label: t("subCalendario") },
     ],
     connect: [
+      { href: "/esplora", label: t("explore") },
       { href: "/#itinerari", label: t("subItinerari") },
       { href: "/ritorno-a-cosenza", label: t("subRadici") },
     ],
@@ -38,6 +40,7 @@ export async function Header() {
   return (
     <header className="site-header" id="site-header">
       <ScrollReset />
+      {!features.passport && <MyItineraryDrawer />}
       <div className="site-container site-header-inner">
         <Link href="/" className="site-brand" aria-label={`Cosenza attrattiva – ${t("home")}`}>
           <Logo className="site-brand-logo" />
@@ -58,13 +61,18 @@ export async function Header() {
           <span className="site-header-locale">
             <LocaleSwitcher />
           </span>
-          <Link href="/passaporto" className="site-header-cta">
-            <IconStamp size={18} />
-            <span>{t("passport")}</span>
-          </Link>
+          {features.passport ? (
+            <Link href="/passaporto" className="site-header-cta">
+              <IconStamp size={18} />
+              <span>{t("passport")}</span>
+            </Link>
+          ) : (
+            <MyItineraryButton />
+          )}
           <HeaderMenu
             links={links}
             labels={{ open: t("openMenu"), close: t("closeMenu"), nav: t("mobileNav"), passport: t("passport") }}
+            passport={features.passport}
           >
             <LocaleSwitcher />
           </HeaderMenu>

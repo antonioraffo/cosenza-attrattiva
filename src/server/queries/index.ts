@@ -219,6 +219,28 @@ export const placesBySlugs = cache(async (slugs: string[]) => {
     .map((r) => ({ ...r, image: covers.get(r.id) ?? null }));
 });
 
+/** Tutti i luoghi con sintesi e testo, per Esplora e per "Il mio itinerario" (ordine per nome). */
+export const listPlacesFull = cache(async () => {
+  const rows = await db
+    .select({
+      id: places.id,
+      slug: places.slug,
+      name: places.name,
+      category: places.category,
+      summary: places.summary,
+      body: places.body,
+      geom: places.geom,
+      geofenceRadiusM: places.geofenceRadiusM,
+      audioUrl: places.audioUrl,
+    })
+    .from(places)
+    .orderBy(asc(places.slug));
+  const covers = await coverByPlace(rows.map((r) => r.id));
+  return rows.map((r) => ({ ...r, image: covers.get(r.id) ?? null }));
+});
+
+export type PlaceFull = Awaited<ReturnType<typeof listPlacesFull>>[number];
+
 /* ── Eventi ─────────────────────────────────────────────────────────────── */
 
 const eventCols = {

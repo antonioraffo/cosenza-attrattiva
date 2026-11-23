@@ -11,6 +11,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ListenButton } from "@/components/audio/ListenButton";
 import { CheckInButton } from "@/components/place/CheckInButton";
+import { SaveButton } from "@/components/mine/SaveButton";
+import { features } from "@/lib/env";
 import { ThenNowSlider } from "@/components/place/ThenNowSlider";
 import { ImmersiveActions } from "@/components/place/ImmersiveActions";
 import { SmartImage } from "@/components/ui/SmartImage";
@@ -63,6 +65,7 @@ export default async function PlacePage({ params }: Props) {
         <div className="mx-auto max-w-4xl px-4 md:px-8">
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <ListenButton id={`place-${p.slug}`} title={name} text={stripMarkdown(tr(p.body, locale))} lang={loc} />
+            <SaveButton slug={p.slug} name={name} variant="pill" />
             <ImmersiveActions
               place={{
                 slug: p.slug,
@@ -180,9 +183,11 @@ export default async function PlacePage({ params }: Props) {
             </dl>
           </section>
 
-          <section className="mt-10">
-            <CheckInButton slug={p.slug} name={name} center={p.geom} radiusM={p.geofenceRadiusM} locale={loc} />
-          </section>
+          {features.passport && (
+            <section className="mt-10">
+              <CheckInButton slug={p.slug} name={name} center={p.geom} radiusM={p.geofenceRadiusM} locale={loc} />
+            </section>
+          )}
 
           {p.itineraries.length > 0 && (
             <section aria-labelledby="in-it-title" className="mt-12">

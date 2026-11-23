@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { IconClose, IconMenu, IconStamp } from "@/components/ui/icons";
 import { PillarIcon, type Pillar } from "./PillarIcon";
+import { MyItineraryButton } from "@/components/mine/MyItineraryButton";
 
 /**
  * Menu mobile (≤ 960 px) come vivicosenza: hamburger 44×44 che diventa X, pannello sotto la barra
@@ -13,8 +14,10 @@ import { PillarIcon, type Pillar } from "./PillarIcon";
 export function HeaderMenu({
   links,
   labels,
+  passport = true,
   children,
 }: {
+  passport?: boolean;
   links: { pillar: Pillar; href: string; label: string; items: { href: string; label: string }[] }[];
   labels: { open: string; close: string; nav: string; passport: string };
   children?: React.ReactNode;
@@ -81,10 +84,14 @@ export function HeaderMenu({
           ))}
         </ul>
         <div className="site-mobile-actions">
-          <Link href="/passaporto" className="site-header-cta site-header-cta--block" onClick={() => setOpen(false)}>
-            <IconStamp size={18} />
-            <span>{labels.passport}</span>
-          </Link>
+          {passport ? (
+            <Link href="/passaporto" className="site-header-cta site-header-cta--block" onClick={() => setOpen(false)}>
+              <IconStamp size={18} />
+              <span>{labels.passport}</span>
+            </Link>
+          ) : (
+            <MyItineraryButton block onNavigate={() => setOpen(false)} />
+          )}
           {children}
         </div>
       </nav>

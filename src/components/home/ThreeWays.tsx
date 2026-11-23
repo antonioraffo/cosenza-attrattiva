@@ -3,7 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { tr } from "@/lib/i18n";
 import { placesBySlugs } from "@/server/queries";
-import { IconArrowRight, IconBook, IconStamp, IconWalk } from "@/components/ui/icons";
+import { features } from "@/lib/env";
+import { IconArrowRight, IconBook, IconHeart, IconStamp, IconWalk } from "@/components/ui/icons";
 import { Typewriter } from "./Typewriter";
 
 /**
@@ -16,7 +17,9 @@ export async function ThreeWays({ locale }: { locale: string }) {
   const steps = [
     { key: "story", icon: IconBook, href: "/itinerari/il-re-nel-fiume/racconto" },
     { key: "walk", icon: IconWalk, href: "/itinerari/fede-di-pietra/passeggiata" },
-    { key: "passport", icon: IconStamp, href: "/passaporto" },
+    features.passport
+      ? { key: "passport", icon: IconStamp, href: "/passaporto" }
+      : { key: "mine", icon: IconHeart, href: "/esplora" },
   ] as const;
 
   return (

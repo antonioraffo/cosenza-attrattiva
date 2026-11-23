@@ -95,6 +95,11 @@ export const IconStamp = (p: P) => (
     <path d="M9 3h6l-1 6h3a2 2 0 0 1 2 2v3H5v-3a2 2 0 0 1 2-2h3L9 3ZM5 17h14M7 21h10" />
   </svg>
 );
+export const IconHeart = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z" />
+  </svg>
+);
 export const IconHeadphones = (p: P) => (
   <svg {...base(p)}>
     <path d="M4 15v-3a8 8 0 0 1 16 0v3" />

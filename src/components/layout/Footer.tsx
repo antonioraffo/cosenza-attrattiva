@@ -60,7 +60,10 @@ export async function Footer() {
           <h2 id="footer-services">{t("services")}</h2>
           <ul className="ca-footer-links">
             <li>
-              <Link href="/passaporto">{tn("passport")}</Link>
+              {features.passport ? <Link href="/passaporto">{tn("passport")}</Link> : <Link href="/mio-itinerario">{tn("mine")}</Link>}
+            </li>
+            <li>
+              <Link href="/esplora">{tn("explore")}</Link>
             </li>
             {features.assistant && (
               <li>
