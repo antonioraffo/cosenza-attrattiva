@@ -62,7 +62,8 @@ calcola lunghezze e frazioni e genera `TODO-coordinate.md` con le coordinate da 
 - La posizione è letta **solo** dopo un'azione esplicita ("Attiva la posizione"), vive in uno store in memoria
   (`src/lib/stores/position.ts`) e non viene mai inviata al server: geofencing, distanze, bussola e check-in
   sono calcolati nel browser. L'unica query di prossimità lato server (`ST_DWithin`) è tra luoghi.
-- Passaporto e consenso stanno in `localStorage`; nessun login, nessun tracker.
+- Passaporto, "Il mio itinerario" e consenso stanno in `localStorage`; nessun login, nessun tracker.
+  La condivisione su WhatsApp passa solo gli slug dei luoghi nell'URL (`?p=`), mai la posizione.
 - Street View e 3D Tiles (Google) si caricano solo dopo il consenso esplicito (banner + `ConsentGate`).
 
 ## Feature flag (fase 2)
@@ -75,6 +76,7 @@ calcola lunghezze e frazioni e genera `TODO-coordinate.md` con le coordinate da 
 | `NEXT_PUBLIC_FEATURE_AR` | AR geolocalizzata (fotocamera + bussola + GPS) sui luoghi con `ar` | HTTPS; su iOS permesso sensori su gesto |
 | `NEXT_PUBLIC_FEATURE_ASSISTANT` | "Chiedi a Cosenza": `POST /api/ask` | stub full-text Postgres; interfaccia `AnswerProvider` pronta per LLM + RAG |
 | `NEXT_PUBLIC_DEMO_TOOLS` | Simulatore di posizione nella passeggiata e nell'AR | — |
+| `NEXT_PUBLIC_FEATURE_PASSPORT` | Passaporto, timbri e check-in (default `false` nella copia sintesi: al suo posto "Il mio itinerario") | — |
 
 I moduli pesanti sono in `src/features/*` e caricati con `next/dynamic` solo all'apertura.
 

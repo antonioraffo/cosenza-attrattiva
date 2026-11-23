@@ -67,18 +67,25 @@ in modalità dispositivo (375 px). L'URL è quello stampato da `make up`
 - Spiega la privacy: la posizione resta sul telefono, mai inviata al server.
 - Apri **DEMO · Simulatore di posizione** → **Percorri l'itinerario** a 15×.
 - In alto: prossima tappa, distanza, freccia della **bussola** (su smartphone ruota con il telefono).
-- All'arrivo al Duomo: **vibrazione**, card del capitolo, **narrazione automatica**, **timbro** animato.
-- Porta la velocità a **40×** e lascia arrivare tutte le tappe: all'ultima compare il **sigillo**
-  dell'itinerario completato (servono tutti i timbri, quindi non saltare tappe).
+- All'arrivo al Duomo: **vibrazione**, card del capitolo, **narrazione automatica**
+  (con il passaporto attivo anche il **timbro** animato).
+- Porta la velocità a **40×** e lascia arrivare tutte le tappe: all'ultima compare il messaggio di completamento.
 
-## 5. Passaporto e offline (2 min)
+## 5. Esplora e Il mio itinerario (3 min, copia "sintesi")
 
-- **Passaporto**: i timbri raccolti, i sigilli per itinerario con l'avanzamento.
+- Menu **Cosenza Connect → Esplora**: elenco e mappa di tutti i luoghi; filtra **Gusto** o **Natura e panorami**.
+- Tocca il **cuore** su 3 luoghi (es. Duomo, Castello Svevo, San Domenico): il contatore nell'header sale.
+- Apri **Il mio itinerario**: riordina con le frecce, poi **Condividi su WhatsApp** (link con le tappe).
+- **Vedi e percorri** → mappa con la sequenza e i minuti a piedi → **Inizia la passeggiata** (posizione simulata).
+- Sottolinea: niente account, le tappe restano sul telefono.
+
+## 6. Offline (1 min)
+
 - Su un itinerario: **Scarica per l'offline** → poi modalità aereo: racconto, foto e mappa
   funzionano senza rete (utile in centro storico, dove il segnale è debole).
 - Installazione come app: "Aggiungi a schermata Home" (PWA, icona del marchio).
 
-## 6. Chiusura (2 min) – dove può andare il progetto
+## 7. Chiusura (2 min) – dove può andare il progetto
 
 - **Chiedi a Cosenza** (lente in alto): oggi risponde citando i testi degli itinerari; è già predisposto per un
   assistente conversazionale con le fonti del Comune.

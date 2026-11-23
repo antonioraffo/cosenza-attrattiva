@@ -25,9 +25,9 @@ Documenti: [Architettura](docs/ARCHITECTURE.md) · [Scaletta della demo](docs/DE
   <img src="docs/screenshots/passeggiata-mobile.jpg" width="180" alt="Modalità Passeggiata">
 </p>
 
-## Copia di lavoro "sintesi" (fase 1)
+## Copia di lavoro "sintesi" (fasi 1 e 2)
 
-Questo branch (`feat/sintesi-fase1`) è la copia di lavoro della proposta di sintesi con il prototipo
+Questi branch (`feat/sintesi-fase1`, poi `feat/sintesi-fase2`) è la copia di lavoro della proposta di sintesi con il prototipo
 "Città da vivere"; la versione stabile resta sul tag `stabile-2026-11-23` (branch `demo-stabile`).
 La copia gira con uno stack Docker separato grazie a `.make.local` e a `COMPOSE_PROJECT_NAME` in `.env`
 (non versionati): **https://cosenzaattrattiva.test:8444**, database su `127.0.0.1:5434`.
@@ -52,6 +52,19 @@ Novità della fase 1:
 | Menu | Sottomenu dei pilastri (desktop e mobile) | `components/layout/NavDropdown` |
 
 Tutti gli eventi sono **dati dimostrativi** (`demo: true`) da verificare con il Comune.
+
+Novità della fase 2:
+
+| Area | Cosa | Dove |
+|---|---|---|
+| Esplora | Elenco + mappa di tutti i luoghi, filtri (Arte e storia, Piazze e quartieri, Gusto, Natura e panorami), pilastro, minuti a piedi stimati da Piazza dei Bruzi | `/esplora`, `lib/explore.ts` |
+| Il mio itinerario | Cuore sulle schede (Esplora e luogo), pannello nell'header con contatore: ordine, rimozione, **Condividi su WhatsApp**, svuota. Solo `localStorage` | `components/mine`, `lib/stores/my-itinerary.ts` |
+| Condivisione | Link `/mio-itinerario?p=slug1,slug2`: chi lo riceve vede le tappe, le salva o le percorre | `/mio-itinerario` |
+| Passeggiata personale | Stessa passeggiata degli itinerari (geofence, audio), percorso in linea retta tra le tappe; servono ≥ 2 tappe | `/mio-itinerario/passeggiata?p=…` |
+| Passaporto | Messo da parte: `NEXT_PUBLIC_FEATURE_PASSPORT=false` (default) nasconde timbri, check-in e link; `/passaporto` → 404 | `lib/env.ts` |
+
+Pilastro dei luoghi in Esplora: strade e piazze → Vive, cantine → Crea, il resto → Connect.
+I minuti a piedi sono una **stima** (linea d'aria × 1,3 a 75 m/min).
 
 ## Requisiti
 
@@ -119,7 +132,7 @@ browser ──HTTPS──▶ proxy (Caddy, :80→:443, cert mkcert)
 | Test unitari (geo, geofence con isteresi, WKB) | `make test` | 23 ✔ |
 | E2E Playwright, mobile 375px + desktop, contro il dominio HTTPS con CA verificata dal browser | `make e2e` | 36 ✔ |
 | E2E sulla build di produzione, incluso offline | `make prod-local && make e2e-prod` | 37 ✔ |
-| Accessibilità axe WCAG 2.1 AA (home, itinerario, luogo, passaporto) | incluso in `make e2e` | 0 violazioni gravi |
+| Accessibilità axe WCAG 2.1 AA (home, itinerario, luogo, Esplora, Il mio itinerario; passaporto se attivo) | incluso in `make e2e` | 0 violazioni gravi |
 | Lighthouse mobile (build di produzione, container dev fermo) | `make prod-local && make lighthouse` | Performance 94–97, Accessibility 100, Best practices 100, SEO 100 |
 | Typecheck / lint | `make typecheck` / `make lint` | ✔ |
 
@@ -171,6 +184,7 @@ solo la mappa open source, nasconde Street View e usa il volo 3D MapLibre.
 | `NEXT_PUBLIC_FEATURE_STREETVIEW`, `_3D`, `_AR`, `_ASSISTANT` | `true` |
 | `NEXT_PUBLIC_DEMO_TOOLS` (simulatore di posizione) | `true` in dev, impostare `false` in produzione |
 | `NEXT_PUBLIC_FLY3D_PROVIDER` (motore del volo 3D) | `google3d` |
+| `NEXT_PUBLIC_FEATURE_PASSPORT` (passaporto e timbri) | `false` (copia sintesi) |
 
 **Volo 3D**: il motore si sceglie con `NEXT_PUBLIC_FLY3D_PROVIDER` in `.env`, poi `make up`
 (per la build di produzione `make prod-local`, perché la variabile entra nel bundle).
