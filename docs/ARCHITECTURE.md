@@ -33,6 +33,7 @@
 | Mappa | **MapLibre + PMTiles Protomaps** self-hosted | Nessun servizio di tile esterno, funziona offline (range request servite dal service worker), stile "pietra" coerente col brand. |
 | i18n | **next-intl** con prefisso `/it`, `/en` | URL condivisibili per lingua, `hreflang`, messaggi ICU (plurali). Contenuti in `jsonb {it, en}` → nuova lingua senza migrazioni. |
 | Animazioni | **motion** (ex Framer Motion) + IntersectionObserver | Scrollytelling leggero; `prefers-reduced-motion` → `jumpTo` e niente transizioni. |
+| Home | Server Components + moduli DOM in `components/home/effects` | Gli effetti di vivi-cosenza sono portati 1:1 come script che seguono lo scroll (rAF, variabili CSS, `position: sticky`); il markup resta reso dal server e i testi della "macchina da scrivere" si spezzano dopo l'idratazione, per tenere leggero il payload. |
 | PWA | **Serwist** (`@serwist/turbopack`) | Mantenuto, compatibile con Turbopack; SW compilato con esbuild e servito da `/serwist/sw.js`. |
 | Audio | file audio → altrimenti **Web Speech API** | Lettura frase per frase: pausa/ripresa affidabili, nessun taglio dopo 15 s (bug Chrome). |
 
@@ -81,7 +82,10 @@ src/
 ├── app/[locale]/          pagine (home, itinerari/[slug]/{,racconto,passeggiata}, luoghi/[slug], passaporto, chiedi, crediti)
 ├── app/api/               health, places, itineraries/[slug]/bundle, ask
 ├── app/sw.ts              service worker
-├── components/            ui, layout, itinerary, story, walk, place, passport, audio, map
+├── components/            ui, layout, home, itinerary, story, walk, place, passport, audio, map
+│   └── home/effects/      effetti allo scroll della home (porting di vivi-cosenza: silhouette, pannelli, foglio, typewriter)
+├── content/               eventi della home (dati dimostrativi)
+├── fonts/                 Plus Jakarta Sans e Manrope (OFL, self-hosted)
 ├── features/              streetview, fly3d, ar, ImmersiveLauncher (lazy)
 ├── lib/                   geo (+ geofence, wkb), stores, orientation, offline, env, text
 ├── server/                db (schema, client, seed, migrate, content), queries, assistant
