@@ -36,3 +36,6 @@ public/map/maplibre-gl-worker.mjs
 docs/lighthouse/
 docs/reference/vivicosenza/raw/
 docs/reference/compare/tmp/
+
+# impostazioni locali di una copia di lavoro (porte, ecc.)
+.make.local

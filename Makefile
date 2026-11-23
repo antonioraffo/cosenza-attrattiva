@@ -6,6 +6,8 @@ DOMAIN := cosenzaattrattiva.test
 # 80/443 sono occupate da un altro stack locale: usiamo 8080/8443.
 # Quando si liberano basta impostare qui 80 e 443 (oppure, una tantum:
 # `make up HTTP_PORT=80 HTTPS_PORT=443`). L'URL del sito si adegua da solo.
+# Una copia di lavoro può sovrascrivere porte e altre variabili in .make.local (non versionato).
+-include .make.local
 HTTP_PORT ?= 8080
 HTTPS_PORT ?= 8443
 SITE_URL := https://$(DOMAIN)$(if $(filter 443,$(HTTPS_PORT)),,:$(HTTPS_PORT))
