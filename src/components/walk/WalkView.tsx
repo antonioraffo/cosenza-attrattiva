@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { bbox, bearingDeg, cardinal, distanceM, formatDistance, lineLengthM, locateOnLine, type LngLat } from "@/lib/geo";
 import { createGeofenceState, smoothPosition, updateGeofences, type Fence } from "@/lib/geo/geofence";
-import { publicEnv } from "@/lib/env";
+import { features, publicEnv } from "@/lib/env";
 import { useDeviceHeading } from "@/lib/orientation";
 import { addStamp, checkBadge, passport } from "@/lib/stores/passport";
 import { positionStore, setSimulatedPosition, startGps, stopPosition } from "@/lib/stores/position";
@@ -54,16 +54,20 @@ export function WalkView({
   color,
   route,
   chapters,
+  backHref,
 }: {
   slug: string;
   title: string;
   color: string;
   route: LngLat[];
   chapters: WalkChapter[];
+  /** pagina a cui torna la freccia "indietro" (default: la scheda dell'itinerario) */
+  backHref?: string;
 }) {
+  const back = backHref ?? `/itinerari/${slug}`;
   const t = useTranslations("walk");
   const ti = useTranslations("itinerary");
-  const th = useTranslations("home");
+  const tn = useTranslations("nav");
   const locale = useLocale() as "it" | "en";
   const audio = useAudio();
   const mapRef = useRef<HTMLDivElement>(null);
@@ -99,7 +103,7 @@ export function WalkView({
 
   // tappe già timbrate in passato contano come visitate
   const isVisited = useCallback(
-    (i: number) => visited.has(i) || Boolean(chapters[i]!.placeSlug && stamps[chapters[i]!.placeSlug!]),
+    (i: number) => visited.has(i) || (features.passport && Boolean(chapters[i]!.placeSlug && stamps[chapters[i]!.placeSlug!])),
     [visited, stamps, chapters],
   );
   const nextIndex = chapters.findIndex((_, i) => !isVisited(i));
@@ -148,12 +152,13 @@ export function WalkView({
       if (i < 0 || visited.has(i)) continue;
       const c = chapters[i]!;
       setVisited((v) => new Set(v).add(i));
-      const newStamp = c.placeSlug ? addStamp(c.placeSlug, slug) : false;
+      // con il passaporto disattivato l'arrivo apre il capitolo, senza timbro
+      const newStamp = features.passport && c.placeSlug ? addStamp(c.placeSlug, slug) : false;
       setArrival({ index: i, newStamp });
       setExpanded(false);
       navigator.vibrate?.([120, 60, 120]);
       audio.play({ id: `ch-${c.id}`, title: c.title, text: c.plain, lang: locale, src: c.audioSrc });
-      if (checkBadge(slug, placeSlugs)) setCompleted(true);
+      if (features.passport ? checkBadge(slug, placeSlugs) : visited.size + 1 === chapters.length) setCompleted(true);
       break; // una tappa alla volta
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- reagisce solo ai cambi di posizione
@@ -191,7 +196,7 @@ export function WalkView({
   if (!started) {
     return (
       <main id="main" className="relative grid min-h-dvh place-items-center bg-[radial-gradient(circle_at_50%_0%,var(--color-primario-700),var(--color-neutro-950)_70%)] px-5 py-16 text-white">
-        <Link href={`/itinerari/${slug}`} className="absolute top-4 left-3 grid size-11 place-items-center rounded-full hover:bg-white/10" aria-label={ti("backToItinerary")}>
+        <Link href={back} className="absolute top-4 left-3 grid size-11 place-items-center rounded-full hover:bg-white/10" aria-label={ti("backToItinerary")}>
           <IconArrowLeft />
         </Link>
         <div className="max-w-md text-center">
@@ -222,7 +227,7 @@ export function WalkView({
       {/* barra superiore con prossima tappa e bussola */}
       <div className="absolute inset-x-0 top-0 z-20 p-3 pt-[max(.75rem,env(safe-area-inset-top))]">
         <div className="mx-auto flex max-w-xl items-center gap-3 rounded-2xl bg-white/95 p-3 shadow-[var(--shadow-float)] backdrop-blur">
-          <Link href={`/itinerari/${slug}`} className="grid size-11 shrink-0 place-items-center rounded-full hover:bg-neutro-100" aria-label={ti("backToItinerary")}>
+          <Link href={back} className="grid size-11 shrink-0 place-items-center rounded-full hover:bg-neutro-100" aria-label={ti("backToItinerary")}>
             <IconArrowLeft />
           </Link>
           {status === "locating" && <p className="flex-1 text-sm text-neutro-600">{t("locating")}</p>}
@@ -389,16 +394,24 @@ export function WalkView({
           >
             <div className="max-w-sm rounded-3xl bg-neutro-50 p-8 text-center">
               <div className="mx-auto w-fit">
-                <Stamp name={title} size={150} animate color={color} date={new Date().toLocaleDateString(locale)} />
+                {features.passport ? (
+                  <Stamp name={title} size={150} animate color={color} date={new Date().toLocaleDateString(locale)} />
+                ) : (
+                  <span className="grid size-24 place-items-center rounded-full text-white" style={{ backgroundColor: color }}>
+                    <IconCheck size={48} />
+                  </span>
+                )}
               </div>
               <h2 id="done-title" className="mt-4 text-3xl">
                 {t("completed")}
               </h2>
-              <p className="mt-2 text-neutro-600">{t("completedText")}</p>
+              <p className="mt-2 text-neutro-600">{features.passport ? t("completedText") : t("completedTextNoPassport")}</p>
               <div className="mt-6 flex flex-col gap-2">
-                <Link href="/passaporto" className="min-h-12 rounded-full bg-primario-700 px-6 py-3 font-semibold text-white">
-                  {th("openPassport")}
-                </Link>
+                {features.passport && (
+                  <Link href="/passaporto" className="min-h-12 rounded-full bg-primario-700 px-6 py-3 font-semibold text-white">
+                    {tn("passport")}
+                  </Link>
+                )}
                 <button type="button" onClick={() => setCompleted(false)} className="min-h-12 rounded-full border border-neutro-300 px-6 font-semibold">
                   {t("close")}
                 </button>

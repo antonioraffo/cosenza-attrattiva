@@ -1,6 +1,7 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
+import { features } from "@/lib/env";
 import { getItinerary, getPlace } from "@/server/queries";
 import { routing } from "@/i18n/routing";
 
@@ -40,7 +41,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ slug: string }
     `/${l}/itinerari/${it.slug}/racconto`,
     // la passeggiata esiste solo con almeno due tappe geolocalizzate (altrimenti reindirizza)
     ...(it.locatedCount >= 2 ? [`/${l}/itinerari/${it.slug}/passeggiata`] : []),
-    `/${l}/passaporto`,
+    ...(features.passport ? [`/${l}/passaporto`] : [`/${l}/mio-itinerario`]),
     ...placeSlugs.map((s) => `/${l}/luoghi/${s}`),
   ]);
   const images = [

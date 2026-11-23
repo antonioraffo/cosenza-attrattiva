@@ -32,4 +32,6 @@ export const features = {
   view3d: bool(process.env.NEXT_PUBLIC_FEATURE_3D),
   ar: bool(process.env.NEXT_PUBLIC_FEATURE_AR),
   assistant: bool(process.env.NEXT_PUBLIC_FEATURE_ASSISTANT),
+  /** Passaporto (timbri e sigilli): accantonato nella proposta di sintesi, si riattiva con il flag. */
+  passport: bool(process.env.NEXT_PUBLIC_FEATURE_PASSPORT, true),
 } as const;

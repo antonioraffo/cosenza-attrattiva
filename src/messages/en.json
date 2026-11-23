@@ -26,7 +26,9 @@
     "subRadici": "Return to Cosenza",
     "subFatto": "Made in Cosenza",
     "subMani": "The Hands of Cosenza",
-    "openSub": "{label} submenu"
+    "openSub": "{label} submenu",
+    "explore": "Explore",
+    "mine": "My itinerary"
   },
   "home": {
     "heroTitle": "Cosenza, a city to live in."
@@ -112,7 +114,8 @@
     "stamped": "Stamp added to your Passport",
     "visited": "Visited",
     "recenter": "Center on my location",
-    "allStops": "All stops"
+    "allStops": "All stops",
+    "completedTextNoPassport": "You have reached every stop on this itinerary."
   },
   "audio": {
     "player": "Audio player",
@@ -350,7 +353,12 @@
     "destination": "Arrival",
     "startTitle": "Start with “The King in the River”",
     "startText": "The legend of Alaric, the king buried in the Busento, as a story to scroll or to walk.",
-    "startCta": "Read the story"
+    "startCta": "Read the story",
+    "mine": {
+      "title": "My itinerary",
+      "text": "Tap the heart on the places you like: they become your own route, ready to share on WhatsApp.",
+      "cta": "Go to Explore"
+    }
   },
   "homeItineraries": {
     "title": "Itineraries",
@@ -515,5 +523,67 @@
     "contactTitle": "Start your search",
     "contactText": "A service to help you trace your origins is among the products planned by Cosenza Connect.",
     "contactTodo": "Contact coming soon: details to be agreed with the City."
+  },
+  "mine": {
+    "title": "My itinerary",
+    "open": "My itinerary",
+    "count": "{count, plural, =0 {no stops} one {# stop} other {# stops}}",
+    "save": "Save to my itinerary",
+    "saved": "In my itinerary",
+    "remove": "Remove",
+    "up": "Move up",
+    "down": "Move down",
+    "empty": "Tap the heart on stops in Explore or on place pages to build your itinerary.",
+    "explore": "Go to Explore",
+    "see": "View and walk",
+    "share": "Share on WhatsApp",
+    "clear": "Clear the itinerary",
+    "close": "Close",
+    "shareText": "My itinerary in Cosenza: {places}",
+    "sharedTitle": "Shared itinerary",
+    "sharedText": "Someone sent you these stops. You can save them to your itinerary or walk them right away.",
+    "keep": "Save to my itinerary",
+    "walk": "Start the walk",
+    "walkNeedsTwo": "You need at least two stops for the walk.",
+    "localNote": "Stops stay on this phone only: no data is sent.",
+    "minutes": "about {min} min on foot between stops",
+    "map": "Map of my itinerary"
+  },
+  "explore": {
+    "title": "Explore",
+    "eyebrow": "Cosenza Connect",
+    "intro": "Every place in the city on one map: filter by interest and tap the heart to add it to your itinerary.",
+    "filterLabel": "Filter places",
+    "all": "All",
+    "groups": {
+      "arte": "Art and history",
+      "piazze": "Squares and neighbourhoods",
+      "gusto": "Food and wine",
+      "natura": "Nature and views"
+    },
+    "count": "{count, plural, one {# place} other {# places}}",
+    "walk": "{min} min walk",
+    "from": "Walking times estimated from Piazza dei Bruzi, as the crow flies.",
+    "map": "Map of places",
+    "category": {
+      "chiesa": "Church",
+      "museo": "Museum",
+      "piazza": "Square",
+      "strada": "Street",
+      "teatro": "Theatre",
+      "parco": "Park",
+      "monumento": "Monument",
+      "opera-arte": "Artwork",
+      "architettura": "Architecture",
+      "paesaggio": "Landscape",
+      "quartiere": "Neighbourhood",
+      "cantina": "Winery",
+      "scienza": "Science"
+    },
+    "pillar": {
+      "vive": "Vive",
+      "connect": "Connect",
+      "crea": "Crea"
+    }
   }
 }

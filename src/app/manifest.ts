@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { features } from "@/lib/env";
 
 export default function manifest(): MetadataRoute.Manifest {
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://cosenzaattrattiva.test";
@@ -21,7 +22,12 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: "/pwa-icon/512?maskable=1", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
     shortcuts: [
-      { name: "Passaporto", url: "/it/passaporto" },
+      ...(features.passport
+        ? [{ name: "Passaporto", url: "/it/passaporto" }]
+        : [
+            { name: "Esplora", url: "/it/esplora" },
+            { name: "Il mio itinerario", url: "/it/mio-itinerario" },
+          ]),
       { name: "Itinerari", url: "/it#itinerari" },
     ],
   };

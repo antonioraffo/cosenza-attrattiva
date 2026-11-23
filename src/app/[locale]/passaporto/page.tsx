@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { features } from "@/lib/env";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { tr } from "@/lib/i18n";
 import { getItinerary, listItineraries, listPlacesLite } from "@/server/queries";
@@ -16,6 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PassportPage({ params }: Props) {
   const { locale } = await params;
+  // passaporto messo da parte nella proposta di sintesi: si riattiva con NEXT_PUBLIC_FEATURE_PASSPORT=true
+  if (!features.passport) notFound();
   setRequestLocale(locale);
   const t = await getTranslations("passport");
   const [summaries, places] = await Promise.all([listItineraries(), listPlacesLite()]);

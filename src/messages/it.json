@@ -26,7 +26,9 @@
     "subRadici": "Ritorno a Cosenza",
     "subFatto": "Fatto a Cosenza",
     "subMani": "Le mani di Cosenza",
-    "openSub": "Sottomenu {label}"
+    "openSub": "Sottomenu {label}",
+    "explore": "Esplora",
+    "mine": "Il mio itinerario"
   },
   "home": {
     "heroTitle": "Cosenza, città da vivere."
@@ -112,7 +114,8 @@
     "stamped": "Timbro aggiunto al Passaporto",
     "visited": "Visitata",
     "recenter": "Centra sulla mia posizione",
-    "allStops": "Tutte le tappe"
+    "allStops": "Tutte le tappe",
+    "completedTextNoPassport": "Hai raggiunto tutte le tappe di questo itinerario."
   },
   "audio": {
     "player": "Lettore audio",
@@ -350,7 +353,12 @@
     "destination": "Arrivo",
     "startTitle": "Inizia da «Il re nel fiume»",
     "startText": "La leggenda di Alarico, il re sepolto nel Busento, in un racconto da scorrere o da camminare.",
-    "startCta": "Leggi il racconto"
+    "startCta": "Leggi il racconto",
+    "mine": {
+      "title": "Il mio itinerario",
+      "text": "Tocca il cuore sui luoghi che ti incuriosiscono: le tappe diventano il tuo percorso, da condividere su WhatsApp.",
+      "cta": "Vai a Esplora"
+    }
   },
   "homeItineraries": {
     "title": "Itinerari",
@@ -515,5 +523,67 @@
     "contactTitle": "Inizia la ricerca",
     "contactText": "Un servizio di accompagnamento alla ricerca delle origini è tra i prodotti previsti da Cosenza Connect.",
     "contactTodo": "Contatto in arrivo: riferimenti da definire con il Comune."
+  },
+  "mine": {
+    "title": "Il mio itinerario",
+    "open": "Il mio itinerario",
+    "count": "{count, plural, =0 {nessuna tappa} one {# tappa} other {# tappe}}",
+    "save": "Salva nel mio itinerario",
+    "saved": "Nel mio itinerario",
+    "remove": "Rimuovi",
+    "up": "Sposta prima",
+    "down": "Sposta dopo",
+    "empty": "Tocca il cuore sulle tappe in Esplora o nelle schede dei luoghi per costruire il tuo itinerario.",
+    "explore": "Vai a Esplora",
+    "see": "Vedi e percorri",
+    "share": "Condividi su WhatsApp",
+    "clear": "Svuota l'itinerario",
+    "close": "Chiudi",
+    "shareText": "Il mio itinerario a Cosenza: {places}",
+    "sharedTitle": "Itinerario condiviso",
+    "sharedText": "Qualcuno ti ha mandato queste tappe. Puoi salvarle nel tuo itinerario o percorrerle subito.",
+    "keep": "Salva nel mio itinerario",
+    "walk": "Inizia la passeggiata",
+    "walkNeedsTwo": "Servono almeno due tappe per la passeggiata.",
+    "localNote": "Le tappe restano solo su questo telefono: nessun dato viene inviato.",
+    "minutes": "circa {min} min a piedi tra le tappe",
+    "map": "Mappa del mio itinerario"
+  },
+  "explore": {
+    "title": "Esplora",
+    "eyebrow": "Cosenza Connect",
+    "intro": "Tutti i luoghi della città su una mappa: filtra per interesse e tocca il cuore per aggiungerli al tuo itinerario.",
+    "filterLabel": "Filtra i luoghi",
+    "all": "Tutti",
+    "groups": {
+      "arte": "Arte e storia",
+      "piazze": "Piazze e quartieri",
+      "gusto": "Gusto",
+      "natura": "Natura e panorami"
+    },
+    "count": "{count, plural, one {# luogo} other {# luoghi}}",
+    "walk": "{min} min a piedi",
+    "from": "Tempi a piedi stimati da Piazza dei Bruzi, in linea d'aria.",
+    "map": "Mappa dei luoghi",
+    "category": {
+      "chiesa": "Chiesa",
+      "museo": "Museo",
+      "piazza": "Piazza",
+      "strada": "Strada",
+      "teatro": "Teatro",
+      "parco": "Parco",
+      "monumento": "Monumento",
+      "opera-arte": "Opera d'arte",
+      "architettura": "Architettura",
+      "paesaggio": "Paesaggio",
+      "quartiere": "Quartiere",
+      "cantina": "Cantina",
+      "scienza": "Scienza"
+    },
+    "pillar": {
+      "vive": "Vive",
+      "connect": "Connect",
+      "crea": "Crea"
+    }
   }
 }
