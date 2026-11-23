@@ -1,10 +1,10 @@
-import { expect, test } from "./fixtures";
+import { expect, passportOn, test } from "./fixtures";
 
 test.use({ permissions: ["geolocation"], geolocation: { latitude: 39.2878, longitude: 16.2547 } });
 
 test.setTimeout(90_000);
 
-test("passeggiata simulata: arrivo alla tappa, audio e timbro nel passaporto", async ({ page }) => {
+test("passeggiata simulata: arrivo alla tappa, audio (e timbro se il passaporto è attivo)", async ({ page }) => {
   await page.goto("/it/itinerari/fede-di-pietra/passeggiata");
   await page.getByRole("button", { name: "Avvia con posizione simulata" }).click();
   await expect(page.getByText("Prossima tappa", { exact: false })).toBeVisible({ timeout: 20_000 });
@@ -22,9 +22,15 @@ test("passeggiata simulata: arrivo alla tappa, audio e timbro nel passaporto", a
   // ferma il simulatore: nel browser headless il WebGL software satura la CPU
   const pause = page.getByRole("button", { name: "Pausa" }).filter({ hasText: "Pausa" });
   if (await pause.isVisible()) await pause.click({ force: true });
+  const stamps = () => page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem("cosenza-passport:v1") ?? "{}").stamps ?? {}));
+  if (!passportOn) {
+    // passaporto disattivato: nessun timbro, nessun riferimento al Passaporto
+    await expect(page.getByText("Timbro aggiunto al Passaporto")).toHaveCount(0);
+    expect(await stamps()).toEqual([]);
+    return;
+  }
   await expect(page.getByText("Timbro aggiunto al Passaporto")).toBeVisible();
 
   // il timbro è salvato nel passaporto locale (la pagina Passaporto ha un test dedicato)
-  const stamps = await page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem("cosenza-passport:v1") ?? "{}").stamps ?? {}));
-  expect(stamps.length).toBeGreaterThanOrEqual(1);
+  expect((await stamps()).length).toBeGreaterThanOrEqual(1);
 });

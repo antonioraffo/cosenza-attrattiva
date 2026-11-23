@@ -1,4 +1,6 @@
-import { expect, test } from "./fixtures";
+import { expect, passportOn, test } from "./fixtures";
+
+test.skip(!passportOn, "passaporto disattivato (NEXT_PUBLIC_FEATURE_PASSPORT=false)");
 
 test("passaporto: timbri e avanzamento dei sigilli", async ({ page }) => {
   await page.addInitScript(() =>

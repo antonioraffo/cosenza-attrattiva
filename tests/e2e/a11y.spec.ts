@@ -1,7 +1,9 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { passportOn } from "./fixtures";
 
-for (const path of ["/it", "/it/itinerari/atene-della-calabria", "/it/luoghi/castello-svevo", "/it/passaporto"]) {
+const extra = passportOn ? ["/it/passaporto"] : ["/it/esplora", "/it/mio-itinerario?p=duomo,castello-svevo"];
+for (const path of ["/it", "/it/itinerari/atene-della-calabria", "/it/luoghi/castello-svevo", ...extra]) {
   test(`accessibilità WCAG 2.1 AA: ${path}`, async ({ page }) => {
     await page.goto(path);
     await page.waitForLoadState("networkidle");

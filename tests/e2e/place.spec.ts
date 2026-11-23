@@ -1,4 +1,4 @@
-import { expect, test } from "./fixtures";
+import { expect, passportOn, test } from "./fixtures";
 
 test("scheda luogo: racconto, info, itinerari collegati", async ({ page }) => {
   await page.goto("/it/luoghi/duomo");
@@ -9,6 +9,7 @@ test("scheda luogo: racconto, info, itinerari collegati", async ({ page }) => {
 });
 
 test("check-in fuori raggio non assegna il timbro", async ({ page, context }) => {
+  test.skip(!passportOn, "passaporto disattivato");
   await context.grantPermissions(["geolocation"]);
   await context.setGeolocation({ latitude: 39.3, longitude: 16.25 });
   await page.goto("/it/luoghi/duomo");

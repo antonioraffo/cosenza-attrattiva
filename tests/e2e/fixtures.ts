@@ -8,3 +8,6 @@ export const test = base.extend({
   },
 });
 export { expect } from "@playwright/test";
+
+/** Passaporto e timbri: disattivati nella proposta di sintesi (NEXT_PUBLIC_FEATURE_PASSPORT, default false). */
+export const passportOn = process.env.NEXT_PUBLIC_FEATURE_PASSPORT === "true";
