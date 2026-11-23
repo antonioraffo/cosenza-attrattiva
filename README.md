@@ -25,6 +25,34 @@ Documenti: [Architettura](docs/ARCHITECTURE.md) · [Scaletta della demo](docs/DE
   <img src="docs/screenshots/passeggiata-mobile.jpg" width="180" alt="Modalità Passeggiata">
 </p>
 
+## Copia di lavoro "sintesi" (fase 1)
+
+Questo branch (`feat/sintesi-fase1`) è la copia di lavoro della proposta di sintesi con il prototipo
+"Città da vivere"; la versione stabile resta sul tag `stabile-2026-11-23` (branch `demo-stabile`).
+La copia gira con uno stack Docker separato grazie a `.make.local` e a `COMPOSE_PROJECT_NAME` in `.env`
+(non versionati): **https://cosenzaattrattiva.test:8444**, database su `127.0.0.1:5434`.
+
+```make
+# .make.local della copia
+HTTP_PORT := 8081
+HTTPS_PORT := 8444
+export DB_HOST_PORT := 5434
+export COMPOSE_PROJECT_NAME := cosenzasintesi
+```
+
+Novità della fase 1:
+
+| Area | Cosa | Dove |
+|---|---|---|
+| Hero | Selettore **Antica / Contemporanea**, claim "Cosenza, città da vivere." sotto il logo | `components/home/SilhouetteIntro` |
+| Vive | Eventi nel database: **grandi eventi** (rilevanza, pagina dedicata) e **calendario** con filtri | `/eventi`, `/eventi/[slug]`, tabella `events`, `content/seed/events.ts` |
+| Crea | Pagina **Fatto a Cosenza**: mestieri, marchio, botteghe, eventi dell'artigianato | `/fatto-a-cosenza` |
+| Connect | Pagina **Ritorno a Cosenza** (turismo delle radici, IT/EN) | `/ritorno-a-cosenza` |
+| Itinerari | Tipi **a piedi / misto / tematico**: tappe con `at: null` senza posizione | `content/seed/types.ts`, esempi `le-mani-di-cosenza`, `ritorno-a-cosenza` |
+| Menu | Sottomenu dei pilastri (desktop e mobile) | `components/layout/NavDropdown` |
+
+Tutti gli eventi sono **dati dimostrativi** (`demo: true`) da verificare con il Comune.
+
 ## Requisiti
 
 - Docker Desktop (Compose v2)

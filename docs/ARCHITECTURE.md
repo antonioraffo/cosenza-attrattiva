@@ -46,6 +46,12 @@
 - `chapters` — capitolo ordinato, legato a un luogo o a un punto libero (transizione), camera per il `flyTo`,
   `route_fraction` (0–1): separa il tratto "fatto" da quello "rimanente".
 - `neighborhoods` — `geom geometry(Polygon,4326)`.
+- `events` — eventi della città (pilastro Vive): `major` = grande evento (rilevanza, non contenitore), date
+  facoltative con `period` ("Luglio", "Data da annunciare"), luogo (`place_id` o `geom`), `demo` per i dati da verificare.
+- Itinerari **a piedi / misti / tematici** (`itineraries.kind`, calcolato dal seed): `chapters.geom`, `camera`,
+  `route_fraction` e `itineraries.route`, `length_m` sono facoltativi. Racconto, passeggiata, volo 3D e mappe
+  usano solo le tappe geolocalizzate; la passeggiata richiede almeno due tappe e mostra le altre come "letture";
+  senza percorso la durata è quella dichiarata nel seed (`durationMin`).
 - `media`, `place_media` — immagini con credito, licenza, alt IT/EN.
 
 Il seed (`src/server/db/seed.ts`) legge `content/seed/**`, valida i riferimenti, fa upsert per slug,

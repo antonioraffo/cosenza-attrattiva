@@ -29,6 +29,17 @@ in modalità dispositivo (375 px). L'URL è quello stampato da `make up`
 - La pillola **"In evidenza"** in basso porta a ogni sezione.
 - Cambia lingua **EN** (in alto su desktop, nel menu su smartphone): tutto è bilingue. Torna a IT.
 
+### 1b. I tre pilastri (copia "sintesi", 3 min)
+
+- In alto il selettore ora dice **Antica / Contemporanea**; sotto il logo il claim *Cosenza, città da vivere.*
+- Menu **Cosenza Vive ▾ → Calendario della città**: fascia dei **grandi eventi** (eventi di grande rilevanza) e
+  calendario filtrabile; apri **Festa della Madonna del Pilerio**: data, luogo, mappa, cosa vedere vicino, itinerari nei dintorni.
+- Menu **Cosenza Crea ▾ → Fatto a Cosenza**: scegli un mestiere (frecce ← →), il marchio, le botteghe;
+  **Segui «Le mani di Cosenza»**: un itinerario *misto*, con tappe sulla mappa e letture tra una tappa e l'altra.
+- Menu **Cosenza Connect ▾ → Ritorno a Cosenza**: turismo delle radici in italiano e inglese; l'itinerario
+  *tematico* "Ritorno a Cosenza" non ha tappe su mappa e si legge come racconto.
+- Ricorda: gli eventi sono dati dimostrativi; date e programmi vanno confermati con il Comune.
+
 ## 2. Il racconto (4 min) – *scrollytelling* "Il re nel fiume"
 
 - Apri **Il re nel fiume** → mostra durata, km, difficoltà, la mappa del percorso reale.
