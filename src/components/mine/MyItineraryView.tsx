@@ -2,10 +2,12 @@
 
 /* eslint-disable @next/next/no-img-element -- miniature già ottimizzate in public/media */
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { GeoJSONSource, LngLatBoundsLike } from "maplibre-gl";
 import { Link } from "@/i18n/navigation";
 import { bbox, type LngLat } from "@/lib/geo";
+import { formatKm } from "@/lib/format";
+import { WALK_M_PER_MIN } from "@/lib/plan";
 import { moveSaved, myItinerary, setSaved, shareParam, toggleSaved } from "@/lib/stores/my-itinerary";
 import { useMapLibre } from "@/components/map/useMapLibre";
 import { IconArrowRight, IconWalk } from "@/components/ui/icons";
@@ -34,8 +36,22 @@ export function MyItineraryView({ places, shared }: { places: MinePlace[]; share
   const slugs = shared ?? saved;
   const editable = shared === null;
   const list = useMemo(() => slugs.map((s) => places.find((p) => p.slug === s)).filter((p) => p !== undefined), [slugs, places]);
-  const minutes = list.length > 1 ? walkMinutes(list.map((p) => p.position)) : 0;
   const param = shareParam(list.map((p) => p.slug));
+  // percorso pedonale reale (OSRM) tra le tappe; finché non arriva, linea retta e minuti stimati
+  const [real, setReal] = useState<{ key: string; coordinates: LngLat[]; distanceM: number } | null>(null);
+  const route = real?.key === param ? real : null;
+  useEffect(() => {
+    if (list.length < 2) return;
+    let alive = true;
+    fetch(`/api/walking-route?p=${param}`)
+      .then((r) => r.json() as Promise<{ coordinates: LngLat[]; distanceM: number; source: string }>)
+      .then((r) => alive && r.source === "osrm" && setReal({ key: param, coordinates: r.coordinates, distanceM: r.distanceM }))
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, [param, list.length]);
+  const minutes = list.length > 1 ? (route ? Math.round(route.distanceM / WALK_M_PER_MIN) : walkMinutes(list.map((p) => p.position))) : 0;
   const el = useRef<HTMLDivElement>(null);
   const map = useMapLibre(el, locale, { cooperativeGestures: true }, list.length > 0);
 
@@ -45,7 +61,7 @@ export function MyItineraryView({ places, shared }: { places: MinePlace[]; share
       type: "FeatureCollection" as const,
       features: [
         ...(list.length > 1
-          ? [{ type: "Feature" as const, properties: { n: "" }, geometry: { type: "LineString" as const, coordinates: list.map((p) => p.position) } }]
+          ? [{ type: "Feature" as const, properties: { n: "" }, geometry: { type: "LineString" as const, coordinates: route?.coordinates ?? list.map((p) => p.position) } }]
           : []),
         ...list.map((p, i) => ({ type: "Feature" as const, properties: { n: String(i + 1) }, geometry: { type: "Point" as const, coordinates: p.position } })),
       ],
@@ -77,9 +93,11 @@ export function MyItineraryView({ places, shared }: { places: MinePlace[]; share
         paint: { "text-color": "#ffffff" },
       });
     }
+    // tratteggio = linea retta provvisoria; continua = percorso pedonale reale
+    map.setPaintProperty("mine-line", "line-dasharray", route ? undefined : [2, 1.5]);
     if (list.length === 1) map.jumpTo({ center: list[0]!.position, zoom: 16 });
-    else if (list.length > 1) map.fitBounds(bbox(list.map((p) => p.position)) as LngLatBoundsLike, { padding: 56, maxZoom: 17, duration: 0 });
-  }, [map, list]);
+    else if (list.length > 1) map.fitBounds(bbox(route?.coordinates ?? list.map((p) => p.position)) as LngLatBoundsLike, { padding: 56, maxZoom: 17, duration: 0 });
+  }, [map, list, route]);
 
   const shareUrl = `${origin}/${locale}/mio-itinerario?p=${param}`;
   const shareText = t("shareText", { places: list.map((p) => p.name.split(" – ")[0]).join(", ") });
@@ -122,7 +140,7 @@ export function MyItineraryView({ places, shared }: { places: MinePlace[]; share
           </div>
           <p className="ca-demo-note">
             {t("count", { count: list.length })}
-            {minutes > 0 && ` · ${t("minutes", { min: minutes })}`}
+            {minutes > 0 && ` · ${route ? t("minutesReal", { min: minutes, km: formatKm(route.distanceM, locale) }) : t("minutes", { min: minutes })}`}
           </p>
           <div className="ca-xp-layout">
             <ol className="ca-xp-list">

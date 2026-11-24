@@ -6,6 +6,7 @@ import { mdToHtml } from "@/lib/markdown";
 import { stripMarkdown } from "@/lib/text";
 import { parsePlacesParam, shareParam } from "@/lib/mine";
 import { listPlacesFull } from "@/server/queries";
+import { walkingRoute } from "@/server/routing";
 import { WalkView, type WalkChapter } from "@/components/walk/WalkView";
 
 type Props = { params: Promise<{ locale: string }>; searchParams: Promise<{ p?: string }> };
@@ -19,7 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 /**
  * Passeggiata sulle tappe scelte dal visitatore (?p=slug1,slug2,…): stessa esperienza degli
- * itinerari curati (mappa, arrivo per geofence, audio), con un percorso in linea retta tra le tappe.
+ * itinerari curati (mappa, arrivo per geofence, audio), sul percorso pedonale reale tra le tappe
+ * (OSRM; linea retta se il servizio non risponde).
  */
 export default async function MyWalkPage({ params, searchParams }: Props) {
   const { locale } = await params;
@@ -48,12 +50,14 @@ export default async function MyWalkPage({ params, searchParams }: Props) {
     };
   });
 
+  const route = await walkingRoute(chapters.map((c) => c.position));
+
   return (
     <WalkView
       slug="mio-itinerario"
       title={tm("title")}
       color="#0f7663"
-      route={chapters.map((c) => c.position)}
+      route={route.coordinates}
       chapters={chapters}
       backHref={`/mio-itinerario?p=${shareParam(slugs)}`}
     />
