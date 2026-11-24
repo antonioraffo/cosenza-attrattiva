@@ -321,7 +321,7 @@
 
 /* ---------------------------------------------------------------------------------------------
    Hero a disegno automatico (HeroDrawing): tutto nella prima schermata, disegno intero e in loop.
-   Card «Il luogo» e «Curiosità»: da 1200 px ai lati del disegno (griglia a tre colonne, il disegno
+   Card «Il luogo» e «Curiosità» (220–260 px): da 1200 px ai lati del disegno (griglia a tre colonne, il disegno
    scala nella colonna centrale e non finisce mai sotto le card); sotto, sopra e sotto il disegno.
    --------------------------------------------------------------------------------------------- */
 .ca-hero-draw {
@@ -543,7 +543,7 @@
 @media (min-width: 1200px) {
   .ca-hero-draw-stage {
     display: grid;
-    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr) minmax(240px, 300px);
+    grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) minmax(220px, 260px);
     grid-template-areas: "fact art place";
     align-items: center;
     gap: clamp(24px, 3vw, 56px);
@@ -580,6 +580,9 @@
     margin-top: 8px;
     font-size: 14px;
     line-height: 1.55;
+    -webkit-line-clamp: 7;
+  }
+  .ca-hero-card--fact .ca-hero-card-text {
     -webkit-line-clamp: 7;
   }
   .ca-hero-card-link {
