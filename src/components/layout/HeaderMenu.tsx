@@ -1,28 +1,34 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { IconClose, IconMenu, IconStamp } from "@/components/ui/icons";
-import { PillarIcon, type Pillar } from "./PillarIcon";
+import { PillarIcon } from "./PillarIcon";
+import type { MegaPillar } from "./MegaMenu";
 import { MyItineraryButton } from "@/components/mine/MyItineraryButton";
 
 /**
  * Menu mobile (≤ 960 px) come vivicosenza: hamburger 44×44 che diventa X, pannello sotto la barra
  * mostrato/nascosto con l'attributo `hidden` (nessuna animazione); si chiude con Esc, click fuori
- * o click su una voce.
+ * o click su una voce. «Scopri» ha lo stesso contenuto del megamenu: Vive, Connect e Crea come
+ * accordion (aria-expanded/aria-controls) con spiegazione e sottovoci; poi Eventi e Pianifica.
  */
 export function HeaderMenu({
+  pillars,
   links,
   labels,
   passport = true,
   children,
 }: {
   passport?: boolean;
-  links: { pillar: Pillar; href: string; label: string; items: { href: string; label: string }[] }[];
-  labels: { open: string; close: string; nav: string; passport: string };
+  pillars: MegaPillar[];
+  links: { href: string; label: string }[];
+  labels: { open: string; close: string; nav: string; passport: string; discover: string };
   children?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const id = useId();
   const button = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLElement>(null);
 
@@ -64,22 +70,53 @@ export function HeaderMenu({
         {open ? <IconClose size={24} /> : <IconMenu size={24} />}
       </button>
       <nav ref={panel} id="mobile-nav" className="site-mobile-nav" aria-label={labels.nav} hidden={!open}>
-        <ul>
+        <p className="site-mobile-heading">{labels.discover}</p>
+        <ul className="site-mobile-pillars">
+          {pillars.map((p) => {
+            const isOpen = expanded === p.pillar;
+            const sub = `${id}-${p.pillar}`;
+            return (
+              <li key={p.pillar} data-pillar={p.pillar}>
+                <button
+                  type="button"
+                  className="site-mobile-link site-mobile-accordion"
+                  aria-expanded={isOpen}
+                  aria-controls={sub}
+                  onClick={() => setExpanded(isOpen ? null : p.pillar)}
+                >
+                  <PillarIcon pillar={p.pillar} size={22} />
+                  <span>{p.label}</span>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <path d="m7 10 5 5 5-5" />
+                  </svg>
+                </button>
+                <div id={sub} className="site-mobile-pane" hidden={!isOpen}>
+                  <p>{p.description}</p>
+                  <ul className="site-mobile-sub">
+                    {p.items.map((it) => (
+                      <li key={it.href}>
+                        <Link href={it.href} onClick={() => setOpen(false)}>
+                          {it.label}
+                        </Link>
+                      </li>
+                    ))}
+                    <li>
+                      <Link href={p.href} onClick={() => setOpen(false)}>
+                        {p.cta}
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+        <ul className="site-mobile-plain">
           {links.map((l) => (
-            <li key={l.pillar}>
+            <li key={l.href}>
               <Link href={l.href} className="site-mobile-link" onClick={() => setOpen(false)}>
-                <PillarIcon pillar={l.pillar} size={22} />
-                <span>{l.label}</span>
+                {l.label}
               </Link>
-              <ul className="site-mobile-sub">
-                {l.items.map((it) => (
-                  <li key={it.href}>
-                    <Link href={it.href} onClick={() => setOpen(false)}>
-                      {it.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
             </li>
           ))}
         </ul>

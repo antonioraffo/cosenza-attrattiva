@@ -4,7 +4,7 @@ import { features } from "@/lib/env";
 import { IconSearch, IconStamp } from "@/components/ui/icons";
 import { HeaderMenu } from "./HeaderMenu";
 import { Logo } from "./Logo";
-import { NavDropdown } from "./NavDropdown";
+import { MegaMenu, type MegaPillar } from "./MegaMenu";
 import { type Pillar } from "./PillarIcon";
 import { ScrollReset } from "./ScrollReset";
 import { MyItineraryButton, MyItineraryDrawer } from "@/components/mine/MyItineraryButton";
@@ -13,7 +13,7 @@ export const PILLARS: Pillar[] = ["vive", "connect", "crea"];
 
 /**
  * Header di sito sul modello di vivicosenza: barra bianca fissa con ombra (80/76/72 px),
- * logo a sinistra, tre voci dei pilastri (icona + etichetta) e azioni a destra; sotto 960 px
+ * logo a sinistra, menu Scopri (megamenu dei pilastri) · Eventi · Pianifica e azioni a destra; sotto 960 px
  * le voci passano nel menu a hamburger (HeaderMenu).
  */
 export async function Header() {
@@ -35,7 +35,20 @@ export async function Header() {
       { href: "/itinerari/le-mani-di-cosenza", label: t("subMani") },
     ],
   };
-  const links = PILLARS.map((p) => ({ pillar: p, href: `/#${p}`, label: t(p), items: sub[p] }));
+  // «Scopri»: i tre pilastri con spiegazione e sottovoci (megamenu su desktop, accordion su mobile)
+  const pillars: MegaPillar[] = PILLARS.map((p) => ({
+    pillar: p,
+    label: t(p),
+    description: t(`mega.${p}`),
+    href: `/#${p}`,
+    cta: t("mega.goTo", { label: t(p) }),
+    items: sub[p],
+  }));
+  // voci dirette: Eventi → calendario della città, Pianifica → il giro su misura del tuo tempo
+  const links = [
+    { href: "/eventi", label: t("events") },
+    { href: "/il-tuo-tempo", label: t("plan") },
+  ];
 
   return (
     <header className="site-header" id="site-header">
@@ -47,8 +60,11 @@ export async function Header() {
         </Link>
 
         <nav className="site-nav" aria-label={t("main")}>
+          <MegaMenu label={t("discover")} pillars={pillars} listLabel={t("mega.list")} />
           {links.map((l) => (
-            <NavDropdown key={l.pillar} pillar={l.pillar} href={l.href} label={l.label} items={l.items} toggleLabel={t("openSub", { label: l.label })} />
+            <Link key={l.href} href={l.href} className="site-nav-link">
+              {l.label}
+            </Link>
           ))}
         </nav>
 
@@ -67,8 +83,9 @@ export async function Header() {
             <MyItineraryButton />
           )}
           <HeaderMenu
+            pillars={pillars}
             links={links}
-            labels={{ open: t("openMenu"), close: t("closeMenu"), nav: t("mobileNav"), passport: t("passport") }}
+            labels={{ open: t("openMenu"), close: t("closeMenu"), nav: t("mobileNav"), passport: t("passport"), discover: t("discover") }}
             passport={features.passport}
           />
         </div>
