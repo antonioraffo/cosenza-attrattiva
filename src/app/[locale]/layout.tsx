@@ -12,8 +12,16 @@ import { OfflineIndicator } from "@/components/layout/OfflineIndicator";
 import { PwaProvider } from "@/components/pwa/PwaProvider";
 import "../globals.css";
 
-// Font unico del progetto: Rethink Sans (SIL Open Font License), self-hosted, file variabile, sottoinsieme latin
-const rethink = localFont({ src: "../../fonts/rethink-sans-latin.woff2", weight: "400 800", variable: "--font-rethink", display: "swap" });
+// Font unico del progetto: Rethink Sans (SIL Open Font License), i due pesi del marchio forniti in materiale/FONT-LOGO.
+// Regular copre i pesi 400–599 (testo), ExtraBold i pesi 600–900 (titoli, pulsanti, menu): nessun grassetto sintetico.
+const rethink = localFont({
+  src: [
+    { path: "../../fonts/RethinkSans-Regular.ttf", weight: "400 599", style: "normal" },
+    { path: "../../fonts/RethinkSans-ExtraBold.ttf", weight: "600 900", style: "normal" },
+  ],
+  variable: "--font-rethink",
+  display: "swap",
+});
 
 // Contenuti letti dal database a ogni richiesta (nessun prerender in fase di build)
 export const dynamic = "force-dynamic";

@@ -94,7 +94,7 @@ src/
 ├── components/            ui, layout, home, itinerary, story, walk, place, passport, audio, map
 │   └── home/effects/      effetti allo scroll della home (porting di vivi-cosenza: silhouette, pannelli, foglio, typewriter)
 ├── content/               eventi della home (dati dimostrativi)
-├── fonts/                 Rethink Sans (OFL, self-hosted)
+├── fonts/                 Rethink Sans Regular ed ExtraBold (OFL, i file del marchio)
 ├── features/              streetview, fly3d, ar, ImmersiveLauncher (lazy)
 ├── lib/                   geo (+ geofence, wkb), stores, orientation, offline, env, text
 ├── server/                db (schema, client, seed, migrate, content), queries, assistant
