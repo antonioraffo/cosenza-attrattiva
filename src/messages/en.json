@@ -47,6 +47,13 @@
       "giroTitle": "Your tour",
       "openFull": "Open the tour with the map",
       "walk": "{min} min on foot"
+    },
+    "hero": {
+      "curiosity": "Did you know?",
+      "place": "The place",
+      "pause": "Pause the animation",
+      "play": "Resume the animation",
+      "shown": "{title}"
     }
   },
   "themes": {

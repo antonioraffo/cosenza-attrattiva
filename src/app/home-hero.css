@@ -320,15 +320,18 @@
 }
 
 /* ---------------------------------------------------------------------------------------------
-   Hero a disegno automatico (HeroDrawing): tutto nella prima schermata, disegno intero e in loop
+   Hero a disegno automatico (HeroDrawing): tutto nella prima schermata, disegno intero e in loop.
+   Card «Il luogo» e «Curiosità»: da 1200 px ai lati del disegno (griglia a tre colonne, il disegno
+   scala nella colonna centrale e non finisce mai sotto le card); sotto, sopra e sotto il disegno.
    --------------------------------------------------------------------------------------------- */
 .ca-hero-draw {
+  --card-ease: cubic-bezier(0.2, 0.7, 0.1, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: clamp(8px, 1.6svh, 20px);
   height: calc(100svh - var(--hero-header-h, 80px));
-  min-height: 420px;
+  min-height: 460px;
   padding: clamp(12px, 2.4svh, 32px) 16px clamp(14px, 2.6svh, 32px);
   overflow: hidden;
   background: #fff;
@@ -339,7 +342,7 @@
 }
 .ca-hero-draw-brand img {
   display: block;
-  width: clamp(200px, 26vw, 400px);
+  width: clamp(180px, 26vw, 400px);
   max-height: 14svh;
   height: auto;
   margin: 0 auto;
@@ -354,14 +357,29 @@
   line-height: 1.2;
   letter-spacing: -0.03em;
 }
-/* il riquadro prende lo spazio rimasto; l'SVG ci sta per intero (preserveAspectRatio meet) */
+
+/* palco: disegno e card */
+.ca-hero-draw-stage {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 1.4svh, 16px);
+  width: 100%;
+  max-width: 1720px;
+  min-height: 0;
+}
 .ca-hero-draw-art {
+  position: relative;
   flex: 1 1 auto;
   width: 100%;
-  max-width: 1400px;
-  min-height: 0;
-  position: relative;
+  min-height: 120px;
   contain: layout paint style;
+}
+.ca-hero-draw-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 /* i tratti animati: canvas sopra l'SVG (che mostra solo il "fantasma"), stessa area e stessa scala */
 .ca-hero-draw-canvas {
@@ -371,18 +389,112 @@
   height: 100%;
   pointer-events: none;
 }
-.ca-hero-draw-art svg {
+
+/* card */
+.ca-hero-card {
+  flex: none;
+  width: min(100%, 520px);
+  padding: 12px 16px;
+  border: 1px solid #e1dcd4;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 28px #211e1c14;
+  color: var(--color-neutro-900);
+  transition:
+    opacity 0.6s var(--card-ease),
+    transform 0.6s var(--card-ease);
+}
+.ca-hero-card--fact {
+  order: -1;
+  --card-from: translateY(-14px);
+}
+.ca-hero-card--place {
+  order: 1;
+  --card-from: translateY(14px);
+}
+.ca-hero-card-eyebrow {
+  margin: 0 0 4px;
+  color: var(--color-primario-700);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ca-hero-card h2,
+.ca-hero-card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.ca-hero-card-text {
+  display: -webkit-box;
+  margin: 4px 0 0;
+  overflow: hidden;
+  color: var(--color-neutro-700);
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.ca-hero-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  margin-top: 4px;
+  color: var(--color-primario-700);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.ca-hero-card-link svg {
+  width: 18px;
+  height: 18px;
+}
+.ca-hero-card-link:hover span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ca-hero-card--fact .ca-hero-card-text {
+  -webkit-line-clamp: 3;
+}
+/* una curiosità per giro (data-drawing-loop 0, 1, 2); senza JavaScript la prima */
+.ca-hero-fact:not([data-fact="0"]) {
+  display: none;
+}
+.ca-hero-draw[data-drawing-loop="1"] .ca-hero-fact[data-fact="0"],
+.ca-hero-draw[data-drawing-loop="2"] .ca-hero-fact[data-fact="0"] {
+  display: none;
+}
+.ca-hero-draw[data-drawing-loop="1"] .ca-hero-fact[data-fact="1"],
+.ca-hero-draw[data-drawing-loop="2"] .ca-hero-fact[data-fact="2"] {
   display: block;
-  width: 100%;
-  height: 100%;
+}
+/* comparsa: dissolvenza + scivolamento dal lato esterno, sincronizzata con il loop (data-cards) */
+.ca-hero-draw[data-drawing-ready][data-cards="out"] .ca-hero-card:not(:focus-within) {
+  opacity: 0;
+  transform: var(--card-from);
+}
+.ca-hero-draw:not([data-drawing-ready]) .ca-hero-card {
+  opacity: 0;
+}
+
+/* comandi: Antica / Contemporanea e pausa */
+.ca-hero-draw-controls {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .ca-hero-draw-nav {
-  flex: none;
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
-  width: min(292px, 100%);
+  width: min(292px, calc(100vw - 92px));
   padding: 5px;
   border: 1px solid #e1dcd4;
   border-radius: 32px;
@@ -407,4 +519,82 @@
 .ca-hero-draw-nav button[aria-pressed="false"]:hover {
   color: var(--color-primario-600);
 }
+.ca-hero-draw-pause {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #e1dcd4;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 8px 28px #211e1c1a;
+  color: var(--color-neutro-900);
+  cursor: pointer;
+}
+.ca-hero-draw-pause svg {
+  width: 18px;
+  height: 18px;
+}
+.ca-hero-draw-pause:hover {
+  color: var(--color-primario-600);
+}
 
+/* da 1200 px: card ai lati del disegno, centrate in verticale */
+@media (min-width: 1200px) {
+  .ca-hero-draw-stage {
+    display: grid;
+    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr) minmax(240px, 300px);
+    grid-template-areas: "fact art place";
+    align-items: center;
+    gap: clamp(24px, 3vw, 56px);
+    padding-inline: clamp(8px, 2vw, 40px);
+  }
+  .ca-hero-draw-art {
+    grid-area: art;
+    height: 100%;
+  }
+  .ca-hero-card {
+    width: auto;
+    padding: 20px 22px;
+    border-radius: 22px;
+  }
+  .ca-hero-card--fact {
+    grid-area: fact;
+    --card-from: translateX(-24px);
+  }
+  .ca-hero-card--place {
+    grid-area: place;
+    --card-from: translateX(24px);
+  }
+  .ca-hero-card-eyebrow {
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .ca-hero-card h2 {
+    font-size: clamp(20px, 1.6vw, 26px);
+  }
+  .ca-hero-card h3 {
+    font-size: 18px;
+  }
+  .ca-hero-card-text {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-line-clamp: 7;
+  }
+  .ca-hero-card-link {
+    min-height: 44px;
+    margin-top: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ca-hero-card {
+    transition: none;
+  }
+  .ca-hero-draw[data-drawing-ready][data-cards="out"] .ca-hero-card,
+  .ca-hero-draw:not([data-drawing-ready]) .ca-hero-card {
+    opacity: 1;
+    transform: none;
+  }
+}

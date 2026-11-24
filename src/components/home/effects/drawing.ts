@@ -12,10 +12,16 @@
  *
  * Con prefers-reduced-motion il disegno è subito completo e fermo. Fuori schermo o con la scheda nascosta
  * l'animazione si ferma. Il disegno si scarica a pagina carica, quando il browser è libero.
+ *
+ * Card dell'hero (HeroDrawing): `data-cards` = "in" | "out" segue il loop (compaiono a CARDS_AT, se ne
+ * vanno con la dissolvenza) e `data-drawing-loop` (0, 1, 2) sceglie la curiosità del giro.
+ * Pausa: evento "drawing:pause" (pulsante, WCAG 2.2.2) e puntatore o focus su [data-drawing-hold].
  */
 
 export const DRAW_MS = 7000;
-export const HOLD_MS = 2500;
+export const HOLD_MS = 4000;
+/** le card compaiono quando il disegno è a questo punto e restano fino alla dissolvenza */
+const CARDS_AT = 0.85;
 export const FADE_MS = 700;
 const CYCLE_MS = DRAW_MS + HOLD_MS + FADE_MS;
 /** spessore dei tratti in pixel CSS (stroke-width 0.9 con vector-effect non-scaling-stroke) */
@@ -53,9 +59,13 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
   // istante (performance.now) a cui corrisponde l'inizio del ciclo; si sposta durante le pause
   let origin = view.performance.now();
   let pausedAt: number | null = null;
+  // motivi di pausa oltre a schermo e scheda: scelta dell'utente, puntatore o focus su una card
+  let userPaused = false;
+  let hovering = false;
+  let focusing = false;
   let resizeObserver: ResizeObserver | undefined;
   // nuova scena: lo stato della precedente non vale più
-  for (const key of ["drawingReady", "drawingState", "drawingProgress"]) delete root.dataset[key];
+  for (const key of ["drawingReady", "drawingState", "drawingProgress", "cards", "drawingLoop"]) delete root.dataset[key];
 
   /** dimensioni del canvas e trasformazione viewBox → pixel (come preserveAspectRatio="xMidYMid meet") */
   const fit = () => {
@@ -111,6 +121,8 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
         canvas.style.opacity = "1";
         redraw(1);
         root.dataset.drawingState = "static";
+        root.dataset.cards = "in";
+        root.dataset.drawingLoop = "0";
       }
       return;
     }
@@ -121,23 +133,29 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
       cycle = current;
       canvas.style.opacity = "1";
       redraw(0);
+      root.dataset.drawingLoop = String(cycle % 3);
     }
     if (t < DRAW_MS) {
-      advance(ease(t / DRAW_MS));
+      const progress = ease(t / DRAW_MS);
+      advance(progress);
       root.dataset.drawingState = "drawing";
+      root.dataset.cards = progress >= CARDS_AT ? "in" : "out";
     } else if (t < DRAW_MS + HOLD_MS) {
       advance(1);
       root.dataset.drawingState = "complete";
+      root.dataset.cards = "in";
     } else {
       advance(1);
       canvas.style.opacity = String(1 - clamp((t - DRAW_MS - HOLD_MS) / FADE_MS));
       root.dataset.drawingState = "fading";
+      root.dataset.cards = "out";
     }
     schedule();
   };
 
+  const held = () => userPaused || hovering || focusing;
   const schedule = () => {
-    if (disposed || frame !== undefined || !visible || doc.hidden || !strokes.length) return;
+    if (disposed || frame !== undefined || !visible || doc.hidden || held() || !strokes.length) return;
     frame = view.requestAnimationFrame(tick);
   };
   const pause = () => {
@@ -163,6 +181,42 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
       : undefined;
   observer?.observe(root);
   const onVisibility = () => (doc.hidden ? pause() : resume());
+  const update = () => {
+    root.dataset.drawingPaused = String(held());
+    if (held()) pause();
+    else resume();
+  };
+  const onPause = (event: Event) => {
+    userPaused = !!(event as CustomEvent<boolean>).detail;
+    update();
+  };
+  const onEnter = (event: Event) => {
+    if ((event as PointerEvent).pointerType === "touch") return;
+    hovering = true;
+    update();
+  };
+  const onLeave = () => {
+    hovering = false;
+    update();
+  };
+  const onFocusIn = () => {
+    focusing = true;
+    update();
+  };
+  const onFocusOut = (event: FocusEvent) => {
+    const next = event.relatedTarget as Node | null;
+    if (next && holds.some((h) => h.contains(next))) return;
+    focusing = false;
+    update();
+  };
+  root.addEventListener("drawing:pause", onPause);
+  const holds = [...root.querySelectorAll<HTMLElement>("[data-drawing-hold]")];
+  for (const h of holds) {
+    h.addEventListener("pointerenter", onEnter);
+    h.addEventListener("pointerleave", onLeave);
+    h.addEventListener("focusin", onFocusIn);
+    h.addEventListener("focusout", onFocusOut);
+  }
   const onMotion = () => {
     origin = view.performance.now();
     cycle = -1;
@@ -249,5 +303,12 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
     resizeObserver?.disconnect();
     doc.removeEventListener("visibilitychange", onVisibility);
     reduce.removeEventListener("change", onMotion);
+    root.removeEventListener("drawing:pause", onPause);
+    for (const h of holds) {
+      h.removeEventListener("pointerenter", onEnter);
+      h.removeEventListener("pointerleave", onLeave);
+      h.removeEventListener("focusin", onFocusIn);
+      h.removeEventListener("focusout", onFocusOut);
+    }
   };
 }

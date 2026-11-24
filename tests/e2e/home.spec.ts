@@ -39,12 +39,45 @@ test("hero: disegno intero nella prima schermata, animazione automatica in loop"
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
 });
 
+test("hero: card del luogo e curiosità seguono il loop, non coprono il disegno, pausa", async ({ page }) => {
+  test.setTimeout(90_000);
+  await page.goto("/it");
+  const hero = page.locator(".ca-hero-draw");
+  const place = hero.locator(".ca-hero-card--place");
+  const fact = hero.locator(".ca-hero-card--fact");
+  await expect(place.getByRole("heading", { level: 2, name: "Duomo di Cosenza" })).toBeAttached();
+  await expect(place.getByRole("link", { name: "Scopri di più" })).toHaveAttribute("href", "/it/luoghi/duomo");
+  await expect(fact.getByRole("heading", { level: 3, name: /1222/ })).toBeVisible({ timeout: 30_000 });
+  await expect.poll(() => hero.getAttribute("data-cards"), { timeout: 30_000, intervals: [250] }).toBe("in");
+  // il disegno (SVG in "meet" nel suo riquadro) non sta sotto le card
+  const boxes = await page.evaluate(() => {
+    const art = document.querySelector(".ca-hero-draw-art")!;
+    const vb = art.querySelector("svg")!.viewBox.baseVal;
+    const a = art.getBoundingClientRect();
+    const s = Math.min(a.width / vb.width, a.height / vb.height);
+    const d = { x: a.x + (a.width - vb.width * s) / 2, y: a.y + (a.height - vb.height * s) / 2, w: vb.width * s, h: vb.height * s };
+    return { d, cards: [...document.querySelectorAll(".ca-hero-card")].map((c) => c.getBoundingClientRect().toJSON()) };
+  });
+  for (const c of boxes.cards)
+    expect(c.right <= boxes.d.x + 1 || c.left >= boxes.d.x + boxes.d.w - 1 || c.bottom <= boxes.d.y + 1 || c.top >= boxes.d.y + boxes.d.h - 1).toBe(true);
+  // pausa (WCAG 2.2.2): il disegno si ferma
+  await hero.getByRole("button", { name: "Metti in pausa l'animazione" }).click();
+  await expect(hero).toHaveAttribute("data-drawing-paused", "true");
+  const progress = await hero.getAttribute("data-drawing-progress");
+  const state = await hero.getAttribute("data-drawing-state");
+  await page.waitForTimeout(1500);
+  expect(await hero.getAttribute("data-drawing-progress")).toBe(progress);
+  expect(await hero.getAttribute("data-drawing-state")).toBe(state);
+});
+
 test("hero: con movimento ridotto il disegno è completo e fermo", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/it");
   const hero = page.locator(".ca-hero-draw");
   await expect(hero).toHaveAttribute("data-drawing-state", "static");
   await expect(hero).toHaveAttribute("data-drawing-progress", "1.000");
+  await expect(hero).toHaveAttribute("data-cards", "in");
+  await expect(hero.locator(".ca-hero-card--place")).toHaveCSS("opacity", "1");
 });
 
 test("menu principale: solo Vive, Connect, Crea con icona e etichetta", async ({ page }, info) => {

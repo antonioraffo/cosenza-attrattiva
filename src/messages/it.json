@@ -47,6 +47,13 @@
       "giroTitle": "Il tuo giro",
       "openFull": "Apri il giro con la mappa",
       "walk": "{min} min a piedi"
+    },
+    "hero": {
+      "curiosity": "Curiosità",
+      "place": "Il luogo",
+      "pause": "Metti in pausa l'animazione",
+      "play": "Riprendi l'animazione",
+      "shown": "{title}"
     }
   },
   "themes": {
