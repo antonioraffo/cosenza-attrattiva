@@ -2,16 +2,19 @@ import { expect, passportOn, test } from "./fixtures";
 
 /* Fase 3 della sintesi: «Il tuo tempo, il tuo giro» (fascia in home, pagina con linea del tempo). */
 
-test("home: fascia «Quanto tempo hai?» con i numeri del giro", async ({ page }) => {
+test("home: «Il tuo tempo» e «Il tuo giro» con il giro e il link alla pagina completa", async ({ page }) => {
   await page.goto("/it");
-  // l'idratazione della home riporta lo scroll in cima: si interagisce a pagina pronta
   await page.waitForLoadState("networkidle");
-  const bar = page.locator(".ca-timebar");
-  await expect(bar.getByRole("heading", { name: "Quanto tempo hai?" })).toBeVisible();
-  await expect(bar.getByRole("link")).toHaveCount(3);
-  await expect(bar.getByRole("link", { name: /^1 giorno/ })).toContainText(/\d+ itinerari · \d+,\d km/);
-  await bar.getByRole("link", { name: /^Weekend/ }).click();
-  await expect(page).toHaveURL(/\/it\/il-tuo-tempo\?t=weekend(&ora=10)?$/);
+  const block = page.locator("#il-tuo-tempo");
+  await block.scrollIntoViewIfNeeded();
+  const options = block.getByRole("radiogroup", { name: /tempo/i });
+  await expect(options.getByRole("radio", { name: "1 giorno" })).toHaveAttribute("aria-checked", "true");
+  await expect(block.locator(".ca-hometime-card")).not.toHaveCount(0);
+  await expect(block.locator(".ca-hometime-card").first()).toContainText("10:00");
+  await options.getByRole("radio", { name: "Weekend" }).click();
+  await expect(block.getByRole("heading", { level: 3, name: "Giorno 2" })).toBeVisible();
+  await block.getByRole("link", { name: "Apri il giro con la mappa" }).click();
+  await expect(page).toHaveURL(/\/it\/il-tuo-tempo\?t=weekend&ora=10$/);
   await expect(page.getByRole("heading", { level: 2, name: /^Giorno 2/ })).toBeVisible();
 });
 

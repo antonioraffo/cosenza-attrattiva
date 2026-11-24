@@ -68,12 +68,10 @@ test("Fatto a Cosenza: mestieri come schede accessibili, raggiungibile dalla car
   await expect(page.getByRole("tabpanel")).toContainText("Intaglio");
 });
 
-test("Ritorno a Cosenza: pagina bilingue con collegamento all'altra lingua", async ({ page }) => {
+test("Ritorno a Cosenza: pagina in italiano, senza rimando all'inglese (sito monolingua)", async ({ page }) => {
   await page.goto("/it/ritorno-a-cosenza");
   await expect(page.getByRole("heading", { level: 1, name: "Ritorno a Cosenza" })).toBeVisible();
-  await page.getByRole("link", { name: "Read in English" }).click();
-  await expect(page).toHaveURL(/\/en\/ritorno-a-cosenza$/);
-  await expect(page.getByRole("heading", { level: 1, name: "Return to Cosenza" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Read in English" })).toHaveCount(0);
 });
 
 test("itinerario tematico: niente mappa né passeggiata, la passeggiata rimanda al racconto", async ({ page }) => {

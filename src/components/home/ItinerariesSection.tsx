@@ -11,8 +11,10 @@ import { Typewriter } from "./Typewriter";
 /**
  * Itinerari nello stile di vivicosenza (card fotografiche in un carosello orizzontale),
  * alimentati dai 7 itinerari del database, con filtro per tema.
+ * Non è più in home: è la pagina /itinerari (titolo h1).
  */
-export async function ItinerariesSection({ locale }: { locale: string }) {
+export async function ItinerariesSection({ locale, as = "h2" }: { locale: string; as?: "h1" | "h2" }) {
+  const Title = as;
   const t = await getTranslations("homeItineraries");
   const tt = await getTranslations("themes");
   const ti = await getTranslations("itinerary");
@@ -70,9 +72,9 @@ export async function ItinerariesSection({ locale }: { locale: string }) {
     <section id="itinerari" className="ca-section ca-itineraries" aria-labelledby="itinerari-title">
       <div className="site-container ca-section-heading">
         <div>
-          <h2 id="itinerari-title">
-            <Typewriter text={t("title")} />
-          </h2>
+          <Title id="itinerari-title" className={as === "h1" ? "ca-page-title" : undefined}>
+            {as === "h1" ? t("title") : <Typewriter text={t("title")} />}
+          </Title>
           <p className="ca-section-intro" data-ir="copy">
             {t("intro")}
           </p>

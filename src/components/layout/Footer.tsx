@@ -43,7 +43,7 @@ export async function Footer() {
               </li>
             ))}
             <li>
-              <Link href="/#itinerari">{t("itineraries")}</Link>
+              <Link href="/itinerari">{t("itineraries")}</Link>
             </li>
             <li>
               <Link href="/eventi">{t("calendar")}</Link>

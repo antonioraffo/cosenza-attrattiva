@@ -2,18 +2,47 @@ import { expect, test } from "./fixtures";
 
 const isMobile = (name: string) => name === "mobile";
 
-test("home: struttura delle sezioni, nessuna sezione «Crea il tuo itinerario», niente scroll orizzontale", async ({ page }) => {
+test("home: sezioni nell'ordine, niente sezioni tolte, niente scroll orizzontale", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/it$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-  for (const id of ["mission", "esplora", "itinerari", "eventi"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
-  await expect(page.locator("[data-hero-panel]")).toHaveCount(3);
-  // il disegno al tratto dell'hero si carica e si analizza correttamente (SVG valido)
-  await expect(page.locator("[data-silhouette-art] svg [data-silhouette-stroke]")).not.toHaveCount(0);
-  await expect(page.getByText(/Crea il tuo itinerario/i)).toHaveCount(0);
-  await expect(page.getByRole("heading", { name: "Tre modi di vivere un itinerario" })).toBeAttached();
+  // hero → mission → eventi → esplora a piedi → il tuo tempo / il tuo giro → fatto a Cosenza
+  const order = await page.evaluate(() =>
+    [".ca-hero-draw", "#mission", "#eventi", "#esplora", "#il-tuo-tempo", ".ca-crea-hero"].map(
+      (s) => document.querySelector(s)?.getBoundingClientRect().top ?? -1,
+    ),
+  );
+  expect(order.every((top, i) => top >= 0 && (i === 0 || top > order[i - 1]!))).toBe(true);
+  for (const name of ["Esplora a piedi", "Il tuo tempo", "Il tuo giro", "Fatto a Cosenza"])
+    await expect(page.getByRole("heading", { level: 2, name })).toHaveCount(1);
+  await expect(page.locator("[data-hero-panel], .ca-timebar, #itinerari, [data-explore-stage]")).toHaveCount(0);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
+});
+
+test("hero: disegno intero nella prima schermata, animazione automatica in loop", async ({ page }) => {
+  await page.goto("/it");
+  const hero = page.locator(".ca-hero-draw");
+  await expect(hero).toHaveAttribute("data-drawing-ready", "true");
+  await expect(hero.locator("[data-silhouette-stroke]")).not.toHaveCount(0);
+  const viewport = page.viewportSize()!;
+  const box = (await hero.boundingBox())!;
+  expect(box.y + box.height).toBeLessThanOrEqual(viewport.height + 1);
+  // l'SVG intero (preserveAspectRatio meet) sta nel riquadro
+  const art = (await hero.locator(".ca-hero-draw-art svg").boundingBox())!;
+  expect(art.y + art.height).toBeLessThanOrEqual(viewport.height + 1);
+  // parte senza scroll e ricomincia dopo la pausa a disegno completo
+  await expect.poll(() => hero.getAttribute("data-drawing-state"), { timeout: 12_000 }).toBe("complete");
+  await expect.poll(() => hero.getAttribute("data-drawing-state"), { timeout: 6_000 }).toBe("drawing");
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+});
+
+test("hero: con movimento ridotto il disegno è completo e fermo", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/it");
+  const hero = page.locator(".ca-hero-draw");
+  await expect(hero).toHaveAttribute("data-drawing-state", "static");
+  await expect(hero).toHaveAttribute("data-drawing-progress", "1.000");
 });
 
 test("menu principale: solo Vive, Connect, Crea con icona e etichetta", async ({ page }, info) => {
@@ -35,8 +64,7 @@ test("menu principale: solo Vive, Connect, Crea con icona e etichetta", async ({
   await expect(page).toHaveURL(/#connect$/);
   await expect(page.locator("#connect")).toBeInViewport();
   await page.locator("#connect").getByRole("link", { name: "Scopri gli itinerari" }).click();
-  await expect(page).toHaveURL(/#itinerari$/);
-  // gli itinerari stanno sotto il foglio "Tre modi": l'ancora arriva quando il foglio è uscito
+  await expect(page).toHaveURL(/\/it\/itinerari$/);
   await expect(page.locator("#itinerari").getByRole("button", { name: "Tutti" })).toBeInViewport();
 
   if (isMobile(info.project.name)) {
@@ -81,24 +109,9 @@ test("carosello mission: frecce, tastiera, swipe e indicatori", async ({ page },
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
-test("pannelli MAB, Duomo e San Domenico collegati alle schede luogo", async ({ page }) => {
-  await page.goto("/it");
-  const panels = page.locator("[data-hero-panel]");
-  const hrefs = await panels.locator(".cs-scroll-action").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
-  expect(hrefs).toEqual(["/it/luoghi/mab-ettore-e-andromaca", "/it/luoghi/duomo", "/it/luoghi/san-domenico"]);
-  await expect(panels.nth(1).getByRole("heading", { level: 2, name: "Duomo di Cosenza" })).toHaveCount(1);
-  await expect(panels.nth(1).locator("img")).toHaveCount(1);
-
-  await page.getByRole("button", { name: "Mostra Chiesa di San Domenico" }).click();
-  const action = panels.nth(2).getByRole("link", { name: "Scopri di più" });
-  await expect(action).toBeInViewport();
-  await action.click();
-  await expect(page).toHaveURL(/\/it\/luoghi\/san-domenico$/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("San Domenico");
-});
-
-test("itinerari: carosello alimentato dal database, con filtro per tema", async ({ page, request }) => {
-  await page.goto("/it");
+test("itinerari: pagina con carosello alimentato dal database, filtro per tema", async ({ page, request }) => {
+  await page.goto("/it/itinerari");
+  await expect(page.getByRole("heading", { level: 1, name: /itinerari/i })).toBeVisible();
   const section = page.locator("#itinerari");
   const cards = section.locator("[data-itinerary-card]");
   await expect(cards).toHaveCount(9);
@@ -108,8 +121,6 @@ test("itinerari: carosello alimentato dal database, con filtro per tema", async 
   for (const href of hrefs) expect((await request.get(href!)).status()).toBe(200);
   await expect(cards.first()).toContainText(/\d tappe/);
 
-  await page.goto("/it#itinerari");
-  await expect(section.getByRole("button", { name: "Tutti" })).toBeInViewport();
   await section.getByRole("button", { name: "Fede" }).click();
   await expect(section.getByRole("button", { name: "Fede" })).toHaveAttribute("aria-pressed", "true");
   await expect.poll(() => cards.count()).toBeLessThan(9);
@@ -126,17 +137,16 @@ test("eventi: quattro card con dettagli apribili", async ({ page }) => {
   await expect(cards.first().getByRole("link", { name: /Dettagli/ })).toBeVisible();
 });
 
-test("cambio lingua IT → EN", async ({ page }, info) => {
+test("sito monolingua: niente selettore lingua, /en non esiste", async ({ page, request }, info) => {
   await page.goto("/it");
   if (isMobile(info.project.name)) await page.getByRole("button", { name: "Apri menu" }).click();
-  await page.getByRole("button", { name: /Lingua|Language/ }).locator("visible=true").click();
-  await expect(page).toHaveURL(/\/en$/);
-  await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await expect(page.getByRole("heading", { name: "It welcomes, creates, connects" })).toBeAttached();
+  await expect(page.getByRole("button", { name: /Lingua|Language/ })).toHaveCount(0);
+  await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(0);
+  expect((await request.get("/en", { maxRedirects: 0 })).status()).not.toBe(200);
 });
 
 test("dalla card di un itinerario la nuova pagina si apre in cima", async ({ page }) => {
-  await page.goto("/it#itinerari");
+  await page.goto("/it/itinerari");
   const card = page.locator("[data-itinerary-card] a").first();
   await expect(card).toBeInViewport();
   await card.click();

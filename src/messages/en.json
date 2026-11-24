@@ -32,7 +32,22 @@
     "time": "Your time"
   },
   "home": {
-    "heroTitle": "Cosenza, a city to live in."
+    "heroTitle": "Cosenza, a city to live in.",
+    "drawingAlt": "Line drawing: {title}",
+    "explore": {
+      "title": "Explore on foot",
+      "intro": "Tap the heart to build your itinerary. Minutes are on foot from Piazza dei Bruzi.",
+      "all": "All places"
+    },
+    "time": {
+      "title": "Your time",
+      "intro": "How much time do you have? Pick one and we suggest a walking tour with ready-made itineraries.",
+      "summary": "{count, plural, one {# itinerary} other {# itineraries}} on foot",
+      "summaryMeta": "about {km} on foot · start at 10:00 · indicative times",
+      "giroTitle": "Your tour",
+      "openFull": "Open the tour with the map",
+      "walk": "{min} min on foot"
+    }
   },
   "themes": {
     "fede": "Faith",
@@ -489,7 +504,8 @@
     "workshopsTodo": "The list of workshops will come from the Cosenza Crea register of craftspeople.",
     "itineraryCta": "Follow “The Hands of Cosenza”",
     "eventsTitle": "Craft events",
-    "quote": "Craftsmanship is not a memory of the past. It is an economy that creates jobs, a heritage that shapes identity, an experience that makes a city unique."
+    "quote": "Craftsmanship is not a memory of the past. It is an economy that creates jobs, a heritage that shapes identity, an experience that makes a city unique.",
+    "discover": "Discover Made in Cosenza"
   },
   "roots": {
     "eyebrow": "Cosenza Connect",

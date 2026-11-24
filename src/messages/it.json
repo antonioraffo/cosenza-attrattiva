@@ -32,7 +32,22 @@
     "time": "Il tuo tempo"
   },
   "home": {
-    "heroTitle": "Cosenza, città da vivere."
+    "heroTitle": "Cosenza, città da vivere.",
+    "drawingAlt": "Disegno al tratto: {title}",
+    "explore": {
+      "title": "Esplora a piedi",
+      "intro": "Tocca il cuore per costruire il tuo itinerario. I minuti sono a piedi da Piazza dei Bruzi.",
+      "all": "Tutti i luoghi"
+    },
+    "time": {
+      "title": "Il tuo tempo",
+      "intro": "Quanto tempo hai? Scegli e ti proponiamo un giro a piedi con gli itinerari già pronti.",
+      "summary": "{count, plural, one {# itinerario} other {# itinerari}} a piedi",
+      "summaryMeta": "circa {km} a piedi · partenza alle 10:00 · orari indicativi",
+      "giroTitle": "Il tuo giro",
+      "openFull": "Apri il giro con la mappa",
+      "walk": "{min} min a piedi"
+    }
   },
   "themes": {
     "fede": "Fede",
@@ -489,7 +504,8 @@
     "workshopsTodo": "L'elenco delle botteghe arriverà dall'Albo Artigiani Cosenza Crea.",
     "itineraryCta": "Segui «Le mani di Cosenza»",
     "eventsTitle": "Gli appuntamenti dell'artigianato",
-    "quote": "L'artigianato non è un ricordo del passato. È un'economia che genera lavoro, un patrimonio che produce identità, un'esperienza che rende una città unica."
+    "quote": "L'artigianato non è un ricordo del passato. È un'economia che genera lavoro, un patrimonio che produce identità, un'esperienza che rende una città unica.",
+    "discover": "Scopri Fatto a Cosenza"
   },
   "roots": {
     "eyebrow": "Cosenza Connect",

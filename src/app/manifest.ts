@@ -28,7 +28,7 @@ export default function manifest(): MetadataRoute.Manifest {
             { name: "Esplora", url: "/it/esplora" },
             { name: "Il mio itinerario", url: "/it/mio-itinerario" },
           ]),
-      { name: "Itinerari", url: "/it#itinerari" },
+      { name: "Itinerari", url: "/it/itinerari" },
     ],
   };
 }

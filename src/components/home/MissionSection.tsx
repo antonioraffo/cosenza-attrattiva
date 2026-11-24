@@ -11,7 +11,7 @@ import { PillarCarousel } from "./PillarCarousel";
  */
 const PILLARS: { id: Pillar; bg: string; accent: string; href: string }[] = [
   { id: "vive", bg: "#9c37b5", accent: "#7a2a8e", href: "/eventi" },
-  { id: "connect", bg: "#137396", accent: "#0f7663", href: "/#itinerari" },
+  { id: "connect", bg: "#137396", accent: "#0f7663", href: "/itinerari" },
   { id: "crea", bg: "#a3570c", accent: "#5a2f06", href: "/fatto-a-cosenza" },
 ];
 
