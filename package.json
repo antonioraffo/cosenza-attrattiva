@@ -21,7 +21,8 @@
     "db:studio": "drizzle-kit studio --host 0.0.0.0",
     "test": "vitest run",
     "test:watch": "vitest",
-    "routes": "tsx scripts/build-routes.ts"
+    "routes": "tsx scripts/build-routes.ts",
+    "routes:links": "tsx scripts/build-links.ts"
   },
   "dependencies": {
     "@protomaps/basemaps": "5.7.2",

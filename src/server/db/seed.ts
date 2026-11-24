@@ -7,14 +7,13 @@ import { eq, notInArray, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { bearingDeg, lineLengthM, locateOnLine, type LngLat } from "../../lib/geo";
-import { chapterPoint, loadContent, readRoute, validateContent } from "./content";
+import { MIN_PER_STOP, WALK_M_PER_MIN } from "../../lib/plan";
+import { chapterPoint, loadContent, readLinks, readRoute, validateContent } from "./content";
 import * as s from "./schema";
 
 const client = postgres(process.env.DATABASE_URL!, { max: 1, onnotice: () => {} });
 const db = drizzle(client, { schema: s, casing: "snake_case" });
 
-const WALK_M_PER_MIN = 70; // passo turistico, con soste brevi
-const MIN_PER_STOP = 8;
 
 const content = await loadContent();
 const { errors, warnings } = validateContent(content);
@@ -188,6 +187,15 @@ await db.transaction(async (tx) => {
       `  ✔ ${it.slug} (${kind}): ${it.chapters.length} capitoli, ${lengthM ? `${(lengthM / 1000).toFixed(1)} km` : "senza percorso"}, ~${durationMin} min`,
     );
   }
+
+  /* trasferimenti a piedi tra itinerari (giro di «Il tuo tempo») */
+  const itRows = await tx.select({ id: s.itineraries.id, slug: s.itineraries.slug }).from(s.itineraries);
+  const itIds = new Map(itRows.map((r) => [r.slug, r.id]));
+  const links = (await readLinks()).filter((l) => itIds.has(l.from) && itIds.has(l.to));
+  await tx.delete(s.itineraryLinks);
+  if (links.length)
+    await tx.insert(s.itineraryLinks).values(links.map((l) => ({ fromId: itIds.get(l.from)!, toId: itIds.get(l.to)!, distanceM: l.distanceM })));
+  console.log(`  ✔ ${links.length} trasferimenti tra itinerari`);
 
   /* eventi */
   for (const e of content.events) {

@@ -121,3 +121,10 @@ export async function readRoute(slug: string): Promise<LngLat[] | null> {
   const json = JSON.parse(await readFile(file, "utf8")) as { coordinates: LngLat[] };
   return json.coordinates;
 }
+
+/** Trasferimenti a piedi tra itinerari (scripts/build-links.ts). */
+export async function readLinks(): Promise<{ from: string; to: string; distanceM: number }[]> {
+  const file = path.join(CONTENT_DIR, "routes", "_links.json");
+  if (!existsSync(file)) return [];
+  return (JSON.parse(await readFile(file, "utf8")) as { links: { from: string; to: string; distanceM: number }[] }).links;
+}

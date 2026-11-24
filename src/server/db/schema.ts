@@ -188,6 +188,24 @@ export const itineraries = pgTable(
   (t) => [index("itineraries_route_idx").using("gist", t.route)],
 );
 
+/**
+ * Trasferimento a piedi tra due itinerari: dall'ultima tappa geolocalizzata di `from` alla prima di `to`,
+ * distanza sul percorso pedonale (OSRM, content/seed/routes/_links.json). Serve al giro di «Il tuo tempo».
+ */
+export const itineraryLinks = pgTable(
+  "itinerary_links",
+  {
+    fromId: integer("from_id")
+      .notNull()
+      .references(() => itineraries.id, { onDelete: "cascade" }),
+    toId: integer("to_id")
+      .notNull()
+      .references(() => itineraries.id, { onDelete: "cascade" }),
+    distanceM: integer("distance_m").notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.fromId, t.toId] })],
+);
+
 export const chapters = pgTable(
   "chapters",
   {

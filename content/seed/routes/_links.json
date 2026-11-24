@@ -1,0 +1,285 @@
+{
+ "source": "OSRM foot (table), © OpenStreetMap contributors",
+ "links": [
+  {
+   "from": "anime-di-quartiere",
+   "to": "arte-a-cielo-aperto",
+   "distanceM": 2043
+  },
+  {
+   "from": "anime-di-quartiere",
+   "to": "atene-della-calabria",
+   "distanceM": 2576
+  },
+  {
+   "from": "anime-di-quartiere",
+   "to": "cosenza-contemporanea",
+   "distanceM": 1336
+  },
+  {
+   "from": "anime-di-quartiere",
+   "to": "fede-di-pietra",
+   "distanceM": 2751
+  },
+  {
+   "from": "anime-di-quartiere",
+   "to": "il-re-nel-fiume",
+   "distanceM": 2172
+  },
+  {
+   "from": "anime-di-quartiere",
+   "to": "la-via-del-magliocco",
+   "distanceM": 9655
+  },
+  {
+   "from": "anime-di-quartiere",
+   "to": "le-mani-di-cosenza",
+   "distanceM": 2747
+  },
+  {
+   "from": "arte-a-cielo-aperto",
+   "to": "anime-di-quartiere",
+   "distanceM": 1243
+  },
+  {
+   "from": "arte-a-cielo-aperto",
+   "to": "atene-della-calabria",
+   "distanceM": 1859
+  },
+  {
+   "from": "arte-a-cielo-aperto",
+   "to": "cosenza-contemporanea",
+   "distanceM": 0
+  },
+  {
+   "from": "arte-a-cielo-aperto",
+   "to": "fede-di-pietra",
+   "distanceM": 1875
+  },
+  {
+   "from": "arte-a-cielo-aperto",
+   "to": "il-re-nel-fiume",
+   "distanceM": 1428
+  },
+  {
+   "from": "arte-a-cielo-aperto",
+   "to": "la-via-del-magliocco",
+   "distanceM": 8875
+  },
+  {
+   "from": "arte-a-cielo-aperto",
+   "to": "le-mani-di-cosenza",
+   "distanceM": 1871
+  },
+  {
+   "from": "atene-della-calabria",
+   "to": "anime-di-quartiere",
+   "distanceM": 1475
+  },
+  {
+   "from": "atene-della-calabria",
+   "to": "arte-a-cielo-aperto",
+   "distanceM": 1300
+  },
+  {
+   "from": "atene-della-calabria",
+   "to": "cosenza-contemporanea",
+   "distanceM": 2299
+  },
+  {
+   "from": "atene-della-calabria",
+   "to": "fede-di-pietra",
+   "distanceM": 424
+  },
+  {
+   "from": "atene-della-calabria",
+   "to": "il-re-nel-fiume",
+   "distanceM": 1205
+  },
+  {
+   "from": "atene-della-calabria",
+   "to": "la-via-del-magliocco",
+   "distanceM": 7062
+  },
+  {
+   "from": "atene-della-calabria",
+   "to": "le-mani-di-cosenza",
+   "distanceM": 572
+  },
+  {
+   "from": "cosenza-contemporanea",
+   "to": "anime-di-quartiere",
+   "distanceM": 1306
+  },
+  {
+   "from": "cosenza-contemporanea",
+   "to": "arte-a-cielo-aperto",
+   "distanceM": 1014
+  },
+  {
+   "from": "cosenza-contemporanea",
+   "to": "atene-della-calabria",
+   "distanceM": 852
+  },
+  {
+   "from": "cosenza-contemporanea",
+   "to": "fede-di-pietra",
+   "distanceM": 1258
+  },
+  {
+   "from": "cosenza-contemporanea",
+   "to": "il-re-nel-fiume",
+   "distanceM": 570
+  },
+  {
+   "from": "cosenza-contemporanea",
+   "to": "la-via-del-magliocco",
+   "distanceM": 7931
+  },
+  {
+   "from": "cosenza-contemporanea",
+   "to": "le-mani-di-cosenza",
+   "distanceM": 1111
+  },
+  {
+   "from": "fede-di-pietra",
+   "to": "anime-di-quartiere",
+   "distanceM": 861
+  },
+  {
+   "from": "fede-di-pietra",
+   "to": "arte-a-cielo-aperto",
+   "distanceM": 570
+  },
+  {
+   "from": "fede-di-pietra",
+   "to": "atene-della-calabria",
+   "distanceM": 290
+  },
+  {
+   "from": "fede-di-pietra",
+   "to": "cosenza-contemporanea",
+   "distanceM": 1568
+  },
+  {
+   "from": "fede-di-pietra",
+   "to": "il-re-nel-fiume",
+   "distanceM": 140
+  },
+  {
+   "from": "fede-di-pietra",
+   "to": "la-via-del-magliocco",
+   "distanceM": 7369
+  },
+  {
+   "from": "fede-di-pietra",
+   "to": "le-mani-di-cosenza",
+   "distanceM": 549
+  },
+  {
+   "from": "il-re-nel-fiume",
+   "to": "anime-di-quartiere",
+   "distanceM": 1779
+  },
+  {
+   "from": "il-re-nel-fiume",
+   "to": "arte-a-cielo-aperto",
+   "distanceM": 1603
+  },
+  {
+   "from": "il-re-nel-fiume",
+   "to": "atene-della-calabria",
+   "distanceM": 1375
+  },
+  {
+   "from": "il-re-nel-fiume",
+   "to": "cosenza-contemporanea",
+   "distanceM": 2602
+  },
+  {
+   "from": "il-re-nel-fiume",
+   "to": "fede-di-pietra",
+   "distanceM": 798
+  },
+  {
+   "from": "il-re-nel-fiume",
+   "to": "la-via-del-magliocco",
+   "distanceM": 6256
+  },
+  {
+   "from": "il-re-nel-fiume",
+   "to": "le-mani-di-cosenza",
+   "distanceM": 875
+  },
+  {
+   "from": "la-via-del-magliocco",
+   "to": "anime-di-quartiere",
+   "distanceM": 9451
+  },
+  {
+   "from": "la-via-del-magliocco",
+   "to": "arte-a-cielo-aperto",
+   "distanceM": 9276
+  },
+  {
+   "from": "la-via-del-magliocco",
+   "to": "atene-della-calabria",
+   "distanceM": 8505
+  },
+  {
+   "from": "la-via-del-magliocco",
+   "to": "cosenza-contemporanea",
+   "distanceM": 10275
+  },
+  {
+   "from": "la-via-del-magliocco",
+   "to": "fede-di-pietra",
+   "distanceM": 7970
+  },
+  {
+   "from": "la-via-del-magliocco",
+   "to": "il-re-nel-fiume",
+   "distanceM": 8909
+  },
+  {
+   "from": "la-via-del-magliocco",
+   "to": "le-mani-di-cosenza",
+   "distanceM": 8475
+  },
+  {
+   "from": "le-mani-di-cosenza",
+   "to": "anime-di-quartiere",
+   "distanceM": 1403
+  },
+  {
+   "from": "le-mani-di-cosenza",
+   "to": "arte-a-cielo-aperto",
+   "distanceM": 1228
+  },
+  {
+   "from": "le-mani-di-cosenza",
+   "to": "atene-della-calabria",
+   "distanceM": 329
+  },
+  {
+   "from": "le-mani-di-cosenza",
+   "to": "cosenza-contemporanea",
+   "distanceM": 2227
+  },
+  {
+   "from": "le-mani-di-cosenza",
+   "to": "fede-di-pietra",
+   "distanceM": 435
+  },
+  {
+   "from": "le-mani-di-cosenza",
+   "to": "il-re-nel-fiume",
+   "distanceM": 750
+  },
+  {
+   "from": "le-mani-di-cosenza",
+   "to": "la-via-del-magliocco",
+   "distanceM": 6950
+  }
+ ]
+}

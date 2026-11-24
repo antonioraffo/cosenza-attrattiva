@@ -15,6 +15,13 @@
       "when": 1795451180151,
       "tag": "0001_events_and_optional_geometry",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795510492679,
+      "tag": "0002_itinerary_links",
+      "breakpoints": true
     }
   ]
 }

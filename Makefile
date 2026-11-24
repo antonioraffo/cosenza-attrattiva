@@ -53,6 +53,7 @@ seed: ## Popola il database con i contenuti di Cosenza (idempotente)
 
 routes: ## Ricalcola i percorsi pedonali (OSRM) in content/seed/routes
 	$(COMPOSE) exec -T app pnpm routes
+	$(COMPOSE) exec -T app pnpm routes:links
 
 reset-db: ## Cancella il database e lo ricrea da zero (migrazioni + seed)
 	$(COMPOSE) rm -sf db
