@@ -318,3 +318,97 @@
     text-align: center;
   }
 }
+
+/* ---------------------------------------------------------------------------------------------
+   Hero a disegno automatico (HeroDrawing): tutto nella prima schermata, disegno intero e in loop
+   --------------------------------------------------------------------------------------------- */
+.ca-hero-draw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 1.6svh, 20px);
+  height: calc(100svh - var(--hero-header-h, 80px));
+  min-height: 420px;
+  padding: clamp(12px, 2.4svh, 32px) 16px clamp(14px, 2.6svh, 32px);
+  overflow: hidden;
+  background: #fff;
+}
+.ca-hero-draw-brand {
+  flex: none;
+  text-align: center;
+}
+.ca-hero-draw-brand img {
+  display: block;
+  width: clamp(200px, 26vw, 400px);
+  max-height: 14svh;
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+.ca-hero-draw-claim {
+  margin: clamp(4px, 1svh, 12px) 0 0;
+  color: var(--color-neutro-900);
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.8vw, 26px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+/* il riquadro prende lo spazio rimasto; l'SVG ci sta per intero (preserveAspectRatio meet) */
+.ca-hero-draw-art {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1400px;
+  min-height: 0;
+}
+.ca-hero-draw-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.ca-hero-draw [data-silhouette-stroke] {
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+.ca-hero-draw [data-silhouette-lines] {
+  transition: opacity 0.2s linear;
+}
+.ca-hero-draw-nav {
+  flex: none;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  width: min(292px, 100%);
+  padding: 5px;
+  border: 1px solid #e1dcd4;
+  border-radius: 32px;
+  background: #fff;
+  box-shadow: 0 8px 28px #211e1c1a;
+}
+.ca-hero-draw-nav button {
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 26px;
+  background: transparent;
+  color: #665f55;
+  font: 600 13px/1.4 var(--font-sans);
+  cursor: pointer;
+  transition: color 0.25s, background-color 0.25s;
+}
+.ca-hero-draw-nav button[aria-pressed="true"] {
+  background: var(--color-primario-600);
+  color: #fff;
+}
+.ca-hero-draw-nav button[aria-pressed="false"]:hover {
+  color: var(--color-primario-600);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ca-hero-draw [data-silhouette-stroke] {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
