@@ -25,10 +25,11 @@ Documenti: [Architettura](docs/ARCHITECTURE.md) · [Scaletta della demo](docs/DE
   <img src="docs/screenshots/passeggiata-mobile.jpg" width="180" alt="Modalità Passeggiata">
 </p>
 
-## Copia di lavoro "sintesi" (fasi 1 e 2)
+## Copia di lavoro "sintesi" (fasi 1–4)
 
-Questi branch (`feat/sintesi-fase1`, poi `feat/sintesi-fase2`) è la copia di lavoro della proposta di sintesi con il prototipo
-"Città da vivere"; la versione stabile resta sul tag `stabile-2026-11-23` (branch `demo-stabile`).
+I branch `feat/sintesi-fase1` … `feat/sintesi-fase4` (uno sopra l'altro) sono la copia di lavoro della proposta di sintesi
+con il prototipo "Città da vivere"; **`demo-sintesi`** (tag `sintesi-2026-11-24`) è la versione unica da presentare, con la
+scaletta in `docs/DEMO-SCRIPT.md`. La versione stabile resta sul tag `stabile-2026-11-23` (branch `demo-stabile`).
 La copia gira con uno stack Docker separato grazie a `.make.local` e a `COMPOSE_PROJECT_NAME` in `.env`
 (non versionati): **https://cosenzaattrattiva.test:8444**, database su `127.0.0.1:5434`.
 
@@ -78,6 +79,16 @@ Novità della fase 3:
 Regole del giro: si parte dal primo itinerario in ordine editoriale, poi si sceglie il più vicino che sta nel
 blocco (3 ore; 1 giorno = 2 blocchi con 1 h 30 di pausa; weekend = 2 giorni). Nessun itinerario si ripete;
 i tematici restano fuori dal giro ma compaiono tra gli "altri itinerari". Passo 70 m/min, 8 min per tappa.
+
+Novità della fase 4:
+
+| Area | Cosa | Dove |
+|---|---|---|
+| Mappa del giro | In «Il tuo tempo»: percorso di ogni itinerario nel suo colore, numerato come nella linea del tempo, trasferimenti tratteggiati; si evidenzia l'itinerario sotto il puntatore. WebGL avviato solo quando la mappa entra nello schermo | `components/time/TimeMap` |
+| Percorsi reali | «Il mio itinerario» e la sua passeggiata seguono il percorso pedonale OSRM tra le tappe (minuti e km reali); se il servizio non risponde entro 5 s, linea retta | `server/routing.ts`, `/api/walking-route?p=…` |
+
+Al servizio dei percorsi vanno solo le coordinate dei luoghi scelti, mai la posizione del visitatore; i risultati restano
+in cache in memoria. Il pannello nell'header continua a mostrare la stima («circa … min»), che funziona anche offline.
 
 ## Requisiti
 
