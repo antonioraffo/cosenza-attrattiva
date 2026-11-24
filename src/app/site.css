@@ -285,10 +285,26 @@ html {
   }
 }
 
-/* ── Footer (vivicosenza: fondo #211e1c, griglia 1.5fr 1fr 1.2fr) ───────── */
+/* ── Footer: fondo verde del logo nella tonalità scura (primario-700 #0c6455, bianco 7,07:1),
+   griglia 1.5fr 1fr 1.2fr. Testi secondari ≥ 85% di bianco (≥ 5,2:1). ───────── */
 .ca-footer {
-  background: var(--color-neutro-900);
+  background: var(--color-primario-700);
   color: #fff;
+}
+/* marchio monocromo bianco: sul verde la goccia verde del logo sparirebbe */
+.ca-footer-logo {
+  filter: brightness(0) invert(1);
+}
+/* icone dei pilastri su un dischetto bianco: i loro colori sul verde non arrivano a 3:1 */
+.ca-footer-links svg {
+  box-sizing: content-box;
+  padding: 4px;
+  border-radius: 50%;
+  background: #fff;
+}
+.ca-footer :focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 .ca-footer-grid {
   display: grid;
@@ -305,7 +321,7 @@ html {
   display: grid;
   gap: 4px;
   font-style: normal;
-  color: rgb(255 255 255 / 0.72);
+  color: rgb(255 255 255 / 0.9);
   font-size: 13px;
   line-height: 1.8;
 }
@@ -315,7 +331,7 @@ html {
 }
 .ca-footer address a {
   text-decoration: underline;
-  text-decoration-color: rgb(255 255 255 / 0.4);
+  text-decoration-color: rgb(255 255 255 / 0.6);
   text-underline-offset: 3px;
 }
 .ca-footer address a:hover {
@@ -324,7 +340,7 @@ html {
 .ca-footer-project {
   max-width: 34em;
   margin: 18px 0 0;
-  color: rgb(255 255 255 / 0.66);
+  color: rgb(255 255 255 / 0.88);
   font-size: 12px;
   line-height: 1.6;
 }
@@ -347,7 +363,7 @@ html {
   align-items: center;
   gap: 8px;
   min-height: 40px;
-  color: rgb(255 255 255 / 0.82);
+  color: rgb(255 255 255 / 0.92);
   font-size: 13px;
   font-weight: 600;
   transition: color 0.2s;
@@ -362,8 +378,8 @@ html {
   flex-wrap: wrap;
   gap: 12px 28px;
   padding-block: 28px;
-  border-top: 1px solid rgb(255 255 255 / 0.13);
-  color: rgb(255 255 255 / 0.66);
+  border-top: 1px solid rgb(255 255 255 / 0.25);
+  color: rgb(255 255 255 / 0.88);
   font-size: 12px;
 }
 .ca-footer-bottom p {
