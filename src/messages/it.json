@@ -28,7 +28,8 @@
     "subMani": "Le mani di Cosenza",
     "openSub": "Sottomenu {label}",
     "explore": "Esplora",
-    "mine": "Il mio itinerario"
+    "mine": "Il mio itinerario",
+    "time": "Il tuo tempo"
   },
   "home": {
     "heroTitle": "Cosenza, città da vivere."
@@ -585,5 +586,48 @@
       "connect": "Connect",
       "crea": "Crea"
     }
+  },
+  "time": {
+    "eyebrow": "Cosenza Connect",
+    "title": "Il tuo tempo, il tuo giro",
+    "intro": "Dicci quanto tempo hai: mettiamo in fila gli itinerari a piedi che ci stanno, con gli orari di ogni tappa e i minuti di cammino tra l'una e l'altra.",
+    "question": "Quanto tempo hai?",
+    "options": {
+      "3h": "3 ore",
+      "1g": "1 giorno",
+      "weekend": "Weekend"
+    },
+    "optionHint": {
+      "3h": "Una mattina o un pomeriggio",
+      "1g": "Mattina, pausa pranzo, pomeriggio",
+      "weekend": "Due giornate piene"
+    },
+    "optionsLabel": "Tempo a disposizione",
+    "start": "Partenza alle",
+    "summary": "{count, plural, one {# itinerario} other {# itinerari}} · {km} a piedi · dalle {from} alle {to}",
+    "summaryWeekend": "{count, plural, one {# itinerario} other {# itinerari}} in due giorni · {km} a piedi",
+    "day": "Giorno {n}",
+    "dayRange": "dalle {from} alle {to}",
+    "single": "Il tuo giro",
+    "transfer": "A piedi verso «{to}»: {min} min ({m} m)",
+    "lunch": "Pausa pranzo",
+    "pause": "Pausa",
+    "pauseLength": "1 h 30 min",
+    "walkFrom": "{min} min a piedi",
+    "reading": "lettura",
+    "kindMisto": "Misto",
+    "openStory": "Racconto",
+    "openWalk": "Passeggiata",
+    "share": "Condividi su WhatsApp",
+    "shareText": "Il mio giro a Cosenza ({option}): {list}",
+    "save": "Salva le tappe nel mio itinerario",
+    "savedFeedback": "{count, plural, one {# tappa aggiunta} other {# tappe aggiunte}} al tuo itinerario.",
+    "others": "Altri itinerari che stanno nel tuo tempo",
+    "othersEmpty": "Il giro li comprende già tutti.",
+    "note": "Tempi calcolati sui percorsi pedonali reali (OpenStreetMap), a passo turistico di 70 metri al minuto con 8 minuti per tappa. Non tengono conto degli orari di apertura: verificali prima di partire.",
+    "empty": "Con questo tempo non c'è un itinerario a piedi completo: prova un'opzione più lunga.",
+    "homeIntro": "Scegli il tempo che hai: ti proponiamo un giro a piedi con gli orari di ogni tappa.",
+    "homeStat": "{count, plural, one {# itinerario} other {# itinerari}} · {km}",
+    "homeCta": "Scopri il giro"
   }
 }

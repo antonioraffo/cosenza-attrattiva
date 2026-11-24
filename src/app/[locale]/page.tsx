@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { HomeIntro, HomePanels } from "@/components/home/HomeHero";
 import { MissionSection } from "@/components/home/MissionSection";
+import { TimeBar } from "@/components/home/TimeBar";
 import { ThreeWays } from "@/components/home/ThreeWays";
 import { ItinerariesSection } from "@/components/home/ItinerariesSection";
 import { EventsSection } from "@/components/home/EventsSection";
@@ -11,7 +12,7 @@ import { SectionNav } from "@/components/home/SectionNav";
 
 /**
  * Home sul modello di vivicosenza (docs/reference/vivicosenza/ANALISI.md):
- * header → hero silhouette → mission e tre aree → pannelli MAB/Duomo/San Domenico →
+ * header → hero silhouette → «Quanto tempo hai?» → mission e tre aree → pannelli MAB/Duomo/San Domenico →
  * "Tre modi di vivere un itinerario" (foglio inclinato) → itinerari → eventi → footer.
  */
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
@@ -25,6 +26,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Header />
       <main id="main">
         <HomeIntro title={t("heroTitle")} />
+        <TimeBar locale={locale} />
         <MissionSection />
         <HomePanels locale={locale} />
         <LowerRoot>

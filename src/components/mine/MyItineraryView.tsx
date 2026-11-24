@@ -10,6 +10,7 @@ import { moveSaved, myItinerary, setSaved, shareParam, toggleSaved } from "@/lib
 import { useMapLibre } from "@/components/map/useMapLibre";
 import { IconArrowRight, IconWalk } from "@/components/ui/icons";
 import { walkMinutes } from "./useSavedPlaces";
+import { useOrigin } from "@/components/mine/useOrigin";
 import { whatsappHref } from "./MyItineraryButton";
 
 export interface MinePlace {
@@ -27,6 +28,7 @@ export interface MinePlace {
  */
 export function MyItineraryView({ places, shared }: { places: MinePlace[]; shared: string[] | null }) {
   const t = useTranslations("mine");
+  const origin = useOrigin();
   const locale = useLocale() as "it" | "en";
   const saved = myItinerary.useStore((s) => s.places);
   const slugs = shared ?? saved;
@@ -79,7 +81,7 @@ export function MyItineraryView({ places, shared }: { places: MinePlace[]; share
     else if (list.length > 1) map.fitBounds(bbox(list.map((p) => p.position)) as LngLatBoundsLike, { padding: 56, maxZoom: 17, duration: 0 });
   }, [map, list]);
 
-  const shareUrl = typeof window === "undefined" ? "" : `${window.location.origin}/${locale}/mio-itinerario?p=${param}`;
+  const shareUrl = `${origin}/${locale}/mio-itinerario?p=${param}`;
   const shareText = t("shareText", { places: list.map((p) => p.name.split(" – ")[0]).join(", ") });
 
   return (

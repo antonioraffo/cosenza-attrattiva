@@ -28,7 +28,8 @@
     "subMani": "The Hands of Cosenza",
     "openSub": "{label} submenu",
     "explore": "Explore",
-    "mine": "My itinerary"
+    "mine": "My itinerary",
+    "time": "Your time"
   },
   "home": {
     "heroTitle": "Cosenza, a city to live in."
@@ -585,5 +586,48 @@
       "connect": "Connect",
       "crea": "Crea"
     }
+  },
+  "time": {
+    "eyebrow": "Cosenza Connect",
+    "title": "Your time, your tour",
+    "intro": "Tell us how much time you have: we line up the walking itineraries that fit, with the time of each stop and the walking minutes between them.",
+    "question": "How much time do you have?",
+    "options": {
+      "3h": "3 hours",
+      "1g": "1 day",
+      "weekend": "Weekend"
+    },
+    "optionHint": {
+      "3h": "A morning or an afternoon",
+      "1g": "Morning, lunch break, afternoon",
+      "weekend": "Two full days"
+    },
+    "optionsLabel": "Time available",
+    "start": "Start at",
+    "summary": "{count, plural, one {# itinerary} other {# itineraries}} · {km} on foot · from {from} to {to}",
+    "summaryWeekend": "{count, plural, one {# itinerary} other {# itineraries}} over two days · {km} on foot",
+    "day": "Day {n}",
+    "dayRange": "from {from} to {to}",
+    "single": "Your tour",
+    "transfer": "Walk to “{to}”: {min} min ({m} m)",
+    "lunch": "Lunch break",
+    "pause": "Break",
+    "pauseLength": "1 h 30 min",
+    "walkFrom": "{min} min walk",
+    "reading": "reading",
+    "kindMisto": "Mixed",
+    "openStory": "Story",
+    "openWalk": "Walk",
+    "share": "Share on WhatsApp",
+    "shareText": "My tour of Cosenza ({option}): {list}",
+    "save": "Save the stops to my itinerary",
+    "savedFeedback": "{count, plural, one {# stop added} other {# stops added}} to your itinerary.",
+    "others": "Other itineraries that fit your time",
+    "othersEmpty": "The tour already includes all of them.",
+    "note": "Times are calculated on real walking routes (OpenStreetMap), at a sightseeing pace of 70 metres per minute with 8 minutes per stop. Opening hours are not taken into account: check them before you go.",
+    "empty": "There is no complete walking itinerary for this time: try a longer option.",
+    "homeIntro": "Pick the time you have: we suggest a walking tour with the time of each stop.",
+    "homeStat": "{count, plural, one {# itinerary} other {# itineraries}} · {km}",
+    "homeCta": "See the tour"
   }
 }

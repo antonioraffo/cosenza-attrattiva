@@ -27,6 +27,7 @@ export async function Header() {
     ],
     connect: [
       { href: "/esplora", label: t("explore") },
+      { href: "/il-tuo-tempo", label: t("time") },
       { href: "/#itinerari", label: t("subItinerari") },
       { href: "/ritorno-a-cosenza", label: t("subRadici") },
     ],

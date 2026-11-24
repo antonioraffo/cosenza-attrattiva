@@ -65,6 +65,9 @@ export async function Footer() {
             <li>
               <Link href="/esplora">{tn("explore")}</Link>
             </li>
+            <li>
+              <Link href="/il-tuo-tempo">{tn("time")}</Link>
+            </li>
             {features.assistant && (
               <li>
                 <Link href="/chiedi">{tn("ask")}</Link>
