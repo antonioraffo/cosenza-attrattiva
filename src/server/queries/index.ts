@@ -2,8 +2,9 @@ import "server-only";
 import { asc, eq, inArray, sql } from "drizzle-orm";
 import { cache } from "react";
 import { db } from "@/server/db/client";
-import { chapters, events, itineraries, media, neighborhoods, placeMedia, places, type Media } from "@/server/db/schema";
+import { chapters, events, itineraries, itineraryLinks, media, neighborhoods, placeMedia, places, type Media } from "@/server/db/schema";
 import type { Position } from "@/lib/geo/wkb";
+import { tr } from "@/lib/i18n";
 
 export type MediaItem = Pick<Media, "url" | "width" | "height" | "alt" | "credit" | "license" | "sourceUrl">;
 
@@ -116,6 +117,51 @@ export const getItinerary = cache(async (slug: string) => {
 
 export type ItineraryDetail = NonNullable<Awaited<ReturnType<typeof getItinerary>>>;
 export type ChapterDetail = ItineraryDetail["chapters"][number];
+
+/** Dati del giro di «Il tuo tempo»: itinerari con le tappe (frazione lungo il percorso) e trasferimenti a piedi. */
+export const getPlanData = cache(async (locale: string) => {
+  const all = await listItineraries();
+  const rows = await db
+    .select({
+      itineraryId: chapters.itineraryId,
+      title: chapters.title,
+      placeSlug: places.slug,
+      placeName: places.name,
+      fraction: chapters.routeFraction,
+      located: sql<boolean>`${chapters.geom} is not null`,
+    })
+    .from(chapters)
+    .leftJoin(places, eq(places.id, chapters.placeId))
+    .orderBy(asc(chapters.itineraryId), asc(chapters.position));
+  const linkRows = await db.select().from(itineraryLinks);
+  const slugById = new Map(all.map((i) => [i.id, i.slug]));
+  const links: Record<string, Record<string, number>> = {};
+  for (const l of linkRows) {
+    const from = slugById.get(l.fromId);
+    const to = slugById.get(l.toId);
+    if (from && to) (links[from] ??= {})[to] = l.distanceM;
+  }
+  const itineraries = all.map((it) => ({
+    slug: it.slug,
+    title: tr(it.title, locale),
+    subtitle: tr(it.subtitle, locale),
+    durationMin: it.durationMin,
+    lengthM: it.lengthM,
+    kind: it.kind,
+    color: it.color,
+    theme: it.theme,
+    cover: it.cover,
+    stops: rows
+      .filter((r) => r.itineraryId === it.id)
+      .map((r) => ({
+        // il nome del luogo è più utile del titolo del capitolo in una linea del tempo
+        title: r.placeName ? tr(r.placeName, locale).split(" – ")[0]! : tr(r.title, locale),
+        placeSlug: r.placeSlug,
+        fraction: r.located ? (r.fraction ?? 0) : null,
+      })),
+  }));
+  return { itineraries, links };
+});
 
 /* ── Luoghi ─────────────────────────────────────────────────────────────── */
 
