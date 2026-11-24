@@ -548,7 +548,8 @@
     "walkNeedsTwo": "You need at least two stops for the walk.",
     "localNote": "Stops stay on this phone only: no data is sent.",
     "minutes": "about {min} min on foot between stops",
-    "map": "Map of my itinerary"
+    "map": "Map of my itinerary",
+    "minutesReal": "{min} min walk between the stops ({km}, walking route)"
   },
   "explore": {
     "title": "Explore",
@@ -628,6 +629,7 @@
     "empty": "There is no complete walking itinerary for this time: try a longer option.",
     "homeIntro": "Pick the time you have: we suggest a walking tour with the time of each stop.",
     "homeStat": "{count, plural, one {# itinerary} other {# itineraries}} · {km}",
-    "homeCta": "See the tour"
+    "homeCta": "See the tour",
+    "map": "Tour map"
   }
 }

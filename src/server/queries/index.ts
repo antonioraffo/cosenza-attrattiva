@@ -128,12 +128,16 @@ export const getPlanData = cache(async (locale: string) => {
       placeSlug: places.slug,
       placeName: places.name,
       fraction: chapters.routeFraction,
-      located: sql<boolean>`${chapters.geom} is not null`,
+      geom: chapters.geom,
     })
     .from(chapters)
     .leftJoin(places, eq(places.id, chapters.placeId))
     .orderBy(asc(chapters.itineraryId), asc(chapters.position));
-  const linkRows = await db.select().from(itineraryLinks);
+  const [linkRows, routes] = await Promise.all([
+    db.select().from(itineraryLinks),
+    db.select({ id: itineraries.id, route: itineraries.route }).from(itineraries),
+  ]);
+  const routeById = new Map(routes.map((r) => [r.id, (r.route as Position[] | null) ?? null]));
   const slugById = new Map(all.map((i) => [i.id, i.slug]));
   const links: Record<string, Record<string, number>> = {};
   for (const l of linkRows) {
@@ -141,7 +145,7 @@ export const getPlanData = cache(async (locale: string) => {
     const to = slugById.get(l.toId);
     if (from && to) (links[from] ??= {})[to] = l.distanceM;
   }
-  const itineraries = all.map((it) => ({
+  const items = all.map((it) => ({
     slug: it.slug,
     title: tr(it.title, locale),
     subtitle: tr(it.subtitle, locale),
@@ -157,10 +161,13 @@ export const getPlanData = cache(async (locale: string) => {
         // il nome del luogo è più utile del titolo del capitolo in una linea del tempo
         title: r.placeName ? tr(r.placeName, locale).split(" – ")[0]! : tr(r.title, locale),
         placeSlug: r.placeSlug,
-        fraction: r.located ? (r.fraction ?? 0) : null,
+        fraction: r.geom ? (r.fraction ?? 0) : null,
+        position: (r.geom as Position | null) ?? null,
       })),
+    /** Percorso pedonale per la mappa del giro (assente nei tematici). */
+    route: routeById.get(it.id) ?? null,
   }));
-  return { itineraries, links };
+  return { itineraries: items, links };
 });
 
 /* ── Luoghi ─────────────────────────────────────────────────────────────── */

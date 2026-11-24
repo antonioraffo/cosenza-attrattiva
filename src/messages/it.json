@@ -548,7 +548,8 @@
     "walkNeedsTwo": "Servono almeno due tappe per la passeggiata.",
     "localNote": "Le tappe restano solo su questo telefono: nessun dato viene inviato.",
     "minutes": "circa {min} min a piedi tra le tappe",
-    "map": "Mappa del mio itinerario"
+    "map": "Mappa del mio itinerario",
+    "minutesReal": "{min} min a piedi tra le tappe ({km}, percorso pedonale)"
   },
   "explore": {
     "title": "Esplora",
@@ -628,6 +629,7 @@
     "empty": "Con questo tempo non c'è un itinerario a piedi completo: prova un'opzione più lunga.",
     "homeIntro": "Scegli il tempo che hai: ti proponiamo un giro a piedi con gli orari di ogni tappa.",
     "homeStat": "{count, plural, one {# itinerario} other {# itinerari}} · {km}",
-    "homeCta": "Scopri il giro"
+    "homeCta": "Scopri il giro",
+    "map": "Mappa del giro"
   }
 }

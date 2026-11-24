@@ -18,10 +18,12 @@ import { myItinerary, setSaved } from "@/lib/stores/my-itinerary";
 import { useOrigin } from "@/components/mine/useOrigin";
 import { whatsappHref } from "@/components/mine/MyItineraryButton";
 import { IconBook, IconWalk } from "@/components/ui/icons";
+import { TimeMap } from "./TimeMap";
 
 export interface TimeItinerary extends PlanItineraryInput {
   subtitle: string;
   durationLabel: string;
+  route: [number, number][] | null;
 }
 
 /**
@@ -47,6 +49,7 @@ export function TimePlanner({
   const [option, setOption] = useState<TimeOption>(initialOption);
   const [start, setStart] = useState(initialStart);
   const [feedback, setFeedback] = useState("");
+  const [active, setActive] = useState<string | null>(null);
   const plan = useMemo(() => buildPlan(itineraries, links, option, start), [itineraries, links, option, start]);
   const others = fittingItineraries(itineraries, option, plan);
   const byslug = useMemo(() => new Map(itineraries.map((i) => [i.slug, i])), [itineraries]);
@@ -123,6 +126,9 @@ export function TimePlanner({
             {feedback}
           </p>
 
+          <div className="ca-time-layout">
+            <TimeMap plan={plan} itineraries={byslug} active={active} label={t("map")} />
+            <div className="ca-time-days">
           {plan.days.map((day, d) => (
             <section key={d} className="ca-time-day" aria-labelledby={`giorno-${d}`}>
               <h2 id={`giorno-${d}`} className="ca-time-day-title">
@@ -153,10 +159,21 @@ export function TimePlanner({
                   }
                   const it = byslug.get(item.slug)!;
                   return (
-                    <li key={i} className="ca-tl-item ca-tl-item--itinerary" style={{ "--theme": item.color } as React.CSSProperties}>
+                    <li
+                      key={i}
+                      className="ca-tl-item ca-tl-item--itinerary"
+                      style={{ "--theme": item.color } as React.CSSProperties}
+                      onMouseEnter={() => setActive(item.slug)}
+                      onMouseLeave={() => setActive(null)}
+                      onFocus={() => setActive(item.slug)}
+                      onBlur={() => setActive(null)}
+                    >
                       <time className="ca-tl-time">{formatClock(item.start)}</time>
                       <div className="ca-tl-body">
                         <h3>
+                          <span className="ca-tl-n" aria-hidden="true">
+                            {plan.slugs.indexOf(item.slug) + 1}
+                          </span>
                           <Link href={`/itinerari/${item.slug}`}>{item.title}</Link>
                         </h3>
                         <p className="ca-tl-meta">
@@ -191,6 +208,8 @@ export function TimePlanner({
               </ol>
             </section>
           ))}
+            </div>
+          </div>
         </>
       )}
 

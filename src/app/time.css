@@ -286,3 +286,62 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* mappa del giro: a destra e fissa su desktop, sopra la linea del tempo su mobile */
+.ca-time-page:has(.ca-time-layout) {
+  max-width: 1280px;
+}
+.ca-time-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: 32px;
+  align-items: start;
+}
+.ca-time-days {
+  display: grid;
+  gap: 24px;
+  grid-row: 1;
+}
+.ca-time-map {
+  position: sticky;
+  top: 96px;
+  grid-column: 2;
+  height: calc(100vh - 128px);
+  min-height: 360px;
+  max-height: 720px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--color-neutro-100);
+}
+@media (max-width: 899px) {
+  .ca-time-layout {
+    grid-template-columns: 1fr;
+  }
+  .ca-time-days {
+    grid-row: auto;
+  }
+  .ca-time-map {
+    position: relative;
+    top: 0;
+    grid-column: 1;
+    height: 320px;
+    min-height: 0;
+  }
+}
+.ca-tl-body h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ca-tl-n {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--theme);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}

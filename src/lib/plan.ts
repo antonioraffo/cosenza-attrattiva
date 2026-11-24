@@ -28,6 +28,8 @@ export interface PlanStopInput {
   placeSlug: string | null;
   /** Posizione lungo il percorso (0–1); null = tappa non geolocalizzata (lettura). */
   fraction: number | null;
+  /** [lng, lat] della tappa, se geolocalizzata: serve alla mappa del giro. */
+  position?: [number, number] | null;
 }
 
 export interface PlanItineraryInput {
