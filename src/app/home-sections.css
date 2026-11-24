@@ -1754,15 +1754,18 @@ ul.ca-events-grid,
 /* ---------------------------------------------------------------------------------------------
    Home: «Il tuo tempo» e «Il tuo giro» (modello della demo di Stefano)
    --------------------------------------------------------------------------------------------- */
-/* nessun colore di sfondo: il blocco sta sul fondo della pagina */
+/* fondo bianco attorno al riquadro verde (niente fondo della pagina) */
 .ca-hometime-wrap {
   padding-top: 0;
-  background: none;
+  background: #fff;
 }
 .ca-hometime {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   gap: 56px;
+  padding: 56px;
+  border-radius: 32px;
+  background: var(--color-primario-50);
 }
 .ca-hometime h2 {
   margin: 0;
@@ -1931,6 +1934,8 @@ ul.ca-events-grid,
   .ca-hometime {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
+    padding: 24px 16px;
+    border-radius: 24px;
   }
   .ca-hometime-pick {
     position: static;
