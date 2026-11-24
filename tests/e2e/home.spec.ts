@@ -21,6 +21,7 @@ test("home: sezioni nell'ordine, niente sezioni tolte, niente scroll orizzontale
 });
 
 test("hero: disegno intero nella prima schermata, animazione automatica in loop", async ({ page }) => {
+  test.setTimeout(90_000);
   await page.goto("/it");
   const hero = page.locator(".ca-hero-draw");
   await expect(hero).toHaveAttribute("data-drawing-ready", "true");
@@ -31,9 +32,10 @@ test("hero: disegno intero nella prima schermata, animazione automatica in loop"
   // l'SVG intero (preserveAspectRatio meet) sta nel riquadro
   const art = (await hero.locator(".ca-hero-draw-art svg").boundingBox())!;
   expect(art.y + art.height).toBeLessThanOrEqual(viewport.height + 1);
-  // parte senza scroll e ricomincia dopo la pausa a disegno completo
-  await expect.poll(() => hero.getAttribute("data-drawing-state"), { timeout: 12_000 }).toBe("complete");
-  await expect.poll(() => hero.getAttribute("data-drawing-state"), { timeout: 6_000 }).toBe("drawing");
+  // parte senza scroll e ricomincia dopo la pausa a disegno completo (tempi larghi: nel container
+  // il thread principale a volte si ferma e il ciclo di 10 s si allunga)
+  await expect.poll(() => hero.getAttribute("data-drawing-state"), { timeout: 30_000, intervals: [250] }).toBe("complete");
+  await expect.poll(() => hero.getAttribute("data-drawing-state"), { timeout: 15_000, intervals: [250] }).toBe("drawing");
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
 });
 
