@@ -3,7 +3,6 @@ import { Link } from "@/i18n/navigation";
 import { features } from "@/lib/env";
 import { IconSearch, IconStamp } from "@/components/ui/icons";
 import { HeaderMenu } from "./HeaderMenu";
-import { LocaleSwitcher } from "./LocaleSwitcher";
 import { Logo } from "./Logo";
 import { NavDropdown } from "./NavDropdown";
 import { type Pillar } from "./PillarIcon";
@@ -28,7 +27,7 @@ export async function Header() {
     connect: [
       { href: "/esplora", label: t("explore") },
       { href: "/il-tuo-tempo", label: t("time") },
-      { href: "/#itinerari", label: t("subItinerari") },
+      { href: "/itinerari", label: t("subItinerari") },
       { href: "/ritorno-a-cosenza", label: t("subRadici") },
     ],
     crea: [
@@ -59,9 +58,6 @@ export async function Header() {
               <IconSearch size={22} />
             </Link>
           )}
-          <span className="site-header-locale">
-            <LocaleSwitcher />
-          </span>
           {features.passport ? (
             <Link href="/passaporto" className="site-header-cta">
               <IconStamp size={18} />
@@ -74,9 +70,7 @@ export async function Header() {
             links={links}
             labels={{ open: t("openMenu"), close: t("closeMenu"), nav: t("mobileNav"), passport: t("passport") }}
             passport={features.passport}
-          >
-            <LocaleSwitcher />
-          </HeaderMenu>
+          />
         </div>
       </div>
     </header>

@@ -27,7 +27,6 @@ export default async function RootsPage({ params }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations("roots");
   const quarters = await placesBySlugs(QUARTERS);
-  const other = t("otherLocale") as "it" | "en";
 
   return (
     <>
@@ -41,12 +40,7 @@ export default async function RootsPage({ params }: Props) {
                 {t("title")}
               </h1>
               <p className="ca-section-intro">{t("intro")}</p>
-              <p className="ca-roots-other" lang={other}>
-                {t("other")}{" "}
-                <Link href="/ritorno-a-cosenza" locale={other} className="font-semibold text-azzurro-700 underline underline-offset-4">
-                  {t("otherCta")}
-                </Link>
-              </p>
+              {/* sito monolingua: il rimando alla versione inglese (roots.other/otherCta) tornerà con l'inglese */}
             </div>
             {quarters[0]?.image && (
               <figure className="ca-roots-photo">
