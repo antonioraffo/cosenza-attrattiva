@@ -1,24 +1,37 @@
 /*
  * Disegno al tratto dell'hero: si traccia da solo al caricamento e si ripete in loop.
- * Usa gli stessi SVG dell'intro "silhouette" (tratti con data-start/data-end, pathLength=1),
- * ma l'avanzamento viene dal tempo invece che dallo scroll:
+ * Usa gli stessi SVG dell'intro "silhouette" (tratti con data-start/data-end), ma l'avanzamento viene
+ * dal tempo invece che dallo scroll:
  *   tracciamento (DRAW_MS) → pausa a disegno completo (HOLD_MS) → dissolvenza (FADE_MS) → di nuovo.
- * Con prefers-reduced-motion il disegno è subito completo e fermo.
- * Fuori schermo o con la scheda nascosta l'animazione si ferma (nessun frame sprecato).
+ *
+ * Prestazioni: animare il dashoffset di ~1200 tracciati SVG costringe il browser a ridipingere tutto il
+ * disegno a ogni fotogramma. Qui l'SVG resta fermo (solo il "fantasma" a bassa opacità) e i tratti si
+ * disegnano su un <canvas> sovrapposto con la stessa geometria: a ogni fotogramma si aggiunge solo il
+ * pezzo nuovo dei tratti in corso. Il tratteggio del canvas, come quello SVG, riparte a ogni sottotracciato,
+ * quindi la coreografia è identica a quella dell'intro.
+ *
+ * Con prefers-reduced-motion il disegno è subito completo e fermo. Fuori schermo o con la scheda nascosta
+ * l'animazione si ferma. Il disegno si scarica a pagina carica, quando il browser è libero.
  */
 
 export const DRAW_MS = 7000;
 export const HOLD_MS = 2500;
 export const FADE_MS = 700;
 const CYCLE_MS = DRAW_MS + HOLD_MS + FADE_MS;
+/** spessore dei tratti in pixel CSS (stroke-width 0.9 con vector-effect non-scaling-stroke) */
+const LINE_PX = 0.9;
+const FAR = 1e7;
 
 const clamp = (v: number) => Math.max(0, Math.min(1, v));
 const ease = (v: number) => 1 - (1 - v) ** 2;
 
 interface Stroke {
-  element: SVGElement;
+  path: Path2D;
+  length: number;
+  color: string;
   start: number;
   rate: number;
+  /** lunghezza già disegnata sul canvas (unità del viewBox) */
   drawn: number;
 }
 
@@ -29,43 +42,95 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
   const reduce = view.matchMedia("(prefers-reduced-motion: reduce)");
   const controller = new AbortController();
   let strokes: Stroke[] = [];
-  let lines: SVGElement | null = null;
+  let canvas: HTMLCanvasElement | null = null;
+  let ctx: CanvasRenderingContext2D | null = null;
+  let box = { x: 0, y: 0, width: 1, height: 1 };
+  let scale = 1;
   let frame: number | undefined;
   let visible = true;
   let disposed = false;
+  let cycle = -1;
   // istante (performance.now) a cui corrisponde l'inizio del ciclo; si sposta durante le pause
   let origin = view.performance.now();
   let pausedAt: number | null = null;
+  let resizeObserver: ResizeObserver | undefined;
+  // nuova scena: lo stato della precedente non vale più
+  for (const key of ["drawingReady", "drawingState", "drawingProgress"]) delete root.dataset[key];
 
-  const render = (progress: number, fade: number) => {
+  /** dimensioni del canvas e trasformazione viewBox → pixel (come preserveAspectRatio="xMidYMid meet") */
+  const fit = () => {
+    if (!canvas || !ctx) return false;
+    const width = art.clientWidth;
+    const height = art.clientHeight;
+    if (!width || !height) return false;
+    const dpr = Math.min(2, view.devicePixelRatio || 1);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    scale = Math.min(width / box.width, height / box.height);
+    const ox = (width - box.width * scale) / 2 - box.x * scale;
+    const oy = (height - box.height * scale) / 2 - box.y * scale;
+    ctx.setTransform(dpr * scale, 0, 0, dpr * scale, dpr * ox, dpr * oy);
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.lineWidth = LINE_PX / scale;
+    return true;
+  };
+
+  /** porta ogni tratto alla lunghezza che gli spetta a `progress`, disegnando solo il pezzo mancante */
+  const advance = (progress: number) => {
+    if (!ctx) return;
     for (const s of strokes) {
-      const local = Math.round(clamp((progress - s.start) * s.rate) * 1000);
-      if (local === s.drawn) continue;
-      s.element.style.strokeDashoffset = String(1 - local / 1000);
-      s.element.style.opacity = local > 0 ? "1" : "0";
-      s.drawn = local;
+      const target = clamp((progress - s.start) * s.rate) * s.length;
+      if (target <= s.drawn + 0.01) continue;
+      ctx.strokeStyle = s.color;
+      // un solo trattino [drawn, target] in ogni sottotracciato
+      ctx.setLineDash([target - s.drawn, FAR]);
+      ctx.lineDashOffset = -s.drawn;
+      ctx.stroke(s.path);
+      s.drawn = target;
     }
-    if (lines) lines.style.opacity = String(1 - fade);
     root.dataset.drawingProgress = progress.toFixed(3);
+  };
+
+  /** ridisegna da capo fino a `progress` (nuovo ciclo, ridimensionamento) */
+  const redraw = (progress: number) => {
+    if (!ctx || !canvas || !fit()) return;
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+    for (const s of strokes) s.drawn = 0;
+    advance(progress);
   };
 
   const tick = (now: number) => {
     frame = undefined;
-    if (disposed) return;
+    if (disposed || !ctx || !canvas) return;
     if (reduce.matches) {
-      render(1, 0);
-      root.dataset.drawingState = "static";
+      if (root.dataset.drawingState !== "static") {
+        canvas.style.opacity = "1";
+        redraw(1);
+        root.dataset.drawingState = "static";
+      }
       return;
     }
-    const t = (now - origin) % CYCLE_MS;
+    const elapsed = now - origin;
+    const current = Math.floor(elapsed / CYCLE_MS);
+    const t = elapsed - current * CYCLE_MS;
+    if (current !== cycle) {
+      cycle = current;
+      canvas.style.opacity = "1";
+      redraw(0);
+    }
     if (t < DRAW_MS) {
-      render(ease(t / DRAW_MS), 0);
+      advance(ease(t / DRAW_MS));
       root.dataset.drawingState = "drawing";
     } else if (t < DRAW_MS + HOLD_MS) {
-      render(1, 0);
+      advance(1);
       root.dataset.drawingState = "complete";
     } else {
-      render(1, clamp((t - DRAW_MS - HOLD_MS) / FADE_MS));
+      advance(1);
+      canvas.style.opacity = String(1 - clamp((t - DRAW_MS - HOLD_MS) / FADE_MS));
       root.dataset.drawingState = "fading";
     }
     schedule();
@@ -100,14 +165,22 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
   const onVisibility = () => (doc.hidden ? pause() : resume());
   const onMotion = () => {
     origin = view.performance.now();
-    strokes.forEach((s) => (s.drawn = -1));
-    if (frame === undefined) frame = view.requestAnimationFrame(tick);
+    cycle = -1;
+    delete root.dataset.drawingState;
+    if (frame === undefined && strokes.length) frame = view.requestAnimationFrame(tick);
   };
   doc.addEventListener("visibilitychange", onVisibility);
   reduce.addEventListener("change", onMotion);
 
-  // il disegno (centinaia di KB) si scarica dopo il primo rendering
-  fetch(drawingUrl, { signal: controller.signal })
+  const idle = () =>
+    new Promise<void>((resolve) => {
+      const go = () => ("requestIdleCallback" in view ? view.requestIdleCallback(() => resolve(), { timeout: 1500 }) : setTimeout(resolve, 200));
+      if (doc.readyState === "complete") go();
+      else view.addEventListener("load", go, { once: true, signal: controller.signal });
+    });
+
+  idle()
+    .then(() => (disposed ? Promise.reject(new DOMException("disposed", "AbortError")) : fetch(drawingUrl, { signal: controller.signal })))
     .then((r) => {
       if (!r.ok) throw new Error(`Disegno: ${r.status}`);
       return r.text();
@@ -121,22 +194,45 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
       svg.removeAttribute("width");
       svg.removeAttribute("height");
       svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-      art.replaceChildren(svg);
-      lines = svg.querySelector("[data-silhouette-lines]");
-      const raw = [...svg.querySelectorAll<SVGElement>("[data-silhouette-stroke]")].map((element) => ({
+      // nell'SVG resta visibile solo il "fantasma"; i tratti animati li disegna il canvas
+      const lines = svg.querySelector<SVGGElement>("[data-silhouette-lines]");
+      lines?.setAttribute("visibility", "hidden");
+      canvas = doc.createElement("canvas");
+      canvas.className = "ca-hero-draw-canvas";
+      canvas.setAttribute("aria-hidden", "true");
+      art.replaceChildren(svg, canvas);
+      ctx = canvas.getContext("2d");
+      const vb = svg.viewBox.baseVal;
+      box = vb && vb.width ? { x: vb.x, y: vb.y, width: vb.width, height: vb.height } : { x: 0, y: 0, width: 1535, height: 1025 };
+
+      const raw = [...(lines?.querySelectorAll<SVGPathElement>("path[data-silhouette-stroke]") ?? [])].map((element) => ({
         element,
         start: Number(element.dataset.start || 0),
         end: Number(element.dataset.end || 1),
       }));
       // l'ultimo tratto finisce a progress = 1: tutte le linee si riempiono
       const last = Math.max(0.001, ...raw.map((s) => s.end));
-      strokes = raw.map(({ element, start, end }) => ({
-        element,
-        start: start / last,
-        rate: last / Math.max(0.001, end - start),
-        drawn: -1,
-      }));
+      strokes = raw.map(({ element, start, end }) => {
+        // la lunghezza vera (pathLength=1 vale solo per l'SVG)
+        element.removeAttribute("pathLength");
+        return {
+          path: new Path2D(element.getAttribute("d") ?? ""),
+          length: element.getTotalLength(),
+          color: element.getAttribute("stroke") || "#1d1d1d",
+          start: start / last,
+          rate: last / Math.max(0.001, end - start),
+          drawn: 0,
+        };
+      });
+      if ("ResizeObserver" in view) {
+        resizeObserver = new ResizeObserver(() => {
+          const progress = Number(root.dataset.drawingProgress ?? 0);
+          redraw(progress);
+        });
+        resizeObserver.observe(art);
+      }
       origin = view.performance.now();
+      cycle = -1;
       root.dataset.drawingReady = "true";
       if (frame === undefined) frame = view.requestAnimationFrame(tick);
     })
@@ -150,6 +246,7 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
     controller.abort();
     if (frame !== undefined) view.cancelAnimationFrame(frame);
     observer?.disconnect();
+    resizeObserver?.disconnect();
     doc.removeEventListener("visibilitychange", onVisibility);
     reduce.removeEventListener("change", onMotion);
   };

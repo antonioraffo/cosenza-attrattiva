@@ -360,20 +360,21 @@
   width: 100%;
   max-width: 1400px;
   min-height: 0;
+  position: relative;
+  contain: layout paint style;
+}
+/* i tratti animati: canvas sopra l'SVG (che mostra solo il "fantasma"), stessa area e stessa scala */
+.ca-hero-draw-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 .ca-hero-draw-art svg {
   display: block;
   width: 100%;
   height: 100%;
-}
-.ca-hero-draw [data-silhouette-stroke] {
-  vector-effect: non-scaling-stroke;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  opacity: 0;
-}
-.ca-hero-draw [data-silhouette-lines] {
-  transition: opacity 0.2s linear;
 }
 .ca-hero-draw-nav {
   flex: none;
@@ -406,9 +407,4 @@
 .ca-hero-draw-nav button[aria-pressed="false"]:hover {
   color: var(--color-primario-600);
 }
-@media (prefers-reduced-motion: reduce) {
-  .ca-hero-draw [data-silhouette-stroke] {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-}
+
