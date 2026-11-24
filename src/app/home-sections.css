@@ -32,7 +32,7 @@
   font-size: 48px;
   font-weight: 600;
   line-height: 1.08;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.0225em;
 }
 .ca-section-eyebrow {
   margin: 0 0 14px;
@@ -269,14 +269,14 @@
   color: #fff;
   font-size: clamp(36px, 4.2vw, 60px);
   line-height: 1.04;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.025em;
 }
 .ca-pillar-tagline {
   margin: 10px 0 0;
   font-family: var(--font-display);
   font-size: clamp(18px, 1.6vw, 22px);
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: rgb(255 255 255 / 0.92);
 }
 .ca-pillar-text {
@@ -399,7 +399,7 @@ body.home-scroll-effects-active .ca-lower.ca-lower--flat {
   font-size: clamp(36px, 4.15vw, 56px);
   font-weight: 600;
   line-height: 1.1;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.0225em;
 }
 .ca-explore-intro {
   margin: 0 0 2px;
@@ -419,7 +419,7 @@ body.home-scroll-effects-active .ca-lower.ca-lower--flat {
   font-size: clamp(26px, 2.6vw, 36px);
   font-weight: 600;
   line-height: 1.22;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.0175em;
 }
 .ca-explore-lead > span {
   display: block;
@@ -1025,7 +1025,7 @@ body.home-scroll-effects-active .ca-explore-tail {
   font-family: var(--font-display);
   font-size: 28px;
   font-weight: 600;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
 }
 .ca-event-date-point > span {
   font-size: 12px;
@@ -1037,7 +1037,7 @@ body.home-scroll-effects-active .ca-explore-tail {
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 .ca-event-major {
   display: inline-block;
@@ -1069,7 +1069,7 @@ body.home-scroll-effects-active .ca-explore-tail {
   margin: 0;
   font-size: 21px;
   line-height: 1.23;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.0125em;
 }
 .ca-event-place {
   display: flex;
@@ -1411,7 +1411,7 @@ ul.ca-events-grid,
   font-size: 30px;
   font-weight: 600;
   line-height: 1.1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
 }
 .ca-major-photo {
   position: relative;
@@ -1637,7 +1637,7 @@ ul.ca-events-grid,
   font-size: clamp(24px, 2.6vw, 36px);
   font-weight: 600;
   line-height: 1.3;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.015em;
 }
 @media (max-width: 960px) {
   .ca-crea-grid,
@@ -1773,7 +1773,7 @@ ul.ca-events-grid,
   font-size: clamp(30px, 3.4vw, 48px);
   font-weight: 700;
   line-height: 1.05;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.0175em;
 }
 .ca-hometime-pick {
   display: grid;
@@ -1818,7 +1818,7 @@ ul.ca-events-grid,
   font-family: var(--font-display);
   font-size: 24px;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 .ca-hometime-summary span {
   color: var(--color-neutro-700);
@@ -1892,7 +1892,7 @@ ul.ca-events-grid,
   font-size: 20px;
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 .ca-hometime-card h3 a {
   color: inherit;
@@ -2013,7 +2013,7 @@ ul.ca-events-grid,
   font-size: clamp(32px, 3.6vw, 52px);
   font-weight: 700;
   line-height: 1.05;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
 }
 .ca-pillar-block-text {
   max-width: 34em;
