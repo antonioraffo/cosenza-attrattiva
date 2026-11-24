@@ -11,24 +11,23 @@ test("hero: selettore Antica / Contemporanea e claim del masterplan", async ({ p
   await expect(nav.getByRole("button", { name: "Contemporanea" })).toHaveAttribute("aria-pressed", "true");
 });
 
-test("menu: sottomenu dei pilastri verso le nuove pagine", async ({ page }, info) => {
+test("menu: sottovoci dei pilastri (megamenu Scopri) verso le nuove pagine", async ({ page }, info) => {
   await page.goto("/it");
   if (isMobile(info.project.name)) {
     await page.getByRole("button", { name: "Apri menu" }).click();
     const nav = page.getByRole("navigation", { name: "Navigazione mobile" });
+    await nav.getByRole("button", { name: "Cosenza Crea" }).click();
     await expect(nav.getByRole("link", { name: "Fatto a Cosenza" })).toBeVisible();
-    await nav.getByRole("link", { name: "Ritorno a Cosenza" }).click();
-    await expect(page).toHaveURL(/\/it\/ritorno-a-cosenza$/);
+    await nav.getByRole("button", { name: "Cosenza Vive" }).click();
+    await nav.getByRole("link", { name: "Calendario della città" }).click();
+    await expect(page).toHaveURL(/\/it\/eventi#calendario$/);
     return;
   }
-  const toggle = page.getByRole("button", { name: "Sottomenu Cosenza Vive" });
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
-  await toggle.click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "true");
-  await page.keyboard.press("Escape");
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
-  await toggle.click();
-  await page.getByRole("link", { name: "Calendario della città" }).first().click();
+  const scopri = page.getByRole("button", { name: "Scopri", exact: true });
+  await scopri.click();
+  const pane = page.getByRole("navigation", { name: "Navigazione principale" }).getByRole("tabpanel");
+  await expect(pane.getByRole("link", { name: "Grandi eventi" })).toBeVisible();
+  await pane.getByRole("link", { name: "Calendario della città" }).click();
   await expect(page).toHaveURL(/\/it\/eventi#calendario$/);
 });
 

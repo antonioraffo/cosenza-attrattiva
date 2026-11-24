@@ -29,7 +29,17 @@
     "openSub": "Sottomenu {label}",
     "explore": "Esplora",
     "mine": "Il mio itinerario",
-    "time": "Il tuo tempo"
+    "time": "Il tuo tempo",
+    "discover": "Scopri",
+    "events": "Eventi",
+    "plan": "Pianifica",
+    "mega": {
+      "list": "Le tre anime della città",
+      "goTo": "Vai a {label}",
+      "vive": "Piazze, commercio ed eventi: la città che si anima tutto l'anno, dai grandi appuntamenti al calendario di ogni giorno.",
+      "connect": "Itinerari a piedi, luoghi da esplorare e un giro su misura del tuo tempo, per scoprire Cosenza e tornarci.",
+      "crea": "Botteghe, mestieri e il marchio «Fatto a Cosenza»: l'artigianato che dà identità alla città."
+    }
   },
   "home": {
     "heroTitle": "Cosenza, città da vivere.",
@@ -54,6 +64,11 @@
       "pause": "Metti in pausa l'animazione",
       "play": "Riprendi l'animazione",
       "shown": "{title}"
+    },
+    "pillarImages": {
+      "vive": "Corso Mazzini, la via dello shopping di Cosenza, con una scultura del Museo all'Aperto Bilotti e i passanti tra i negozi",
+      "connect": "Cosenza vecchia sul colle e la cupola di San Domenico lungo il fiume, dove si incontrano Crati e Busento",
+      "crea": "Una piccola bottega con le merci esposte sull'ingresso, in una strada del centro storico"
     }
   },
   "themes": {

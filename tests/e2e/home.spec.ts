@@ -80,66 +80,82 @@ test("hero: con movimento ridotto il disegno è completo e fermo", async ({ page
   await expect(hero.locator(".ca-hero-card--place")).toHaveCSS("opacity", "1");
 });
 
-test("menu principale: solo Vive, Connect, Crea con icona e etichetta", async ({ page }, info) => {
+test("menu principale: Scopri, Eventi, Pianifica (solo testo) e megamenu dei pilastri", async ({ page }, info) => {
   await page.goto("/it");
-  let nav = page.getByRole("navigation", { name: "Navigazione principale" });
   if (isMobile(info.project.name)) {
-    await expect(nav).toBeHidden();
+    await expect(page.getByRole("navigation", { name: "Navigazione principale" })).toBeHidden();
     await page.getByRole("button", { name: "Apri menu" }).click();
-    nav = page.getByRole("navigation", { name: "Navigazione mobile" });
-    await expect(nav).toBeVisible();
+    const nav = page.getByRole("navigation", { name: "Navigazione mobile" });
+    await expect(nav.getByText("Scopri", { exact: true })).toBeVisible();
+    await expect(nav.getByRole("link", { name: "Eventi", exact: true })).toHaveAttribute("href", "/it/eventi");
+    await expect(nav.getByRole("link", { name: "Pianifica", exact: true })).toHaveAttribute("href", "/it/il-tuo-tempo");
+    // accordion senza hover: tocco su Connect → spiegazione e sottovoci
+    const connect = nav.getByRole("button", { name: "Cosenza Connect" });
+    await expect(connect).toHaveAttribute("aria-expanded", "false");
+    await connect.click();
+    await expect(connect).toHaveAttribute("aria-expanded", "true");
+    await expect(nav.getByRole("link", { name: "Esplora" })).toBeVisible();
+    await nav.getByRole("link", { name: "Ritorno a Cosenza" }).click();
+    await expect(page).toHaveURL(/\/it\/ritorno-a-cosenza$/);
+    return;
   }
-  const links = nav.getByRole("link").filter({ hasText: /^Cosenza (Vive|Connect|Crea)$/ });
-  await expect(links).toHaveText(["Cosenza Vive", "Cosenza Connect", "Cosenza Crea"]);
-  for (const link of await links.all()) await expect(link.locator('svg[aria-hidden="true"]')).toHaveCount(1);
-  await expect(links.nth(1)).toHaveAttribute("href", "/it#connect");
+  const nav = page.getByRole("navigation", { name: "Navigazione principale" });
+  const scopri = nav.getByRole("button", { name: "Scopri", exact: true });
+  await expect(nav.getByRole("link", { name: "Eventi", exact: true })).toHaveAttribute("href", "/it/eventi");
+  await expect(nav.getByRole("link", { name: "Pianifica", exact: true })).toHaveAttribute("href", "/it/il-tuo-tempo");
+  await expect(nav.getByRole("link", { name: /^(Eventi|Pianifica)$/ }).locator("svg")).toHaveCount(0);
 
-  // Connect porta all'area turismo della mission, che dà accesso agli itinerari
-  await links.nth(1).click();
+  // clic: si apre, Vive di default; il mouse su Connect cambia il riquadro
+  await expect(scopri).toHaveAttribute("aria-expanded", "false");
+  await scopri.click();
+  await expect(scopri).toHaveAttribute("aria-expanded", "true");
+  const tabs = nav.getByRole("tablist");
+  await expect(tabs.getByRole("tab", { name: "Cosenza Vive" })).toHaveAttribute("aria-selected", "true");
+  await tabs.getByRole("tab", { name: "Cosenza Connect" }).hover();
+  const pane = nav.getByRole("tabpanel");
+  await expect(pane.getByRole("link", { name: "Esplora" })).toBeVisible();
+  // clic fuori: si chiude
+  await page.mouse.click(5, 600);
+  await expect(scopri).toHaveAttribute("aria-expanded", "false");
+
+  // tastiera: freccia giù apre e porta il focus sui pilastri, frecce per cambiare, Esc chiude
+  await scopri.focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(tabs.getByRole("tab", { name: "Cosenza Vive" })).toBeFocused();
+  await page.keyboard.press("ArrowDown");
+  await page.keyboard.press("ArrowDown");
+  await expect(tabs.getByRole("tab", { name: "Cosenza Crea" })).toHaveAttribute("aria-selected", "true");
+  await page.keyboard.press("Tab");
+  await expect(pane.getByRole("link", { name: "Fatto a Cosenza" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(scopri).toHaveAttribute("aria-expanded", "false");
+  await expect(scopri).toBeFocused();
+
+  // il link del riquadro porta al blocco del pilastro in home
+  await scopri.click();
+  await tabs.getByRole("tab", { name: "Cosenza Connect" }).click();
+  await pane.getByRole("link", { name: "Vai a Cosenza Connect" }).click();
   await expect(page).toHaveURL(/#connect$/);
   await expect(page.locator("#connect")).toBeInViewport();
-  await page.locator("#connect").getByRole("link", { name: "Scopri gli itinerari" }).click();
-  await expect(page).toHaveURL(/\/it\/itinerari$/);
-  await expect(page.locator("#itinerari").getByRole("button", { name: "Tutti" })).toBeInViewport();
-
-  if (isMobile(info.project.name)) {
-    await page.getByRole("button", { name: "Apri menu" }).click();
-    await page.keyboard.press("Escape");
-    await expect(page.getByRole("navigation", { name: "Navigazione mobile" })).toBeHidden();
-  }
 });
 
-test("carosello mission: frecce, tastiera, swipe e indicatori", async ({ page }, info) => {
+test("pilastri: blocchi immagine + testo alternati, immagine sopra da mobile", async ({ page }, info) => {
   await page.goto("/it");
-  const carousel = page.getByRole("region", { name: "Le tre aree di Cosenza attrattiva" });
-  await carousel.scrollIntoViewIfNeeded();
-  await expect(carousel.locator('[aria-roledescription="slide"]')).toHaveCount(3);
-  const dot = (n: number) => carousel.getByRole("button", { name: `Vai a Cosenza ${["Vive", "Connect", "Crea"][n]}` });
-  await expect(dot(0)).toHaveAttribute("aria-current", "true");
-
-  if (!isMobile(info.project.name)) {
-    const next = carousel.getByRole("button", { name: "Area successiva" });
-    await expect(carousel.getByRole("button", { name: "Area precedente" })).toBeDisabled();
-    await next.click();
-    await expect(dot(1)).toHaveAttribute("aria-current", "true");
-  } else {
-    // swipe: lo scroll orizzontale della traccia con scroll-snap
-    const track = carousel.locator(".ca-carousel-track");
-    await track.evaluate((el: HTMLElement) => {
-      const second = el.children[1] as HTMLElement;
-      el.scrollTo({ left: second.offsetLeft - el.offsetLeft - 20, behavior: "instant" });
-    });
-    await expect(dot(1)).toHaveAttribute("aria-current", "true");
+  const blocks = page.locator(".ca-pillar-block");
+  await expect(blocks).toHaveCount(3);
+  for (const [i, name] of ["Cosenza Vive", "Cosenza Connect", "Cosenza Crea"].entries()) {
+    const block = blocks.nth(i);
+    await expect(block.getByRole("heading", { level: 3, name })).toBeAttached();
+    await expect(block.locator(".ca-blob img")).toHaveAttribute("alt", /.{20,}/);
+    await expect(block.locator(".ca-blob-spot")).toHaveCount(3);
+    await block.scrollIntoViewIfNeeded();
+    const media = (await block.locator(".ca-pillar-block-media").boundingBox())!;
+    const copy = (await block.locator(".ca-pillar-block-copy").boundingBox())!;
+    if (isMobile(info.project.name)) expect(media.y + media.height).toBeLessThanOrEqual(copy.y + 1);
+    else if (i % 2 === 0) expect(media.x).toBeGreaterThan(copy.x);
+    else expect(media.x).toBeLessThan(copy.x);
   }
-
-  const track = carousel.locator(".ca-carousel-track");
-  await track.focus();
-  await page.keyboard.press("ArrowRight");
-  await expect(dot(2)).toHaveAttribute("aria-current", "true");
-  await page.keyboard.press("Home");
-  await expect(dot(0)).toHaveAttribute("aria-current", "true");
-  await dot(2).click();
-  await expect(dot(2)).toHaveAttribute("aria-current", "true");
+  await expect(blocks.nth(2).getByRole("link", { name: "Scopri Fatto a Cosenza" })).toHaveAttribute("href", "/it/fatto-a-cosenza");
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
 });

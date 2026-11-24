@@ -29,7 +29,17 @@
     "openSub": "{label} submenu",
     "explore": "Explore",
     "mine": "My itinerary",
-    "time": "Your time"
+    "time": "Your time",
+    "discover": "Discover",
+    "events": "Events",
+    "plan": "Plan",
+    "mega": {
+      "list": "The city's three souls",
+      "goTo": "Go to {label}",
+      "vive": "Squares, shops and events: a city that comes alive all year, from major events to the everyday calendar.",
+      "connect": "Walking itineraries, places to explore and a tour fitted to your time, to discover Cosenza and come back.",
+      "crea": "Workshops, crafts and the «Made in Cosenza» mark: the craftsmanship that gives the city its identity."
+    }
   },
   "home": {
     "heroTitle": "Cosenza, a city to live in.",
@@ -54,6 +64,11 @@
       "pause": "Pause the animation",
       "play": "Resume the animation",
       "shown": "{title}"
+    },
+    "pillarImages": {
+      "vive": "Corso Mazzini, Cosenza's shopping street, with a sculpture of the Bilotti Open-Air Museum and people walking among the shops",
+      "connect": "Old Cosenza on the hill and the dome of San Domenico by the river, where the Crati and Busento meet",
+      "crea": "A small shop with goods displayed at the entrance, on a street in the historic centre"
     }
   },
   "themes": {
