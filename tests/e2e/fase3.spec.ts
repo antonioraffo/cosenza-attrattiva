@@ -4,6 +4,8 @@ import { expect, passportOn, test } from "./fixtures";
 
 test("home: fascia «Quanto tempo hai?» con i numeri del giro", async ({ page }) => {
   await page.goto("/it");
+  // l'idratazione della home riporta lo scroll in cima: si interagisce a pagina pronta
+  await page.waitForLoadState("networkidle");
   const bar = page.locator(".ca-timebar");
   await expect(bar.getByRole("heading", { name: "Quanto tempo hai?" })).toBeVisible();
   await expect(bar.getByRole("link")).toHaveCount(3);
