@@ -346,6 +346,9 @@ body.home-scroll-effects-active .ca-lower {
   z-index: 8;
   margin-top: calc(-1 * var(--explore-overlap));
 }
+body.home-scroll-effects-active .ca-lower.ca-lower--flat {
+  margin-top: 0;
+}
 .ca-explore-transition {
   --explore-exit-overlap: clamp(320px, 72svh, 740px);
   position: relative;

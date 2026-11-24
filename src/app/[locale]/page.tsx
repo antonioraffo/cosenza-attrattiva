@@ -37,7 +37,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           }}
         />
         <MissionSection />
-        <LowerRoot>
+        <LowerRoot overlap={false}>
           <EventsSection locale={locale} />
           <ExploreSection locale={locale} />
           <TimeSection locale={locale} />
