@@ -167,7 +167,7 @@ Lighthouse su Docker Desktop è sensibile al carico della macchina: misurare dop
 
 ## Home e design system
 
-La home riprende struttura, tipografia (Plus Jakarta Sans + Manrope, self-hosted in `src/fonts/`),
+La home riprende struttura, tipografia (Rethink Sans, font unico self-hosted in `src/fonts/`),
 spaziature ed effetti di vivi-cosenza, con il marchio e la palette di Cosenza attrattiva
 ([design token](docs/DESIGN-TOKENS.md), contrasti AA verificati). Gli effetti allo scroll sono porting
 fedeli del sito di riferimento (`src/components/home/effects/`) e si disattivano con `prefers-reduced-motion`.

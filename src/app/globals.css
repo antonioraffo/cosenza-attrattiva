@@ -10,11 +10,11 @@
  * Design token "Cosenza attrattiva" (vedi docs/DESIGN-TOKENS.md).
  * Colori dal logo ufficiale (#128771 verde, #dd7b19 arancio, #9c37b5 viola, #1a98c4 azzurro),
  * con varianti più scure/chiare dove serve il contrasto WCAG AA; neutri caldi e tipografia
- * (Plus Jakarta Sans + Manrope) presi dall'impianto di vivicosenza.
+ * (Rethink Sans, font unico per titoli e testi).
  */
 @theme {
-  --font-display: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-sans: var(--font-manrope), "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-rethink), "Rethink Sans", system-ui, sans-serif;
+  --font-sans: var(--font-rethink), "Rethink Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* Neutri (sfondi, testo, bordi) */
   --color-neutro-50: #f5f3ef;
@@ -181,7 +181,7 @@
     line-height: 1.7;
   }
 
-  /* eyebrow di vivicosenza: Manrope 600 12/1.55, .07em (.035em su mobile) */
+  /* eyebrow di vivicosenza: 600 12/1.55, .07em (.035em su mobile) */
   .eyebrow {
     font-family: var(--font-sans);
     font-size: 0.75rem;

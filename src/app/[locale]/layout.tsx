@@ -12,14 +12,8 @@ import { OfflineIndicator } from "@/components/layout/OfflineIndicator";
 import { PwaProvider } from "@/components/pwa/PwaProvider";
 import "../globals.css";
 
-// Font self-hosted (SIL Open Font License), gli stessi di vivicosenza: file variabili, sottoinsieme latin
-const jakarta = localFont({
-  src: "../../fonts/plus-jakarta-sans-latin.woff2",
-  weight: "400 800",
-  variable: "--font-jakarta",
-  display: "swap",
-});
-const manrope = localFont({ src: "../../fonts/manrope-latin.woff2", weight: "400 700", variable: "--font-manrope", display: "swap" });
+// Font unico del progetto: Rethink Sans (SIL Open Font License), self-hosted, file variabile, sottoinsieme latin
+const rethink = localFont({ src: "../../fonts/rethink-sans-latin.woff2", weight: "400 800", variable: "--font-rethink", display: "swap" });
 
 // Contenuti letti dal database a ogni richiesta (nessun prerender in fase di build)
 export const dynamic = "force-dynamic";
@@ -37,7 +31,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: t("description"),
     applicationName: "Cosenza attrattiva",
     appleWebApp: { capable: true, title: "Cosenza", statusBarStyle: "black-translucent" },
-    alternates: { languages: { it: "/it", en: "/en" } },
     openGraph: { type: "website", siteName: t("brand"), locale: locale === "it" ? "it_IT" : "en_GB" },
     formatDetection: { telephone: false },
   };
@@ -63,7 +56,7 @@ export default async function LocaleLayout({
   const t = await getTranslations("nav");
 
   return (
-    <html lang={locale} className={`${jakarta.variable} ${manrope.variable}`} data-scroll-behavior="smooth">
+    <html lang={locale} className={rethink.variable} data-scroll-behavior="smooth">
       <body className="min-h-dvh antialiased">
         <a
           href="#main"

@@ -98,8 +98,8 @@ e caricati con `next/font/local`:
 
 | Token | Font | Uso |
 |---|---|---|
-| `--font-display` (`font-display`) | Plus Jakarta Sans 400–800 | titoli h1–h4 (peso 600, `letter-spacing` −0,025em; titoli grandi −0,045em) |
-| `--font-sans` (`font-sans`) | Manrope 400–700 | testo 16/1,6; navigazione, pulsanti, eyebrow (600) |
+| `--font-display` (`font-display`) | Rethink Sans 400–800 | titoli h1–h4 (peso 600, `letter-spacing` −0,025em; titoli grandi −0,045em) |
+| `--font-sans` (`font-sans`) | Rethink Sans 400–800 | testo 16/1,6; navigazione, pulsanti, eyebrow (600) |
 
 Scala della home (da vivicosenza): h2 di sezione 48/1,08 → 42 (≤ 960) → 36/1,1 (≤ 640); titoli pannello
 `clamp(44px, 5.2vw, 76px)`; eyebrow 12/1,55 maiuscolo, 600, spaziatura .07em (.035em su mobile).
