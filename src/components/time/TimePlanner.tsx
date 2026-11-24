@@ -24,6 +24,7 @@ export interface TimeItinerary extends PlanItineraryInput {
   subtitle: string;
   durationLabel: string;
   route: [number, number][] | null;
+  cover?: { url: string } | null;
 }
 
 /**

@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { tr } from "@/lib/i18n";
-import { EXPLORE_ORIGIN, groupOf, pillarOf, walkMinutesFrom } from "@/lib/explore";
-import { listPlacesFull } from "@/server/queries";
+import { EXPLORE_ORIGIN } from "@/lib/explore";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { ExploreView, type ExplorePlace } from "@/components/explore/ExploreView";
+import { ExploreView } from "@/components/explore/ExploreView";
+import { explorePlaces } from "@/components/explore/explorePlaces";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -20,20 +19,7 @@ export default async function ExplorePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("explore");
-  const places: ExplorePlace[] = (await listPlacesFull())
-    .map((p) => ({
-      slug: p.slug,
-      name: tr(p.name, locale),
-      summary: tr(p.summary, locale),
-      category: p.category,
-      categoryLabel: t(`category.${p.category}`),
-      group: groupOf(p.category),
-      pillar: pillarOf(p.category),
-      position: p.geom,
-      minutes: walkMinutesFrom(EXPLORE_ORIGIN, p.geom),
-      image: p.image ? { url: p.image.url, alt: tr(p.image.alt, locale) } : null,
-    }))
-    .sort((a, b) => a.minutes - b.minutes);
+  const places = await explorePlaces(locale);
 
   return (
     <>

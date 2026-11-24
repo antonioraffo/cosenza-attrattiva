@@ -27,15 +27,28 @@ export interface ExplorePlace {
 
 const GROUPS = Object.keys(EXPLORE_GROUPS) as ExploreGroup[];
 
-/** Elenco + mappa sincronizzati: passando su una scheda si evidenzia il punto, toccando un punto si va alla scheda. */
-export function ExploreView({ places, origin }: { places: ExplorePlace[]; origin: LngLat }) {
+/**
+ * Elenco + mappa sincronizzati: passando su una scheda si evidenzia il punto, toccando un punto si va alla scheda.
+ * `compact` (home, «Esplora a piedi»): elenco a scorrimento di altezza fissa accanto alla mappa, nomi in h3,
+ * mappa creata solo quando si avvicina allo schermo.
+ */
+export function ExploreView({ places, origin, compact = false }: { places: ExplorePlace[]; origin: LngLat; compact?: boolean }) {
   const t = useTranslations("explore");
   const locale = useLocale() as "it" | "en";
   const [group, setGroup] = useState<ExploreGroup | null>(null);
   const [active, setActive] = useState<string | null>(null);
   const saved = myItinerary.useStore((s) => s.places);
   const el = useRef<HTMLDivElement>(null);
-  const map = useMapLibre(el, locale, { center: origin, zoom: 14, cooperativeGestures: true });
+  const [near, setNear] = useState(!compact);
+  useEffect(() => {
+    const node = el.current;
+    if (near || !node) return;
+    const io = new IntersectionObserver(([e]) => e?.isIntersecting && setNear(true), { rootMargin: "300px" });
+    io.observe(node);
+    return () => io.disconnect();
+  }, [near]);
+  const map = useMapLibre(el, locale, { center: origin, zoom: 14, cooperativeGestures: true }, near);
+  const Name = compact ? "h3" : "h2";
   const shown = useMemo(() => (group ? places.filter((p) => p.group === group) : places), [places, group]);
 
   const data = useMemo(
@@ -111,7 +124,7 @@ export function ExploreView({ places, origin }: { places: ExplorePlace[]; origin
       <p className="ca-demo-note" aria-live="polite">
         {t("count", { count: shown.length })} · {t("from")}
       </p>
-      <div className="ca-xp-layout">
+      <div className="ca-xp-layout" data-compact={compact || undefined}>
         <ul className="ca-xp-list">
           {shown.map((p) => (
             <li
@@ -124,11 +137,11 @@ export function ExploreView({ places, origin }: { places: ExplorePlace[]; origin
             >
               {p.image ? <img src={p.image.url} alt="" width={112} height={92} loading="lazy" /> : <span aria-hidden="true" className="ca-place-noimg" />}
               <div>
-                <h2 className="ca-place-name">
+                <Name className="ca-place-name">
                   <Link href={`/luoghi/${p.slug}`} onFocus={() => setActive(p.slug)}>
                     {p.name}
                   </Link>
-                </h2>
+                </Name>
                 <p>{p.summary}</p>
                 <p className="ca-place-meta">
                   <span className="ca-pillar-tag" data-pillar={p.pillar}>

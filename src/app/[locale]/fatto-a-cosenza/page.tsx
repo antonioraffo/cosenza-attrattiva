@@ -5,7 +5,7 @@ import { isPast } from "@/lib/events";
 import { listEvents } from "@/server/queries";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { CraftTabs } from "@/components/crea/CraftTabs";
+import { CreaBand } from "@/components/crea/CreaBand";
 import { EventCard } from "@/components/home/EventCard";
 import { calendarItems, cardLabels } from "@/components/events/calendarItems";
 import { IconArrowRight } from "@/components/ui/icons";
@@ -18,8 +18,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title"), description: t("intro") };
 }
 
-const CRAFTS = ["ceramica", "legno", "tessile", "oreficeria", "prodotti"] as const;
-
 /**
  * Pilastro Crea: "Fatto a Cosenza" (dal prototipo "Città da vivere" e dal programma Cosenza Crea).
  * Nessuna prenotazione di laboratori; le botteghe reali arriveranno dall'Albo Artigiani.
@@ -29,7 +27,6 @@ export default async function CreaPage({ params }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations("crea");
   const te = await getTranslations("events");
-  const crafts = CRAFTS.map((k) => ({ key: k, name: t(`craft.${k}.name`), text: t(`craft.${k}.text`) }));
   const creaEvents = await calendarItems(
     (await listEvents()).filter((e) => (e.pillar === "crea" || e.category === "artigianato") && !isPast(e)),
     locale,
@@ -40,19 +37,7 @@ export default async function CreaPage({ params }: Props) {
     <>
       <Header />
       <main id="main">
-        <section className="ca-crea-hero" aria-labelledby="crea-title">
-          <div className="site-container ca-crea-grid">
-            <div>
-              <p className="ca-pillar-badge ca-pillar-badge--crea">{t("eyebrow")}</p>
-              <h1 id="crea-title" className="ca-page-title">
-                {t("title")}
-              </h1>
-              <p className="ca-crea-intro">{t("intro")}</p>
-              <h2 className="sr-only">{t("crafts")}</h2>
-            </div>
-            <CraftTabs crafts={crafts} label={t("craftsLabel")} photoTodo={t("photoTodo")} />
-          </div>
-        </section>
+        <CreaBand />
 
         <section className="ca-section ca-section--light" aria-labelledby="brand-title">
           <div className="site-container">
