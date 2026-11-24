@@ -79,6 +79,13 @@ in modalità dispositivo (375 px). L'URL è quello stampato da `make up`
 - **Vedi e percorri** → mappa con la sequenza e i minuti a piedi → **Inizia la passeggiata** (posizione simulata).
 - Sottolinea: niente account, le tappe restano sul telefono.
 
+### 5b. Il tuo tempo, il tuo giro (2 min, copia "sintesi")
+
+- In home, subito sotto l'hero: **Quanto tempo hai?** → **1 giorno**.
+- Mostra la linea del tempo: orari di ogni tappa, minuti a piedi, trasferimento e pausa pranzo.
+- Cambia **Partenza alle** (es. 15:00) e passa a **Weekend**: il giro si ricalcola, l'indirizzo resta condivisibile.
+- **Salva le tappe nel mio itinerario** → il contatore nell'header sale. Sottolinea: tempi dai percorsi pedonali reali, non stime.
+
 ## 6. Offline (1 min)
 
 - Su un itinerario: **Scarica per l'offline** → poi modalità aereo: racconto, foto e mappa

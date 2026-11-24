@@ -66,6 +66,19 @@ Novità della fase 2:
 Pilastro dei luoghi in Esplora: strade e piazze → Vive, cantine → Crea, il resto → Connect.
 I minuti a piedi sono una **stima** (linea d'aria × 1,3 a 75 m/min).
 
+Novità della fase 3:
+
+| Area | Cosa | Dove |
+|---|---|---|
+| Home | Fascia **Quanto tempo hai?** sotto l'hero: 3 ore / 1 giorno / weekend con i numeri del giro proposto | `components/home/TimeBar` |
+| Il tuo tempo | Giro a piedi con **linea del tempo**: orario di ogni tappa, minuti di cammino, trasferimenti, pausa pranzo; ora di partenza; altri itinerari che stanno nel tempo | `/il-tuo-tempo?t=3h\|1g\|weekend&ora=10`, `lib/plan.ts` |
+| Tempi reali | Minuti tra le tappe dal percorso pedonale dell'itinerario; trasferimenti tra itinerari dalla tabella OSRM `itinerary_links` | `make routes` (anche `pnpm routes:links`), `content/seed/routes/_links.json` |
+| Azioni | **Condividi su WhatsApp** (link riproducibile), **Salva le tappe nel mio itinerario** | `components/time/TimePlanner` |
+
+Regole del giro: si parte dal primo itinerario in ordine editoriale, poi si sceglie il più vicino che sta nel
+blocco (3 ore; 1 giorno = 2 blocchi con 1 h 30 di pausa; weekend = 2 giorni). Nessun itinerario si ripete;
+i tematici restano fuori dal giro ma compaiono tra gli "altri itinerari". Passo 70 m/min, 8 min per tappa.
+
 ## Requisiti
 
 - Docker Desktop (Compose v2)
