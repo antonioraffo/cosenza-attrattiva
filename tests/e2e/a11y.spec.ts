@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 import { passportOn } from "./fixtures";
 
 const extra = passportOn ? ["/it/passaporto"] : ["/it/esplora", "/it/mio-itinerario?p=duomo,castello-svevo"];
-for (const path of ["/it", "/it/itinerari/atene-della-calabria", "/it/luoghi/castello-svevo", ...extra]) {
+for (const path of ["/it", "/it/itinerari/atene-della-calabria", "/it/luoghi/castello-svevo", "/it/il-tuo-tempo?t=1g", ...extra]) {
   test(`accessibilità WCAG 2.1 AA: ${path}`, async ({ page }) => {
     await page.goto(path);
     await page.waitForLoadState("networkidle");
