@@ -1957,3 +1957,151 @@ ul.ca-events-grid,
   text-decoration: underline;
   text-underline-offset: 4px;
 }
+
+/* ---------------------------------------------------------------------------------------------
+   Pilastri in home: blocchi immagine + testo alternati (immagine a destra, sinistra, destra);
+   sotto 900 px immagine sopra e testo sotto
+   --------------------------------------------------------------------------------------------- */
+.ca-pillar-blocks {
+  display: grid;
+  gap: clamp(56px, 8vw, 112px);
+  margin-top: 48px;
+}
+.ca-pillar-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas: "copy media";
+  align-items: center;
+  gap: clamp(32px, 5vw, 80px);
+  scroll-margin-top: 96px;
+}
+.ca-pillar-block[data-side="left"] {
+  grid-template-areas: "media copy";
+}
+.ca-pillar-block-media {
+  grid-area: media;
+}
+.ca-pillar-block-copy {
+  grid-area: copy;
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+}
+.ca-pillar-block[data-pillar="vive"] {
+  --pillar-accent: #9c37b5;
+  --pillar-ink: #7a2a8e;
+}
+.ca-pillar-block[data-pillar="connect"] {
+  --pillar-accent: #137396;
+  --pillar-ink: #137396;
+}
+.ca-pillar-block[data-pillar="crea"] {
+  --pillar-accent: #a3570c;
+  --pillar-ink: #a3570c;
+}
+.ca-pillar-block-kicker {
+  margin: 0;
+  color: var(--pillar-ink);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ca-pillar-block h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.6vw, 52px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+.ca-pillar-block-text {
+  max-width: 34em;
+  margin: 0;
+  color: var(--color-neutro-700);
+  font-size: 17px;
+  line-height: 1.65;
+}
+.ca-pillar-block-cta {
+  margin-top: 8px;
+  border: 1.5px solid var(--color-neutro-300);
+}
+@media (max-width: 899px) {
+  .ca-pillar-block,
+  .ca-pillar-block[data-side="left"] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "media" "copy";
+    gap: 24px;
+  }
+  .ca-pillar-block-text {
+    font-size: 16px;
+  }
+}
+
+/* Foto nella forma organica con le macchie di colore (BlobImage) */
+.ca-blob {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin-inline: auto;
+  aspect-ratio: 1;
+}
+.ca-blob-spot {
+  position: absolute;
+  display: block;
+}
+.ca-blob-spot--arancio {
+  background: var(--color-arancio-500);
+}
+.ca-blob-spot--viola {
+  background: var(--color-viola-500);
+}
+.ca-blob-spot--azzurro {
+  background: var(--color-azzurro-500);
+}
+.ca-blob-photo {
+  position: absolute;
+  inset: 4% 3% 3% 5%;
+  overflow: hidden;
+  background: var(--color-neutro-50);
+}
+.ca-blob-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.03);
+}
+/* fluttuazione delle macchie, come nella demo (y e rotazione, 8–10 s, avanti e indietro) */
+@keyframes ca-blob-float-a {
+  50% {
+    transform: translateY(-14px) rotate(4deg);
+  }
+}
+@keyframes ca-blob-float-b {
+  50% {
+    transform: translateY(12px);
+  }
+}
+@keyframes ca-blob-float-c {
+  50% {
+    transform: translateY(-10px) rotate(-5deg);
+  }
+}
+.ca-blob-float-a {
+  animation: ca-blob-float-a 9s ease-in-out infinite;
+}
+.ca-blob-float-b {
+  animation: ca-blob-float-b 8s ease-in-out infinite;
+}
+.ca-blob-float-c {
+  animation: ca-blob-float-c 10s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ca-blob-float-a,
+  .ca-blob-float-b,
+  .ca-blob-float-c {
+    animation: none;
+  }
+}
