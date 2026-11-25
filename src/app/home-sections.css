@@ -1727,6 +1727,7 @@ ul.ca-events-grid,
   top: 0;
   height: 640px;
   min-height: 0;
+  background: #f4f1ec;
 }
 /* mini card: miniatura e testi un po' più grandi, sintesi su una riga (due su mobile) */
 .ca-xp-layout[data-compact] .ca-place-card {

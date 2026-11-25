@@ -49,7 +49,7 @@ export function ExploreView({ places, origin, compact = false }: { places: Explo
     io.observe(node);
     return () => io.disconnect();
   }, [near]);
-  const map = useMapLibre(el, locale, { center: origin, zoom: 14, cooperativeGestures: true }, near);
+  const map = useMapLibre(el, locale, { center: origin, zoom: 14, cooperativeGestures: true }, near, compact ? "schematic" : "default");
   const Name = compact ? "h3" : "h2";
   const shown = useMemo(() => (group ? places.filter((p) => p.group === group) : places), [places, group]);
 
@@ -58,7 +58,15 @@ export function ExploreView({ places, origin, compact = false }: { places: Explo
       type: "FeatureCollection" as const,
       features: shown.map((p) => ({
         type: "Feature" as const,
-        properties: { slug: p.slug, name: p.name, active: p.slug === active, saved: saved.includes(p.slug) },
+        properties: {
+          slug: p.slug,
+          name: p.name,
+          // nome corto per le etichette della mappa schematica (prima di « – » o di « (»)
+          short: p.name.split(/ – | \(/)[0],
+          pillar: p.pillar,
+          active: p.slug === active,
+          saved: saved.includes(p.slug),
+        },
         geometry: { type: "Point" as const, coordinates: p.position },
       })),
     }),
@@ -73,25 +81,55 @@ export function ExploreView({ places, origin, compact = false }: { places: Explo
       return;
     }
     map.addSource("explore", { type: "geojson", data });
-    map.addLayer({
-      id: "explore-dot",
-      type: "circle",
-      source: "explore",
-      paint: {
-        "circle-radius": ["case", ["get", "active"], 11, 7],
-        "circle-color": ["case", ["get", "saved"], "#7a2a8e", "#0f7663"],
-        "circle-stroke-color": "#ffffff",
-        "circle-stroke-width": ["case", ["get", "active"], 4, 2.5],
-      },
-    });
-    map.addLayer({
-      id: "explore-label",
-      type: "symbol",
-      source: "explore",
-      filter: ["get", "active"],
-      layout: { "text-field": ["get", "name"], "text-size": 13, "text-offset": [0, 1.4], "text-anchor": "top", "text-font": ["Noto Sans Medium"] },
-      paint: { "text-color": "#211e1c", "text-halo-color": "#ffffff", "text-halo-width": 2 },
-    });
+    if (compact) {
+      // home: pin come nella mappa schematica di Stefano, colore del pilastro, bordo bianco, nome accanto
+      map.addLayer({
+        id: "explore-dot",
+        type: "circle",
+        source: "explore",
+        paint: {
+          "circle-radius": ["case", ["get", "active"], 11, 8],
+          "circle-color": ["match", ["get", "pillar"], "vive", "#9c37b5", "crea", "#dd7b19", "#1a98c4"],
+          "circle-stroke-color": ["case", ["get", "saved"], "#1d1d1d", "#ffffff"],
+          "circle-stroke-width": ["case", ["get", "active"], 3.5, 2.5],
+        },
+      });
+      map.addLayer({
+        id: "explore-label",
+        type: "symbol",
+        source: "explore",
+        layout: {
+          "text-field": ["get", "short"],
+          "text-size": 12,
+          "text-offset": [1.1, 0],
+          "text-anchor": "left",
+          "text-font": ["Noto Sans Medium"],
+          // i nomi che si sovrapporrebbero restano nascosti; quello attivo ha la precedenza
+          "symbol-sort-key": ["case", ["get", "active"], 0, 1],
+        },
+        paint: { "text-color": ["case", ["get", "active"], "#1d1d1d", "#4a4a4a"], "text-halo-color": "#f4f1ec", "text-halo-width": 2.5 },
+      });
+    } else {
+      map.addLayer({
+        id: "explore-dot",
+        type: "circle",
+        source: "explore",
+        paint: {
+          "circle-radius": ["case", ["get", "active"], 11, 7],
+          "circle-color": ["case", ["get", "saved"], "#7a2a8e", "#0f7663"],
+          "circle-stroke-color": "#ffffff",
+          "circle-stroke-width": ["case", ["get", "active"], 4, 2.5],
+        },
+      });
+      map.addLayer({
+        id: "explore-label",
+        type: "symbol",
+        source: "explore",
+        filter: ["get", "active"],
+        layout: { "text-field": ["get", "name"], "text-size": 13, "text-offset": [0, 1.4], "text-anchor": "top", "text-font": ["Noto Sans Medium"] },
+        paint: { "text-color": "#211e1c", "text-halo-color": "#ffffff", "text-halo-width": 2 },
+      });
+    }
     const enter = (e: MapLayerMouseEvent) => {
       map.getCanvas().style.cursor = "pointer";
       setActive((e.features?.[0]?.properties?.slug as string) ?? null);
@@ -109,7 +147,7 @@ export function ExploreView({ places, origin, compact = false }: { places: Explo
     map.on("mouseenter", "explore-dot", enter);
     map.on("mouseleave", "explore-dot", leave);
     map.on("click", "explore-dot", click);
-  }, [map, data]);
+  }, [map, data, compact]);
 
   return (
     <>

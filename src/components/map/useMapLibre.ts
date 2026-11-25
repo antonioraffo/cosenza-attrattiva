@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Map as MLMap, MapOptions } from "maplibre-gl";
-import { COSENZA_BOUNDS, COSENZA_CENTER, cosenzaStyle } from "@/lib/map/style";
+import { COSENZA_BOUNDS, COSENZA_CENTER, cosenzaSchematicStyle, cosenzaStyle } from "@/lib/map/style";
 
 let protocolReady = false;
 
@@ -27,6 +27,8 @@ export function useMapLibre(
   options: Partial<MapOptions> = {},
   /** false = rimanda la creazione (es. finché la mappa non è vicina al viewport) */
   enabled = true,
+  /** "schematic": stile della mappa schematica della demo di Stefano (solo home) */
+  variant: "default" | "schematic" = "default",
 ) {
   const [map, setMap] = useState<MLMap | null>(null);
   const opts = useRef(options);
@@ -41,7 +43,7 @@ export function useMapLibre(
       if (disposed || !container.current || !hasWebGL2()) return;
       const m = new maplibregl.Map({
         container: container.current,
-        style: cosenzaStyle(window.location.origin, locale),
+        style: (variant === "schematic" ? cosenzaSchematicStyle : cosenzaStyle)(window.location.origin, locale),
         center: COSENZA_CENTER,
         zoom: 14,
         maxBounds: COSENZA_BOUNDS,
@@ -61,7 +63,7 @@ export function useMapLibre(
       instance?.remove();
       setMap(null);
     };
-  }, [container, locale, enabled]);
+  }, [container, locale, enabled, variant]);
 
   return map;
 }

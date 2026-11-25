@@ -51,6 +51,60 @@ export function cosenzaStyle(origin: string, locale: "it" | "en"): StyleSpecific
   };
 }
 
+/**
+ * Stile «schematico» dalla mappa della demo di Stefano (Città da vivere): fondo sabbia, fiumi azzurri larghi,
+ * strade chiare e sottili, niente edifici, POI, numeri civici o nomi di strade minori. Solo per la home.
+ */
+const schematicFlavor = {
+  ...flavor,
+  background: "#f4f1ec",
+  earth: "#f4f1ec",
+  water: "#b5d9e8",
+  park_a: "#e9e3d8",
+  park_b: "#e9e3d8",
+  wood_a: "#ece6db",
+  wood_b: "#ece6db",
+  scrub_a: "#efeae1",
+  scrub_b: "#efeae1",
+  pedestrian: "#ece6dc",
+  hospital: "#f4f1ec",
+  school: "#f4f1ec",
+  industrial: "#f4f1ec",
+  minor_a: "#e6e0d5",
+  minor_b: "#e6e0d5",
+  minor_service: "#ebe6dd",
+  other: "#ebe6dd",
+  link: "#ddd6ca",
+  major: "#ddd6ca",
+  highway: "#d6cebf",
+  minor_casing: "#f4f1ec",
+  major_casing_early: "#f4f1ec",
+  major_casing_late: "#f4f1ec",
+  highway_casing_early: "#f4f1ec",
+  highway_casing_late: "#f4f1ec",
+  railway: "#ddd6ca",
+  roads_label_major: "#8a857c",
+  ocean_label: "#3d7286",
+  subplace_label: "#8a857c",
+  city_label: "#4a4a4a",
+};
+const SCHEMATIC_HIDDEN = /^(buildings|pois|address_label|roads_labels_minor|roads_oneway|roads_shields|roads_rail|boundaries|landuse_(hospital|school|industrial))/;
+
+export function cosenzaSchematicStyle(origin: string, locale: "it" | "en"): StyleSpecification {
+  const base = cosenzaStyle(origin, locale);
+  return {
+    ...base,
+    layers: layers("protomaps", schematicFlavor, { lang: locale })
+      .filter((l) => !SCHEMATIC_HIDDEN.test(l.id))
+      .map((l) => {
+        // fiumi più larghi e in corsivo azzurro, come nello schema
+        if (l.id === "water_river" || l.id === "water_stream") return { ...l, paint: { ...l.paint, "line-color": "#b5d9e8", "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 16, 12] } } as typeof l;
+        if (l.id === "water_waterway_label") return { ...l, paint: { ...l.paint, "text-color": "#3d7286" }, layout: { ...l.layout, "text-font": ["Noto Sans Italic"] } } as typeof l;
+        return l;
+      }),
+  };
+}
+
 export const COSENZA_CENTER: [number, number] = [16.2547, 39.2945];
 /** Limiti dell'estratto PMTiles (con margine). */
 export const COSENZA_BOUNDS: [[number, number], [number, number]] = [
