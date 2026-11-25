@@ -83,7 +83,7 @@ html {
 .site-nav {
   display: flex;
   align-items: center;
-  gap: clamp(20px, 2.4vw, 36px);
+  gap: clamp(20px, 2.4vw, 44px);
 }
 /* da 961 px: marchio | voci del menu centrate | azioni (colonne laterali uguali) */
 @media (min-width: 961px) {
@@ -105,7 +105,8 @@ html {
   gap: 8px;
   min-height: 44px;
   font-family: var(--font-sans);
-  font-size: 16px;
+  /* 16 px fino a 1440 px di viewport, poi cresce fino a 20 px (circa 2560 px) */
+  font-size: clamp(16px, calc(16px + (100vw - 1440px) * 0.004), 20px);
   font-weight: 600;
   color: var(--color-neutro-900);
   white-space: nowrap;
