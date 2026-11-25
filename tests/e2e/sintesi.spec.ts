@@ -55,10 +55,16 @@ test("eventi: grandi eventi, filtri del calendario e pagina dell'evento", async 
   await expect(page.getByRole("heading", { name: "Itinerari nei dintorni" })).toBeVisible();
 });
 
-test("Fatto a Cosenza: mestieri come schede accessibili, raggiungibile dalla card Crea", async ({ page }) => {
-  await page.goto("/it#crea");
-  await page.locator("#crea").getByRole("link", { name: "Scopri Fatto a Cosenza" }).click();
-  await expect(page).toHaveURL(/\/it\/fatto-a-cosenza$/);
+test("Fatto a Cosenza: mestieri come schede accessibili, raggiungibile dalla fascia in home", async ({ page }) => {
+  await page.goto("/it");
+  const link = page.locator(".ca-crea-hero").getByRole("link").first();
+  await expect(link).toHaveAttribute("href", "/it/fatto-a-cosenza");
+  // in fondo alla home: il clic durante lo scorrimento a volte va a vuoto, si riprova
+  await expect(async () => {
+    await link.scrollIntoViewIfNeeded();
+    await link.click();
+    await expect(page).toHaveURL(/\/it\/fatto-a-cosenza$/, { timeout: 10_000 });
+  }).toPass({ timeout: 40_000 });
   const tabs = page.getByRole("tablist", { name: "Scegli un mestiere" });
   await expect(tabs.getByRole("tab", { name: "Ceramica" })).toHaveAttribute("aria-selected", "true");
   await tabs.getByRole("tab", { name: "Ceramica" }).focus();

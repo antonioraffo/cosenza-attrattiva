@@ -6,16 +6,16 @@ test("home: sezioni nell'ordine, niente sezioni tolte, niente scroll orizzontale
   await page.goto("/");
   await expect(page).toHaveURL(/\/it$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-  // hero → mission → eventi → esplora a piedi → il tuo tempo / il tuo giro → fatto a Cosenza
+  // hero → esplora a piedi → il tuo tempo / il tuo giro → eventi → fatto a Cosenza (la mission non c'è più)
   const order = await page.evaluate(() =>
-    [".ca-hero-draw", "#mission", "#eventi", "#esplora", "#il-tuo-tempo", ".ca-crea-hero"].map(
+    [".ca-hero-draw", "#esplora", "#il-tuo-tempo", "#eventi", ".ca-crea-hero"].map(
       (s) => document.querySelector(s)?.getBoundingClientRect().top ?? -1,
     ),
   );
   expect(order.every((top, i) => top >= 0 && (i === 0 || top > order[i - 1]!))).toBe(true);
   for (const name of ["Esplora a piedi", "Il tuo tempo", "Il tuo giro", "Fatto a Cosenza"])
     await expect(page.getByRole("heading", { level: 2, name })).toHaveCount(1);
-  await expect(page.locator("[data-hero-panel], .ca-timebar, #itinerari, [data-explore-stage]")).toHaveCount(0);
+  await expect(page.locator("[data-hero-panel], .ca-timebar, #itinerari, [data-explore-stage], #mission, .ca-pillar-block")).toHaveCount(0);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
 });
@@ -131,31 +131,37 @@ test("menu principale: Scopri, Eventi, Pianifica (solo testo) e megamenu dei pil
   await expect(scopri).toHaveAttribute("aria-expanded", "false");
   await expect(scopri).toBeFocused();
 
-  // il link del riquadro porta al blocco del pilastro in home
+  // il link del riquadro porta alla pagina del pilastro
   await scopri.click();
   await tabs.getByRole("tab", { name: "Cosenza Connect" }).click();
   await pane.getByRole("link", { name: "Vai a Cosenza Connect" }).click();
-  await expect(page).toHaveURL(/#connect$/);
-  await expect(page.locator("#connect")).toBeInViewport();
+  await expect(page).toHaveURL(/\/it\/itinerari$/);
 });
 
-test("pilastri: blocchi immagine + testo alternati, immagine sopra da mobile", async ({ page }, info) => {
+test("header: solo il marchio, voci Scopri · Eventi · Pianifica centrate a 16 px", async ({ page }, info) => {
   await page.goto("/it");
-  const blocks = page.locator(".ca-pillar-block");
-  await expect(blocks).toHaveCount(3);
-  for (const [i, name] of ["Cosenza Vive", "Cosenza Connect", "Cosenza Crea"].entries()) {
-    const block = blocks.nth(i);
-    await expect(block.getByRole("heading", { level: 3, name })).toBeAttached();
-    await expect(block.locator(".ca-blob img")).toHaveAttribute("alt", /.{20,}/);
-    await expect(block.locator(".ca-blob-spot")).toHaveCount(3);
-    await block.scrollIntoViewIfNeeded();
-    const media = (await block.locator(".ca-pillar-block-media").boundingBox())!;
-    const copy = (await block.locator(".ca-pillar-block-copy").boundingBox())!;
-    if (isMobile(info.project.name)) expect(media.y + media.height).toBeLessThanOrEqual(copy.y + 1);
-    else if (i % 2 === 0) expect(media.x).toBeGreaterThan(copy.x);
-    else expect(media.x).toBeLessThan(copy.x);
-  }
-  await expect(blocks.nth(2).getByRole("link", { name: "Scopri Fatto a Cosenza" })).toHaveAttribute("href", "/it/fatto-a-cosenza");
+  const brand = page.locator(".site-brand img");
+  await expect(brand).toHaveAttribute("src", "/brand/mark.svg");
+  if (isMobile(info.project.name)) return;
+  const nav = page.getByRole("navigation", { name: "Navigazione principale" });
+  const header = (await page.locator(".site-header-inner").boundingBox())!;
+  const box = (await nav.boundingBox())!;
+  // centro delle voci entro 2 px dal centro dell'header
+  expect(Math.abs(box.x + box.width / 2 - (header.x + header.width / 2))).toBeLessThanOrEqual(2);
+  for (const name of ["Eventi", "Pianifica"])
+    await expect(nav.getByRole("link", { name, exact: true })).toHaveCSS("font-size", "16px");
+  await expect(nav.getByRole("button", { name: "Scopri", exact: true })).toHaveCSS("font-size", "16px");
+});
+
+test("esplora a piedi: mini card con la riga di sintesi, senza pilastro né descrizione", async ({ page }) => {
+  await page.goto("/it");
+  const cards = page.locator("#esplora .ca-place-card");
+  await expect(cards).toHaveCount(35);
+  await expect(page.locator("#esplora .ca-pillar-tag")).toHaveCount(0);
+  const duomo = page.locator("#place-duomo");
+  await expect(duomo.locator(".ca-place-summary")).toHaveText("Cattedrale consacrata nel 1222 alla presenza di Federico II, testimone UNESCO di pace");
+  const texts = await cards.locator(".ca-place-summary").allTextContents();
+  expect(texts.every((t) => t.length > 0 && t.length <= 90)).toBe(true);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
 });
@@ -181,6 +187,9 @@ test("eventi: quattro card con dettagli apribili", async ({ page }) => {
   await page.goto("/it");
   const cards = page.locator("#eventi .ca-events-grid article");
   await expect(cards).toHaveCount(4);
+  // grandi eventi senza foto
+  await expect(page.locator("#eventi .ca-major-card")).not.toHaveCount(0);
+  await expect(page.locator("#eventi .ca-major-card img")).toHaveCount(0);
   const toggle = cards.first().getByRole("button", { name: /Scopri di più/ });
   await toggle.scrollIntoViewIfNeeded();
   await toggle.click();
