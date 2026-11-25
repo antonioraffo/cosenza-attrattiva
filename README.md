@@ -272,4 +272,10 @@ con lo stesso flusso (dev, poi merge su main):
 Lo fa l'hook `scripts/git-hooks/pre-push`, che lancia `scripts/publish.sh`. Per installarlo su un nuovo clone:
 `ln -sf "$PWD/scripts/git-hooks/pre-push" "$(git rev-parse --git-common-dir)/hooks/pre-push"`.
 Il push diretto su `altrama` è bloccato; se `main` ha un conflitto il push si ferma senza toccarlo.
+
+Vale anche al contrario: un push su `altrama` (branch `dev` o `main`) che modifica `frontend/` viene riportato
+in `antonioraffo/cosenza-attrattiva` dalla GitHub Action `.github/workflows/sync-antonioraffo.yml` di altrama
+(su `dev`, poi merge su `main`). Serve la deploy key con scrittura su antonioraffo e il secret `SYNC_DEPLOY_KEY`
+su altrama (impronta della chiave: `SHA256:Pfwb4pbs5X+wlqSJgqA9lrY5QaCqOeQmh0SyDSTKkp4`, la stessa che l'Action
+scrive nel log). Se il proprio `git push` viene rifiutato perché il remoto è avanti: `git pull` e poi di nuovo `git push`.
 Database di produzione: Neon (PostGIS); migrazioni e seed con `DATABASE_URL` di Neon (connessione diretta, senza `-pooler`).
