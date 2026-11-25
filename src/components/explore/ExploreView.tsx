@@ -151,8 +151,8 @@ export function ExploreView({ places, origin, compact = false }: { places: Explo
                       {t(`pillar.${p.pillar}`)}
                     </span>
                   )}
-                  <span>{p.categoryLabel}</span>
-                  <span>{t("walk", { min: p.minutes })}</span>
+                  <span className="ca-place-cat">{p.categoryLabel}</span>
+                  <span className="ca-place-walk">{t("walk", { min: p.minutes })}</span>
                 </p>
               </div>
               <SaveButton slug={p.slug} name={p.name} />
