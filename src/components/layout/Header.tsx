@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { features } from "@/lib/env";
 import { IconSearch, IconStamp } from "@/components/ui/icons";
 import { HeaderMenu } from "./HeaderMenu";
-import { LogoMark } from "./Logo";
+import { Logo } from "./Logo";
 import { MegaMenu, type MegaPillar } from "./MegaMenu";
 import { type Pillar } from "./PillarIcon";
 import { ScrollReset } from "./ScrollReset";
@@ -15,7 +15,7 @@ export const PILLAR_HREF: Record<Pillar, string> = { vive: "/eventi", connect: "
 
 /**
  * Header di sito sul modello di vivicosenza: barra bianca fissa con ombra (80/76/72 px),
- * marchio a sinistra (solo il simbolo, senza scritta), menu Scopri (megamenu dei pilastri) · Eventi · Pianifica al centro e azioni a destra; sotto 960 px
+ * logo a sinistra, menu Scopri (megamenu dei pilastri) · Eventi · Pianifica al centro e azioni a destra; sotto 960 px
  * le voci passano nel menu a hamburger (HeaderMenu).
  */
 export async function Header() {
@@ -58,7 +58,7 @@ export async function Header() {
       {!features.passport && <MyItineraryDrawer />}
       <div className="site-container site-header-inner">
         <Link href="/" className="site-brand" aria-label={`Cosenza attrattiva – ${t("home")}`}>
-          <LogoMark className="site-brand-logo" />
+          <Logo className="site-brand-logo" />
         </Link>
 
         <nav className="site-nav" aria-label={t("main")}>

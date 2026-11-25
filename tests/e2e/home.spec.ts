@@ -138,10 +138,10 @@ test("menu principale: Scopri, Eventi, Pianifica (solo testo) e megamenu dei pil
   await expect(page).toHaveURL(/\/it\/itinerari$/);
 });
 
-test("header: solo il marchio, voci Scopri · Eventi · Pianifica centrate a 16 px", async ({ page }, info) => {
+test("header: logo con la scritta, voci Scopri · Eventi · Pianifica centrate a 16 px", async ({ page }, info) => {
   await page.goto("/it");
   const brand = page.locator(".site-brand img");
-  await expect(brand).toHaveAttribute("src", "/brand/mark.svg");
+  await expect(brand).toHaveAttribute("src", "/brand/logo-h.svg");
   if (isMobile(info.project.name)) return;
   const nav = page.getByRole("navigation", { name: "Navigazione principale" });
   const header = (await page.locator(".site-header-inner").boundingBox())!;
