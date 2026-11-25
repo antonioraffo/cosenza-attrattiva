@@ -258,3 +258,18 @@ cloudflared tunnel --url https://cosenzaattrattiva.test --http-host-header cosen
 
 Il tunnel fornisce un dominio pubblico con certificato reale: imposta `NEXT_PUBLIC_SITE_URL` su
 quell'URL, riavvia (`make up`) e aggiungi il referrer alla chiave Google.
+
+## Pubblicazione (GitHub e Vercel)
+
+Si lavora sul branch `dev`. Ogni `git push origin dev` pubblica lo stesso commit su due repository,
+con lo stesso flusso (dev, poi merge su main):
+
+| Remoto | Repository | Dove sta il progetto |
+|---|---|---|
+| `origin` | `git@github.com:antonioraffo/cosenza-attrattiva.git` | radice |
+| `altrama` | `git@github.com:altrama/cosenza-attrativa.git` | cartella `frontend/` (Vercel: branch `main`, Root Directory `frontend`) |
+
+Lo fa l'hook `scripts/git-hooks/pre-push`, che lancia `scripts/publish.sh`. Per installarlo su un nuovo clone:
+`ln -sf "$PWD/scripts/git-hooks/pre-push" "$(git rev-parse --git-common-dir)/hooks/pre-push"`.
+Il push diretto su `altrama` è bloccato; se `main` ha un conflitto il push si ferma senza toccarlo.
+Database di produzione: Neon (PostGIS); migrazioni e seed con `DATABASE_URL` di Neon (connessione diretta, senza `-pooler`).

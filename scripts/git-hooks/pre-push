@@ -1,0 +1,23 @@
+#!/bin/sh
+# Hook pre-push: ogni push di dev verso origin viene pubblicato anche su altrama (scripts/publish.sh),
+# con lo stesso flusso dev → main su entrambi. Un push diretto verso altrama è bloccato:
+# lì il progetto sta in frontend/ e va aggiornato solo tramite lo script.
+[ -n "${PUBLISH_RUNNING:-}" ] && exit 0
+remote="$1"
+if [ "$remote" = altrama ]; then
+  echo "✖ non fare push diretto su altrama: usa 'git push origin dev' (vedi scripts/publish.sh)" >&2
+  exit 1
+fi
+[ "$remote" = origin ] || exit 0
+script="$(git rev-parse --show-toplevel)/scripts/publish.sh"
+[ -x "$script" ] || exit 0
+zero=0000000000000000000000000000000000000000
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$local_ref" = refs/heads/dev ] && [ "$local_sha" != "$zero" ]; then
+    "$script" "$local_sha" </dev/null || {
+      echo "✖ pubblicazione non riuscita: push annullato" >&2
+      exit 1
+    }
+  fi
+done
+exit 0
