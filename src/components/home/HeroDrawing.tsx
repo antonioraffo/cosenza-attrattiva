@@ -13,6 +13,12 @@ const DRAWINGS: Record<Kind, string> = {
   ponte: "/home/ponte-calatrava-silhouette-lines.svg",
 };
 
+/**
+ * Ritagli (viewBox): nel Duomo l'asse della facciata (la croce, x≈624) non è al centro del disegno
+ * largo 1535; tagliando il lato destro a 1248 la facciata sta al centro e l'hero torna simmetrico.
+ */
+const CROPS: Partial<Record<Kind, string>> = { duomo: "0 0 1248 1025" };
+
 export interface HeroScene {
   title: string;
   description: string;
@@ -90,7 +96,7 @@ export function HeroDrawing({
     if (!root.current) return;
     // anteprima della variante con i colori del logo: ?colori=logo
     const palette: FillPalette = new URLSearchParams(window.location.search).get("colori") === "logo" ? "logo" : "verde";
-    return initializeDrawing(root.current, DRAWINGS[kind], FILLS[kind], palette);
+    return initializeDrawing(root.current, DRAWINGS[kind], FILLS[kind], palette, CROPS[kind]);
   }, [kind]);
 
   // pausa scelta dall'utente: effects/drawing.ts legge data-drawing-paused

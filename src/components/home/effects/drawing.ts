@@ -50,7 +50,16 @@ interface Stroke {
   drawn: number;
 }
 
-export function initializeDrawing(root: HTMLElement, drawingUrl: string, fills: Fill[] = [], palette: FillPalette = "verde"): () => void {
+/** ritaglio del disegno in unità del viewBox: `x y width height` */
+export type DrawingCrop = string;
+
+export function initializeDrawing(
+  root: HTMLElement,
+  drawingUrl: string,
+  fills: Fill[] = [],
+  palette: FillPalette = "verde",
+  crop?: DrawingCrop,
+): () => void {
   const doc = root.ownerDocument;
   const view = doc.defaultView!;
   const art = root.querySelector<HTMLElement>("[data-drawing-art]")!;
@@ -96,6 +105,10 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string, fills: 
       c.width = Math.round(width * dpr);
       c.height = Math.round(height * dpr);
       x.setTransform(dpr * scale, 0, 0, dpr * scale, dpr * ox, dpr * oy);
+      // con il ritaglio le linee fuori dal viewBox non si vedono
+      x.beginPath();
+      x.rect(box.x, box.y, box.width, box.height);
+      x.clip();
     }
     fillKey = "";
     ctx.lineCap = "round";
@@ -312,6 +325,7 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string, fills: 
       }
       art.replaceChildren(...[svg, fillCanvas, canvas].filter((n): n is NonNullable<typeof n> => !!n));
       ctx = canvas.getContext("2d");
+      if (crop) svg.setAttribute("viewBox", crop);
       const vb = svg.viewBox.baseVal;
       box = vb && vb.width ? { x: vb.x, y: vb.y, width: vb.width, height: vb.height } : { x: 0, y: 0, width: 1535, height: 1025 };
 
