@@ -14,7 +14,7 @@ script="$(git rev-parse --show-toplevel)/scripts/publish.sh"
 zero=0000000000000000000000000000000000000000
 while read -r local_ref local_sha remote_ref remote_sha; do
   if [ "$local_ref" = refs/heads/dev ] && [ "$local_sha" != "$zero" ]; then
-    "$script" "$local_sha" </dev/null || {
+    PUBLISH_FROM_HOOK=1 "$script" "$local_sha" </dev/null || {
       echo "✖ pubblicazione non riuscita: push annullato" >&2
       exit 1
     }
