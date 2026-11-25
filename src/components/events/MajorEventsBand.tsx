@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { tr } from "@/lib/i18n";
@@ -15,8 +14,8 @@ const TONE: Record<EventSummary["category"], string> = {
 };
 
 /**
- * Grandi eventi: gli eventi di grande rilevanza, in card grandi e colorate (dal calendario del prototipo
- * "Città da vivere"), ciascuna verso la sua pagina dedicata.
+ * Grandi eventi: gli eventi di grande rilevanza, in card grandi e colorate senza foto (dal calendario del
+ * prototipo "Città da vivere"), ciascuna verso la sua pagina dedicata.
  */
 export async function MajorEventsBand({ events, locale, headingLevel = 3 }: { events: EventSummary[]; locale: string; headingLevel?: 2 | 3 }) {
   const t = await getTranslations("events");
@@ -28,11 +27,6 @@ export async function MajorEventsBand({ events, locale, headingLevel = 3 }: { ev
         <li key={e.slug}>
           <article className="ca-major-card" style={{ "--tone": TONE[e.category] } as React.CSSProperties}>
             <p className="ca-major-date">{eventDateLine(e, locale)}</p>
-            {e.cover && (
-              <div className="ca-major-photo">
-                <Image src={e.cover.url} alt="" fill sizes="(min-width: 961px) 300px, 70vw" />
-              </div>
-            )}
             <div className="ca-major-copy">
               <p className="ca-major-kind">{t(`category.${e.category}`)}</p>
               <H className="ca-major-title">

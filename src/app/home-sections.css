@@ -1413,16 +1413,6 @@ ul.ca-events-grid,
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
-.ca-major-photo {
-  position: relative;
-  height: 120px;
-  margin-inline: 20px;
-  overflow: hidden;
-  border-radius: 12px;
-}
-.ca-major-photo img {
-  object-fit: cover;
-}
 .ca-major-copy {
   margin-top: auto;
   padding: 16px 20px 20px;
