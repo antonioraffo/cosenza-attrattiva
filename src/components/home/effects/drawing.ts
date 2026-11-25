@@ -20,6 +20,9 @@
  * Riempimenti (effects/fills.ts): un secondo canvas sotto i tratti colora le parti principali del disegno
  * quando le linee sono quasi finite, una parte dopo l'altra; restano durante la pausa e svaniscono con il
  * disegno. `data-drawing-fill` = quota di riempimento (0–1).
+ *
+ * Opzioni (DrawingOptions): tempi del ciclo, ancoraggio in basso e tratti tenui per la "filigrana" dell'hero
+ * v2 (predefinito), `onComplete` a fine giro, dopo la dissolvenza (l'hero v2 passa al luogo successivo). La variabile CSS --drawing-progress (0–1) sulla radice segue il tracciamento.
  */
 import { fillAlpha, fillColor, type Fill, type FillPalette } from "./fills";
 
@@ -28,12 +31,10 @@ export const HOLD_MS = 4000;
 /** le card compaiono quando il disegno è a questo punto e restano fino alla dissolvenza */
 const CARDS_AT = 0.85;
 export const FADE_MS = 700;
-const CYCLE_MS = DRAW_MS + HOLD_MS + FADE_MS;
 /** spessore dei tratti in pixel CSS (stroke-width 0.9 con vector-effect non-scaling-stroke) */
 const LINE_PX = 0.9;
 const FAR = 1e7;
-/** i riempimenti partono a questo punto del tracciamento, uno ogni FILL_STEP, e durano FILL_MS */
-const FILL_FROM = DRAW_MS * 0.8;
+/** i riempimenti partono all'80% del tracciamento, uno ogni FILL_STEP, e durano FILL_MS */
 const FILL_STEP = 300;
 const FILL_MS = 900;
 
@@ -44,22 +45,42 @@ interface Stroke {
   path: Path2D;
   length: number;
   color: string;
+  alpha: number;
   start: number;
   rate: number;
   /** lunghezza già disegnata sul canvas (unità del viewBox) */
   drawn: number;
 }
 
-/** ritaglio del disegno in unità del viewBox: `x y width height` */
-export type DrawingCrop = string;
+export interface DrawingOptions {
+  fills?: Fill[];
+  palette?: FillPalette;
+  /** ritaglio del disegno in unità del viewBox: `x y width height` */
+  crop?: string;
+  drawMs?: number;
+  holdMs?: number;
+  fadeMs?: number;
+  /** "bottom": disegno ancorato in basso al centro, come uno skyline (preserveAspectRatio xMidYMax) */
+  align?: "center" | "bottom";
+  /** spessore dei tratti in pixel CSS */
+  linePx?: number;
+  /** opacità dei tratti scuri e degli accenti (colori diversi dal nero del disegno) */
+  inkAlpha?: number;
+  accentAlpha?: number;
+  /** a fine giro (tracciamento, pausa, dissolvenza): al posto di ricominciare */
+  onComplete?: () => void;
+}
 
-export function initializeDrawing(
-  root: HTMLElement,
-  drawingUrl: string,
-  fills: Fill[] = [],
-  palette: FillPalette = "verde",
-  crop?: DrawingCrop,
-): () => void {
+const INK = "#1d1d1d";
+
+export function initializeDrawing(root: HTMLElement, drawingUrl: string, options: DrawingOptions = {}): () => void {
+  const { fills = [], palette = "verde", crop, align = "center", linePx = LINE_PX, inkAlpha = 1, accentAlpha = 1, onComplete } = options;
+  const drawMs = options.drawMs ?? DRAW_MS;
+  const holdMs = options.holdMs ?? HOLD_MS;
+  const fadeMs = options.fadeMs ?? FADE_MS;
+  const cycleMs = drawMs + holdMs + fadeMs;
+  const fillFrom = drawMs * 0.8;
+
   const doc = root.ownerDocument;
   const view = doc.defaultView!;
   const art = root.querySelector<HTMLElement>("[data-drawing-art]")!;
@@ -99,7 +120,7 @@ export function initializeDrawing(
     const dpr = Math.min(2, view.devicePixelRatio || 1);
     scale = Math.min(width / box.width, height / box.height);
     const ox = (width - box.width * scale) / 2 - box.x * scale;
-    const oy = (height - box.height * scale) / 2 - box.y * scale;
+    const oy = (align === "bottom" ? height - box.height * scale : (height - box.height * scale) / 2) - box.y * scale;
     for (const [c, x] of [[canvas, ctx], [fillCanvas, fctx]] as const) {
       if (!c || !x) continue;
       c.width = Math.round(width * dpr);
@@ -113,7 +134,7 @@ export function initializeDrawing(
     fillKey = "";
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.lineWidth = LINE_PX / scale;
+    ctx.lineWidth = linePx / scale;
     return true;
   };
 
@@ -124,13 +145,16 @@ export function initializeDrawing(
       const target = clamp((progress - s.start) * s.rate) * s.length;
       if (target <= s.drawn + 0.01) continue;
       ctx.strokeStyle = s.color;
+      ctx.globalAlpha = s.alpha;
       // un solo trattino [drawn, target] in ogni sottotracciato
       ctx.setLineDash([target - s.drawn, FAR]);
       ctx.lineDashOffset = -s.drawn;
       ctx.stroke(s.path);
       s.drawn = target;
     }
+    ctx.globalAlpha = 1;
     root.dataset.drawingProgress = progress.toFixed(3);
+    root.style.setProperty("--drawing-progress", progress.toFixed(3));
   };
 
   /** riempimenti: ognuno alla sua quota (0–1); si ridipinge solo se qualcosa è cambiato */
@@ -156,7 +180,7 @@ export function initializeDrawing(
     root.dataset.drawingFill = total.toFixed(2);
   };
   /** quote dei riempimenti a `t` ms dall'inizio del ciclo */
-  const fillsAt = (t: number) => fillShapes.map((_, i) => clamp((t - FILL_FROM - i * FILL_STEP) / FILL_MS));
+  const fillsAt = (t: number) => fillShapes.map((_, i) => clamp((t - fillFrom - i * FILL_STEP) / FILL_MS));
 
   /** ridisegna da capo fino a `progress` (nuovo ciclo, ridimensionamento) */
   const redraw = (progress: number) => {
@@ -186,9 +210,15 @@ export function initializeDrawing(
       return;
     }
     const elapsed = now - origin;
-    const current = Math.floor(elapsed / CYCLE_MS);
-    const t = elapsed - current * CYCLE_MS;
+    const current = Math.floor(elapsed / cycleMs);
+    const t = elapsed - current * cycleMs;
     if (current !== cycle) {
+      // con onComplete il giro non ricomincia: chi chiama passa al disegno successivo
+      if (onComplete && cycle >= 0) {
+        cycle = current;
+        onComplete();
+        return;
+      }
       cycle = current;
       canvas.style.opacity = "1";
       if (fillCanvas) fillCanvas.style.opacity = "1";
@@ -197,21 +227,22 @@ export function initializeDrawing(
       root.dataset.drawingLoop = String(cycle % 3);
     }
     paintFills(fillsAt(t));
-    if (t < DRAW_MS) {
-      const progress = ease(t / DRAW_MS);
+    if (t < drawMs) {
+      const progress = ease(t / drawMs);
       advance(progress);
       root.dataset.drawingState = "drawing";
       root.dataset.cards = progress >= CARDS_AT ? "in" : "out";
-    } else if (t < DRAW_MS + HOLD_MS) {
+    } else if (t < drawMs + holdMs) {
       advance(1);
       root.dataset.drawingState = "complete";
       root.dataset.cards = "in";
     } else {
       advance(1);
-      canvas.style.opacity = String(1 - clamp((t - DRAW_MS - HOLD_MS) / FADE_MS));
+      canvas.style.opacity = String(1 - clamp((t - drawMs - holdMs) / fadeMs));
       if (fillCanvas) fillCanvas.style.opacity = canvas.style.opacity;
       root.dataset.drawingState = "fading";
       root.dataset.cards = "out";
+
     }
     schedule();
   };
@@ -310,7 +341,7 @@ export function initializeDrawing(
       // il disegno intero sta nel riquadro, senza tagli e con le sue proporzioni
       svg.removeAttribute("width");
       svg.removeAttribute("height");
-      svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+      svg.setAttribute("preserveAspectRatio", align === "bottom" ? "xMidYMax meet" : "xMidYMid meet");
       // nell'SVG resta visibile solo il "fantasma"; i tratti animati li disegna il canvas
       const lines = svg.querySelector<SVGGElement>("[data-silhouette-lines]");
       lines?.setAttribute("visibility", "hidden");
@@ -342,7 +373,8 @@ export function initializeDrawing(
         return {
           path: new Path2D(element.getAttribute("d") ?? ""),
           length: element.getTotalLength(),
-          color: element.getAttribute("stroke") || "#1d1d1d",
+          color: element.getAttribute("stroke") || INK,
+          alpha: (element.getAttribute("stroke") || INK).toLowerCase() === INK ? inkAlpha : accentAlpha,
           start: start / last,
           rate: last / Math.max(0.001, end - start),
           drawn: 0,

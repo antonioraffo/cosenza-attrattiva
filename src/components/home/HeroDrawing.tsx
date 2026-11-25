@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link } from "@/i18n/navigation";
 import { initializeDrawing } from "./effects/drawing";
-import { FILLS, type FillPalette } from "./effects/fills";
+import { FILLS } from "./effects/fills";
+import { TEMPLATE_PALETTE, type DrawingTemplate } from "./heroTemplate";
 
-type Kind = "duomo" | "ponte";
+export type Kind = "duomo" | "ponte";
 
 /** Disegni al tratto (gli stessi dell'intro silhouette): nero #1d1d1d e verde #0f7663. */
-const DRAWINGS: Record<Kind, string> = {
+export const DRAWINGS: Record<Kind, string> = {
   duomo: "/home/duomo-silhouette-lines.svg",
   ponte: "/home/ponte-calatrava-silhouette-lines.svg",
 };
@@ -36,7 +37,7 @@ const arrow = (
  * Hero della home: claim e disegno al tratto che sta per intero nella prima schermata (100svh
  * meno l'header). Il disegno si traccia da solo e si ripete in loop (effects/drawing.ts); il selettore
  * Antica / Contemporanea passa dal Duomo al Ponte di Calatrava. Dopo il tratto le parti principali si
- * colorano (effects/fills.ts): verde del logo di default, i quattro colori del logo con `?colori=logo`.
+ * colorano (effects/fills.ts) con i colori del template scelto da ?template= (heroTemplate.ts).
  * Due card accompagnano il disegno: la curiosità (una diversa a ogni giro) e la scheda del luogo.
  * Da 1200 px stanno ai lati del disegno, sotto sopra e sotto; compaiono quando le linee sono quasi
  * complete e se ne vanno con la dissolvenza del loop. Il loop si può mettere in pausa (WCAG 2.2.2) e si
@@ -46,7 +47,7 @@ const arrow = (
  * Il claim in tre righe, come nella demo di Stefano: «Cosenza, / città da / vivere.». Fino alla virgola,
  * poi il resto, poi l'ultima parola (in verde).
  */
-function claimLines(title: string): string[] {
+export function claimLines(title: string): string[] {
   const comma = title.indexOf(",");
   const head = comma >= 0 ? title.slice(0, comma + 1) : "";
   const words = title.slice(head.length).trim().split(/\s+/);
@@ -55,10 +56,13 @@ function claimLines(title: string): string[] {
 }
 
 export function HeroDrawing({
+  template = 2,
   title,
   scenes,
   labels,
 }: {
+  /** 2 o 3 (scelto da HeroSwitch con ?template=) */
+  template?: DrawingTemplate;
   title: string;
   scenes: Record<Kind, HeroScene>;
   labels: {
@@ -94,10 +98,8 @@ export function HeroDrawing({
 
   useEffect(() => {
     if (!root.current) return;
-    // anteprima della variante con i colori del logo: ?colori=logo
-    const palette: FillPalette = new URLSearchParams(window.location.search).get("colori") === "logo" ? "logo" : "verde";
-    return initializeDrawing(root.current, DRAWINGS[kind], FILLS[kind], palette, CROPS[kind]);
-  }, [kind]);
+    return initializeDrawing(root.current, DRAWINGS[kind], { fills: FILLS[kind], palette: TEMPLATE_PALETTE[template], crop: CROPS[kind] });
+  }, [kind, template]);
 
   // pausa scelta dall'utente: effects/drawing.ts legge data-drawing-paused
   useEffect(() => {
@@ -105,7 +107,7 @@ export function HeroDrawing({
   }, [paused, kind]);
 
   return (
-    <section ref={root} className="ca-hero-draw" data-drawing-kind={kind} aria-labelledby="hero-title">
+    <section ref={root} className="ca-hero-draw" data-drawing-kind={kind} data-hero-template={template} aria-labelledby="hero-title">
       <div className="ca-hero-draw-brand">
         <h1 id="hero-title" className="ca-hero-draw-claim">
           {claimLines(title).map((line, i, all) => (

@@ -334,6 +334,33 @@
     },
     "faithKicker": "Art and faith"
   },
+  "homeHero2": {
+    "eyebrow": "Narrative walking tours",
+    "lead": "From the old town to the contemporary city: places, stories, events and workshops to build your own walk.",
+    "time": "How much time do you have?",
+    "era": {
+      "duomo": "Old town",
+      "ponte": "Contemporary city"
+    },
+    "placeKicker": "{era} · The place",
+    "drawing": "Drawing…",
+    "step": "{n} of {total}",
+    "featured": {
+      "label": "Major event",
+      "from": "From {time}",
+      "countdown": "Time to the event",
+      "countdownMidnight": "Time to midnight",
+      "countdownLabel": "Countdown",
+      "started": "It's on!",
+      "days": "days",
+      "hours": "hours",
+      "minutes": "min",
+      "seconds": "sec",
+      "discover": "Find out more",
+      "all": "All major events",
+      "next": "Coming up"
+    }
+  },
   "mission": {
     "eyebrow": "Our mission",
     "title": "It welcomes, creates, connects",

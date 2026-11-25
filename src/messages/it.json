@@ -334,6 +334,33 @@
     },
     "faithKicker": "Arte e spiritualità"
   },
+  "homeHero2": {
+    "eyebrow": "Itinerari narrativi a piedi",
+    "lead": "Dalla città antica a quella contemporanea: luoghi, storie, eventi e botteghe per costruire il tuo giro su misura.",
+    "time": "Quanto tempo hai?",
+    "era": {
+      "duomo": "Città antica",
+      "ponte": "Città contemporanea"
+    },
+    "placeKicker": "{era} · Il luogo",
+    "drawing": "Disegno in corso…",
+    "step": "{n} di {total}",
+    "featured": {
+      "label": "Grande evento",
+      "from": "Dalle {time}",
+      "countdown": "Mancano all'evento",
+      "countdownMidnight": "Mancano alla mezzanotte",
+      "countdownLabel": "Conto alla rovescia",
+      "started": "Ci siamo!",
+      "days": "giorni",
+      "hours": "ore",
+      "minutes": "min",
+      "seconds": "sec",
+      "discover": "Scopri di più",
+      "all": "Tutti i grandi eventi",
+      "next": "Prossimi appuntamenti"
+    }
+  },
   "mission": {
     "eyebrow": "La mission",
     "title": "Accoglie, crea, connette",

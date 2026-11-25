@@ -8,7 +8,7 @@ test("home: sezioni nell'ordine, niente sezioni tolte, niente scroll orizzontale
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
   // hero → esplora a piedi → il tuo tempo / il tuo giro → eventi → Bottega Cosenza (la mission non c'è più)
   const order = await page.evaluate(() =>
-    [".ca-hero-draw", "#esplora", "#il-tuo-tempo", "#eventi", ".ca-crea-hero"].map(
+    [".ca-hero2", "#esplora", "#il-tuo-tempo", "#eventi", ".ca-crea-hero"].map(
       (s) => document.querySelector(s)?.getBoundingClientRect().top ?? -1,
     ),
   );
@@ -20,9 +20,47 @@ test("home: sezioni nell'ordine, niente sezioni tolte, niente scroll orizzontale
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
+test("hero: ?template= sceglie la variante (1 hero v2 predefinito, 2 disegno verde, 3 disegno con i colori del logo)", async ({ page }) => {
+  for (const [query, expected] of [["", "1"], ["?template=1", "1"], ["?template=2", "2"], ["?template=3", "3"], ["?template=9", "1"], ["?colori=logo", "3"]] as const) {
+    await page.goto(`/it${query}`);
+    const hero = page.locator(expected === "1" ? ".ca-hero2" : ".ca-hero-draw");
+    await expect(hero).toHaveAttribute("data-hero-template", expected);
+    await expect(hero).toHaveAttribute("data-drawing-ready", "true");
+  }
+});
+
+test("hero v2 (predefinito): filigrana, foto dopo il disegno, curiosità, slot in evidenza con conto alla rovescia", async ({ page }) => {
+  test.setTimeout(60_000);
+  await page.goto("/it");
+  const hero = page.locator(".ca-hero2");
+  await expect(hero).toHaveAttribute("data-drawing-ready", "true");
+  await expect(page.locator(".ca-hero-draw")).toHaveCount(0);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Cosenza, città da vivere.");
+  // niente CTA «Esplora a piedi» / «Itinerari pronti» nell'hero
+  await expect(hero.getByRole("link", { name: /Esplora a piedi|Itinerari pronti/ })).toHaveCount(0);
+  await expect(hero.getByRole("link", { name: "1 giorno" })).toHaveAttribute("href", /\/it\/il-tuo-tempo\?t=1g/);
+  // la foto del luogo si rivela a disegno completo
+  await expect(hero).toHaveAttribute("data-drawing-state", "complete", { timeout: 15_000 });
+  await expect(hero.locator(".ca-hero2-photo")).toHaveAttribute("href", "/it/luoghi/duomo");
+  // switch: cambiano insieme luogo, link e curiosità
+  await hero.getByRole("button", { name: "Contemporanea" }).click();
+  await expect(hero.getByRole("button", { name: "Contemporanea" })).toHaveAttribute("aria-pressed", "true");
+  await expect(hero.locator(".ca-hero2-photo")).toHaveAttribute("href", "/it/luoghi/ponte-calatrava");
+  // pausa
+  const pause = hero.getByRole("button", { name: "Metti in pausa l'animazione" });
+  await pause.click();
+  await expect(hero).toHaveAttribute("data-drawing-paused", "true");
+  // slot in evidenza: conto alla rovescia solo nel browser
+  const feature = page.locator(".ca-feature");
+  await expect(feature.getByRole("heading", { level: 2 })).toBeVisible();
+  await expect(feature.getByRole("timer")).not.toContainText("--");
+  const width = await page.evaluate(() => document.documentElement.scrollWidth);
+  expect(width).toBeLessThanOrEqual(page.viewportSize()!.width);
+});
+
 test("hero: disegno intero nella prima schermata, animazione automatica in loop", async ({ page }) => {
   test.setTimeout(90_000);
-  await page.goto("/it");
+  await page.goto("/it?template=2");
   const hero = page.locator(".ca-hero-draw");
   await expect(hero).toHaveAttribute("data-drawing-ready", "true");
   await expect(hero.locator("[data-silhouette-stroke]")).not.toHaveCount(0);
@@ -41,7 +79,7 @@ test("hero: disegno intero nella prima schermata, animazione automatica in loop"
 
 test("hero: card del luogo e curiosità seguono il loop, non coprono il disegno, pausa", async ({ page }) => {
   test.setTimeout(90_000);
-  await page.goto("/it");
+  await page.goto("/it?template=2");
   const hero = page.locator(".ca-hero-draw");
   const place = hero.locator(".ca-hero-card--place");
   const fact = hero.locator(".ca-hero-card--fact");
@@ -72,7 +110,7 @@ test("hero: card del luogo e curiosità seguono il loop, non coprono il disegno,
 
 test("hero: con movimento ridotto il disegno è completo e fermo", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/it");
+  await page.goto("/it?template=2");
   const hero = page.locator(".ca-hero-draw");
   await expect(hero).toHaveAttribute("data-drawing-state", "static");
   await expect(hero).toHaveAttribute("data-drawing-progress", "1.000");
