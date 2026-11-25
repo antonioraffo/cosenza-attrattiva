@@ -13,6 +13,11 @@ export function Logo({ className = "", light = false }: { className?: string; li
   );
 }
 
+/** Solo il marchio grafico (senza la scritta «Cosenza attrattiva»), per l'header. */
+export function LogoMark({ className = "" }: { className?: string }) {
+  return <img src="/brand/mark.svg" alt="Cosenza attrattiva" width={55} height={48} className={className} />;
+}
+
 /** Variante verticale con il pilastro turistico "Connect". */
 export function LogoConnect({ light = false, className = "" }: { light?: boolean; className?: string }) {
   return (

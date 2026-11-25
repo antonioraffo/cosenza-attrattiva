@@ -83,8 +83,20 @@ html {
 .site-nav {
   display: flex;
   align-items: center;
-  gap: clamp(16px, 1.8vw, 28px);
-  margin-left: auto;
+  gap: clamp(20px, 2.4vw, 36px);
+}
+/* da 961 px: marchio | voci del menu centrate | azioni (colonne laterali uguali) */
+@media (min-width: 961px) {
+  .site-header-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+  .site-brand {
+    justify-self: start;
+  }
+  .site-header-actions {
+    justify-self: end;
+  }
 }
 .site-nav-link {
   position: relative;
@@ -93,7 +105,7 @@ html {
   gap: 8px;
   min-height: 44px;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--color-neutro-900);
   white-space: nowrap;
@@ -113,11 +125,6 @@ html {
 .site-nav-link:focus-visible::after,
 .site-nav-link[aria-current="page"]::after {
   right: 0;
-}
-@media (min-width: 961px) and (max-width: 1200px) {
-  .site-nav-link {
-    font-size: 13px;
-  }
 }
 
 .site-header-actions {
