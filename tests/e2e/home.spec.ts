@@ -6,14 +6,14 @@ test("home: sezioni nell'ordine, niente sezioni tolte, niente scroll orizzontale
   await page.goto("/");
   await expect(page).toHaveURL(/\/it$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-  // hero → esplora a piedi → il tuo tempo / il tuo giro → eventi → fatto a Cosenza (la mission non c'è più)
+  // hero → esplora a piedi → il tuo tempo / il tuo giro → eventi → Bottega Cosenza (la mission non c'è più)
   const order = await page.evaluate(() =>
     [".ca-hero-draw", "#esplora", "#il-tuo-tempo", "#eventi", ".ca-crea-hero"].map(
       (s) => document.querySelector(s)?.getBoundingClientRect().top ?? -1,
     ),
   );
   expect(order.every((top, i) => top >= 0 && (i === 0 || top > order[i - 1]!))).toBe(true);
-  for (const name of ["Esplora a piedi", "Il tuo tempo", "Il tuo giro", "Fatto a Cosenza"])
+  for (const name of ["Esplora a piedi", "Il tuo tempo", "Il tuo giro", "Bottega Cosenza"])
     await expect(page.getByRole("heading", { level: 2, name })).toHaveCount(1);
   await expect(page.locator("[data-hero-panel], .ca-timebar, #itinerari, [data-explore-stage], #mission, .ca-pillar-block")).toHaveCount(0);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -126,7 +126,7 @@ test("menu principale: Scopri, Eventi, Pianifica (solo testo) e megamenu dei pil
   await page.keyboard.press("ArrowDown");
   await expect(tabs.getByRole("tab", { name: "Cosenza Crea" })).toHaveAttribute("aria-selected", "true");
   await page.keyboard.press("Tab");
-  await expect(pane.getByRole("link", { name: "Fatto a Cosenza" })).toBeFocused();
+  await expect(pane.getByRole("link", { name: "Bottega Cosenza" })).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(scopri).toHaveAttribute("aria-expanded", "false");
   await expect(scopri).toBeFocused();

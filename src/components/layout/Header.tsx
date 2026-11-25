@@ -20,7 +20,7 @@ export const PILLAR_HREF: Record<Pillar, string> = { vive: "/eventi", connect: "
  */
 export async function Header() {
   const t = await getTranslations("nav");
-  // sottovoci di ogni pilastro (proposta di sintesi): Vive → eventi, Connect → itinerari e radici, Crea → Fatto a Cosenza
+  // sottovoci di ogni pilastro (proposta di sintesi): Vive → eventi, Connect → itinerari e radici, Crea → Bottega Cosenza
   const sub: Record<Pillar, { href: string; label: string }[]> = {
     vive: [
       { href: "/eventi#grandi-eventi", label: t("subGrandiEventi") },

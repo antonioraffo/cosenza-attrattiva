@@ -6,7 +6,7 @@ import { CraftTabs } from "./CraftTabs";
 const CRAFTS = ["ceramica", "legno", "tessile", "oreficeria", "prodotti"] as const;
 
 /**
- * Fascia nera di "Fatto a Cosenza": titolo, introduzione e i mestieri (CraftTabs).
+ * Fascia nera di "Bottega Cosenza": titolo, introduzione e i mestieri (CraftTabs).
  * Nella pagina dedicata il titolo è l'h1; in home è un h2 con il link alla pagina.
  */
 export async function CreaBand({ as = "h1", withLink = false }: { as?: "h1" | "h2"; withLink?: boolean }) {

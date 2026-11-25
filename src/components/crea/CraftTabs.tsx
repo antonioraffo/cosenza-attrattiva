@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { PillarIcon } from "@/components/layout/PillarIcon";
 
 /**
- * Mestieri di "Fatto a Cosenza" (dal prototipo: scegli un mestiere e cambia l'immagine), come schede
+ * Mestieri di "Bottega Cosenza" (dal prototipo: scegli un mestiere e cambia l'immagine), come schede
  * accessibili (pattern APG "tabs": frecce, Home/End, attivazione automatica).
  */
 export function CraftTabs({
