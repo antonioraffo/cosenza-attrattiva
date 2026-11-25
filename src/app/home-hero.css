@@ -340,20 +340,13 @@
   flex: none;
   text-align: center;
 }
-.ca-hero-draw-brand img {
-  display: block;
-  width: clamp(180px, 26vw, 400px);
-  max-height: 14svh;
-  height: auto;
-  margin: 0 auto;
-  object-fit: contain;
-}
 .ca-hero-draw-claim {
-  margin: clamp(4px, 1svh, 12px) 0 0;
+  /* senza logo il claim apre l'hero (il lettering definitivo è da scegliere) */
+  margin: clamp(8px, 2svh, 24px) 0 0;
   color: var(--color-neutro-900);
   font-family: var(--font-display);
-  font-size: clamp(17px, 1.8vw, 26px);
-  font-weight: 600;
+  font-size: clamp(26px, 3.2vw, 48px);
+  font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.015em;
 }

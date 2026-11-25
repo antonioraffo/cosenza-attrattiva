@@ -16,7 +16,12 @@
  * Card dell'hero (HeroDrawing): `data-cards` = "in" | "out" segue il loop (compaiono a CARDS_AT, se ne
  * vanno con la dissolvenza) e `data-drawing-loop` (0, 1, 2) sceglie la curiosità del giro.
  * Pausa: evento "drawing:pause" (pulsante, WCAG 2.2.2) e puntatore o focus su [data-drawing-hold].
+ *
+ * Riempimenti (effects/fills.ts): un secondo canvas sotto i tratti colora le parti principali del disegno
+ * quando le linee sono quasi finite, una parte dopo l'altra; restano durante la pausa e svaniscono con il
+ * disegno. `data-drawing-fill` = quota di riempimento (0–1).
  */
+import { fillAlpha, fillColor, type Fill, type FillPalette } from "./fills";
 
 export const DRAW_MS = 7000;
 export const HOLD_MS = 4000;
@@ -27,6 +32,10 @@ const CYCLE_MS = DRAW_MS + HOLD_MS + FADE_MS;
 /** spessore dei tratti in pixel CSS (stroke-width 0.9 con vector-effect non-scaling-stroke) */
 const LINE_PX = 0.9;
 const FAR = 1e7;
+/** i riempimenti partono a questo punto del tracciamento, uno ogni FILL_STEP, e durano FILL_MS */
+const FILL_FROM = DRAW_MS * 0.8;
+const FILL_STEP = 300;
+const FILL_MS = 900;
 
 const clamp = (v: number) => Math.max(0, Math.min(1, v));
 const ease = (v: number) => 1 - (1 - v) ** 2;
@@ -41,7 +50,7 @@ interface Stroke {
   drawn: number;
 }
 
-export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => void {
+export function initializeDrawing(root: HTMLElement, drawingUrl: string, fills: Fill[] = [], palette: FillPalette = "verde"): () => void {
   const doc = root.ownerDocument;
   const view = doc.defaultView!;
   const art = root.querySelector<HTMLElement>("[data-drawing-art]")!;
@@ -50,6 +59,11 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
   let strokes: Stroke[] = [];
   let canvas: HTMLCanvasElement | null = null;
   let ctx: CanvasRenderingContext2D | null = null;
+  let fillCanvas: HTMLCanvasElement | null = null;
+  let fctx: CanvasRenderingContext2D | null = null;
+  const fillShapes = fills.map((f) => ({ path: new Path2D(f.d), color: fillColor(f, palette), alpha: fillAlpha(f) }));
+  let fillAmounts = fillShapes.map(() => 0);
+  let fillKey = "";
   let box = { x: 0, y: 0, width: 1, height: 1 };
   let scale = 1;
   let frame: number | undefined;
@@ -65,7 +79,7 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
   let focusing = false;
   let resizeObserver: ResizeObserver | undefined;
   // nuova scena: lo stato della precedente non vale più
-  for (const key of ["drawingReady", "drawingState", "drawingProgress", "cards", "drawingLoop"]) delete root.dataset[key];
+  for (const key of ["drawingReady", "drawingState", "drawingProgress", "cards", "drawingLoop", "drawingFill"]) delete root.dataset[key];
 
   /** dimensioni del canvas e trasformazione viewBox → pixel (come preserveAspectRatio="xMidYMid meet") */
   const fit = () => {
@@ -74,12 +88,16 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
     const height = art.clientHeight;
     if (!width || !height) return false;
     const dpr = Math.min(2, view.devicePixelRatio || 1);
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
     scale = Math.min(width / box.width, height / box.height);
     const ox = (width - box.width * scale) / 2 - box.x * scale;
     const oy = (height - box.height * scale) / 2 - box.y * scale;
-    ctx.setTransform(dpr * scale, 0, 0, dpr * scale, dpr * ox, dpr * oy);
+    for (const [c, x] of [[canvas, ctx], [fillCanvas, fctx]] as const) {
+      if (!c || !x) continue;
+      c.width = Math.round(width * dpr);
+      c.height = Math.round(height * dpr);
+      x.setTransform(dpr * scale, 0, 0, dpr * scale, dpr * ox, dpr * oy);
+    }
+    fillKey = "";
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.lineWidth = LINE_PX / scale;
@@ -102,6 +120,31 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
     root.dataset.drawingProgress = progress.toFixed(3);
   };
 
+  /** riempimenti: ognuno alla sua quota (0–1); si ridipinge solo se qualcosa è cambiato */
+  const paintFills = (amounts: number[]) => {
+    fillAmounts = amounts;
+    if (!fctx || !fillCanvas) return;
+    const key = amounts.map((a) => a.toFixed(3)).join();
+    if (key === fillKey) return;
+    fillKey = key;
+    fctx.save();
+    fctx.setTransform(1, 0, 0, 1, 0, 0);
+    fctx.clearRect(0, 0, fillCanvas.width, fillCanvas.height);
+    fctx.restore();
+    fillShapes.forEach((f, i) => {
+      const a = ease(amounts[i] ?? 0);
+      if (a <= 0) return;
+      fctx!.globalAlpha = f.alpha * a;
+      fctx!.fillStyle = f.color;
+      fctx!.fill(f.path);
+    });
+    fctx.globalAlpha = 1;
+    const total = amounts.length ? amounts.reduce((s, a) => s + a, 0) / amounts.length : 0;
+    root.dataset.drawingFill = total.toFixed(2);
+  };
+  /** quote dei riempimenti a `t` ms dall'inizio del ciclo */
+  const fillsAt = (t: number) => fillShapes.map((_, i) => clamp((t - FILL_FROM - i * FILL_STEP) / FILL_MS));
+
   /** ridisegna da capo fino a `progress` (nuovo ciclo, ridimensionamento) */
   const redraw = (progress: number) => {
     if (!ctx || !canvas || !fit()) return;
@@ -111,6 +154,7 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
     ctx.restore();
     for (const s of strokes) s.drawn = 0;
     advance(progress);
+    paintFills(fillAmounts);
   };
 
   const tick = (now: number) => {
@@ -119,6 +163,8 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
     if (reduce.matches) {
       if (root.dataset.drawingState !== "static") {
         canvas.style.opacity = "1";
+        if (fillCanvas) fillCanvas.style.opacity = "1";
+        fillAmounts = fillShapes.map(() => 1);
         redraw(1);
         root.dataset.drawingState = "static";
         root.dataset.cards = "in";
@@ -132,9 +178,12 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
     if (current !== cycle) {
       cycle = current;
       canvas.style.opacity = "1";
+      if (fillCanvas) fillCanvas.style.opacity = "1";
+      fillAmounts = fillShapes.map(() => 0);
       redraw(0);
       root.dataset.drawingLoop = String(cycle % 3);
     }
+    paintFills(fillsAt(t));
     if (t < DRAW_MS) {
       const progress = ease(t / DRAW_MS);
       advance(progress);
@@ -147,6 +196,7 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
     } else {
       advance(1);
       canvas.style.opacity = String(1 - clamp((t - DRAW_MS - HOLD_MS) / FADE_MS));
+      if (fillCanvas) fillCanvas.style.opacity = canvas.style.opacity;
       root.dataset.drawingState = "fading";
       root.dataset.cards = "out";
     }
@@ -254,7 +304,13 @@ export function initializeDrawing(root: HTMLElement, drawingUrl: string): () => 
       canvas = doc.createElement("canvas");
       canvas.className = "ca-hero-draw-canvas";
       canvas.setAttribute("aria-hidden", "true");
-      art.replaceChildren(svg, canvas);
+      if (fillShapes.length) {
+        fillCanvas = doc.createElement("canvas");
+        fillCanvas.className = "ca-hero-draw-canvas ca-hero-fill-canvas";
+        fillCanvas.setAttribute("aria-hidden", "true");
+        fctx = fillCanvas.getContext("2d");
+      }
+      art.replaceChildren(...[svg, fillCanvas, canvas].filter((n): n is NonNullable<typeof n> => !!n));
       ctx = canvas.getContext("2d");
       const vb = svg.viewBox.baseVal;
       box = vb && vb.width ? { x: vb.x, y: vb.y, width: vb.width, height: vb.height } : { x: 0, y: 0, width: 1535, height: 1025 };

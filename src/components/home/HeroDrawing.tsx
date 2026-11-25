@@ -1,9 +1,9 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element -- logo SVG statico */
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { initializeDrawing } from "./effects/drawing";
+import { FILLS, type FillPalette } from "./effects/fills";
 
 type Kind = "duomo" | "ponte";
 
@@ -27,9 +27,10 @@ const arrow = (
 );
 
 /**
- * Hero della home: logo, claim e disegno al tratto che sta per intero nella prima schermata (100svh
+ * Hero della home: claim e disegno al tratto che sta per intero nella prima schermata (100svh
  * meno l'header). Il disegno si traccia da solo e si ripete in loop (effects/drawing.ts); il selettore
- * Antica / Contemporanea passa dal Duomo al Ponte di Calatrava.
+ * Antica / Contemporanea passa dal Duomo al Ponte di Calatrava. Dopo il tratto le parti principali si
+ * colorano (effects/fills.ts): verde del logo di default, i quattro colori del logo con `?colori=logo`.
  * Due card accompagnano il disegno: la curiosità (una diversa a ogni giro) e la scheda del luogo.
  * Da 1200 px stanno ai lati del disegno, sotto sopra e sotto; compaiono quando le linee sono quasi
  * complete e se ne vanno con la dissolvenza del loop. Il loop si può mettere in pausa (WCAG 2.2.2) e si
@@ -73,7 +74,12 @@ export function HeroDrawing({
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => (root.current ? initializeDrawing(root.current, DRAWINGS[kind]) : undefined), [kind]);
+  useEffect(() => {
+    if (!root.current) return;
+    // anteprima della variante con i colori del logo: ?colori=logo
+    const palette: FillPalette = new URLSearchParams(window.location.search).get("colori") === "logo" ? "logo" : "verde";
+    return initializeDrawing(root.current, DRAWINGS[kind], FILLS[kind], palette);
+  }, [kind]);
 
   // pausa scelta dall'utente: effects/drawing.ts legge data-drawing-paused
   useEffect(() => {
@@ -83,7 +89,6 @@ export function HeroDrawing({
   return (
     <section ref={root} className="ca-hero-draw" data-drawing-kind={kind} aria-labelledby="hero-title">
       <div className="ca-hero-draw-brand">
-        <img src="/brand/logo-h.svg" alt="Cosenza attrattiva" width={1384} height={437} fetchPriority="high" decoding="async" />
         <h1 id="hero-title" className="ca-hero-draw-claim">
           {title}
         </h1>
