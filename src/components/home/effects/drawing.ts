@@ -22,7 +22,7 @@
  * disegno. `data-drawing-fill` = quota di riempimento (0–1).
  *
  * Opzioni (DrawingOptions): tempi del ciclo, ancoraggio in basso e tratti tenui per la "filigrana" dell'hero
- * v2 (?template=3), `onComplete` a fine giro, dopo la dissolvenza (l'hero v2 passa al luogo successivo). La variabile CSS --drawing-progress (0–1) sulla radice segue il tracciamento.
+ * v2 (predefinito), `onComplete` a fine giro, dopo la dissolvenza (l'hero v2 passa al luogo successivo). La variabile CSS --drawing-progress (0–1) sulla radice segue il tracciamento.
  */
 import { fillAlpha, fillColor, type Fill, type FillPalette } from "./fills";
 

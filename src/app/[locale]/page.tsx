@@ -10,7 +10,7 @@ import { LowerRoot } from "@/components/home/LowerRoot";
 import { CreaBand } from "@/components/crea/CreaBand";
 
 /**
- * Home: hero (disegno al tratto in loop; con ?template=3 l'hero v2 con filigrana e slot «In evidenza») → «Esplora a piedi», «Il tuo tempo» e «Il tuo giro» (modello della
+ * Home: hero v2 (filigrana del disegno al tratto, foto, curiosità e slot «In evidenza»; con ?template=2 e 3 il disegno al tratto in loop) → «Esplora a piedi», «Il tuo tempo» e «Il tuo giro» (modello della
  * demo di Stefano) → eventi (grandi eventi, poi il calendario) → fascia nera «Bottega Cosenza» → footer.
  * Restano nel progetto ma non in home: HomeIntro/SilhouetteIntro, HomePanels (MAB/Duomo/San Domenico),
  * TimeBar, ThreeWays, ItinerariesSection, SectionNav, MissionSection (carosello dei pilastri),

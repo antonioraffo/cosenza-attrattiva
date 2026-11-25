@@ -4,7 +4,7 @@ import { eventDateLine, eventDates, isPast } from "@/lib/events";
 import { listEvents, type EventSummary } from "@/server/queries";
 
 /**
- * Slot «In evidenza» dell'hero v2 (?template=3): un evento (con conto alla rovescia) o una notizia.
+ * Slot «In evidenza» dell'hero v2 (predefinito): un evento (con conto alla rovescia) o una notizia.
  * Scelta: l'evento indicato in FEATURED_OVERRIDES se è ancora futuro, altrimenti il prossimo grande evento
  * con una data. Gli eventi non hanno ancora un flag «in evidenza» nel database: finché non c'è, lo
  * sostituisce questa tabella (dati dimostrativi: orario e foto del Capodanno sono segnaposto).

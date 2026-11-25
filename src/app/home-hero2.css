@@ -1,10 +1,10 @@
 /* -----------------------------------------------------------------------------------------------
-   Hero v2 della home (?template=3, HeroV2.tsx; prototipo e brief: HANDOFF-hero-v2). Il disegno al tratto
+   Hero v2 della home (predefinito, ?template=1, HeroV2.tsx; prototipo e brief: HANDOFF-hero-v2). Il disegno al tratto
    è una filigrana a tutta larghezza ancorata in basso; a sinistra claim e tempo, a destra switch, foto
    del luogo e curiosità; sotto lo slot «In evidenza».
    --------------------------------------------------------------------------------------------- */
-/* con ?template=3 l'hero 1 resta nascosto finché non arriva il 3 (script in HeroSwitch) */
-html[data-hero-template="3"] .ca-hero-draw {
+/* con ?template=2 o 3 l'hero v2 (reso dal server) resta nascosto finché non arriva il disegno (script in HeroSwitch) */
+html:is([data-hero-template="2"], [data-hero-template="3"]) .ca-hero2 {
   visibility: hidden;
 }
 

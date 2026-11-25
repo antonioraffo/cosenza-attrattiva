@@ -9,7 +9,7 @@ import { claimLines, DRAWINGS, type HeroScene, type Kind } from "./HeroDrawing";
 import type { FeaturedItem } from "./featured";
 
 /**
- * Hero v2 (?template=3, da docs HANDOFF-hero-v2): il disegno al tratto diventa una filigrana a tutta
+ * Hero v2 (hero predefinito, ?template=1; da HANDOFF-hero-v2): il disegno al tratto diventa una filigrana a tutta
  * larghezza, ancorata in basso come uno skyline, dietro a claim e colonna destra (switch Antica /
  * Contemporanea, foto del luogo, curiosità). Ciclo: il disegno si traccia (effects/drawing.ts con le opzioni
  * della filigrana) → la foto del luogo si rivela → pausa → luogo successivo. Sotto, lo slot «In evidenza»
@@ -117,7 +117,7 @@ export function HeroV2({
   const lines = claimLines(title);
 
   return (
-    <section ref={root} className="ca-hero2" data-hero-template="3" data-drawing-kind={kind} data-paused={paused || undefined} aria-labelledby="hero-title">
+    <section ref={root} className="ca-hero2" data-hero-template="1" data-drawing-kind={kind} data-paused={paused || undefined} aria-labelledby="hero-title">
       <div className="ca-hero2-top">
         <div key={kind} className="ca-hero2-watermark" data-drawing-art role="img" aria-label={labels.art[kind]} />
         <div className="site-container">

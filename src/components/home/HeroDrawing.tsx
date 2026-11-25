@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link } from "@/i18n/navigation";
 import { initializeDrawing } from "./effects/drawing";
 import { FILLS } from "./effects/fills";
-import { TEMPLATE_PALETTE, type HeroTemplate } from "./heroTemplate";
+import { TEMPLATE_PALETTE, type DrawingTemplate } from "./heroTemplate";
 
 export type Kind = "duomo" | "ponte";
 
@@ -56,13 +56,13 @@ export function claimLines(title: string): string[] {
 }
 
 export function HeroDrawing({
-  template = 1,
+  template = 2,
   title,
   scenes,
   labels,
 }: {
-  /** 1 o 2 (scelto da HeroSwitch con ?template=) */
-  template?: HeroTemplate;
+  /** 2 o 3 (scelto da HeroSwitch con ?template=) */
+  template?: DrawingTemplate;
   title: string;
   scenes: Record<Kind, HeroScene>;
   labels: {
