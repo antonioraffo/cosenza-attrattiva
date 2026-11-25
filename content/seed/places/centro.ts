@@ -18,6 +18,7 @@ export const places: SeedPlace[] = [
       it: "La cattedrale consacrata nel 1222 alla presenza di Federico II, riconosciuta dall'UNESCO come patrimonio testimone di una cultura di pace.",
       en: "The cathedral consecrated in 1222 in the presence of Frederick II, recognised by UNESCO as a heritage “Messenger of a Culture of Peace”.",
     },
+    sintesi: { it: "Cattedrale consacrata nel 1222 alla presenza di Federico II, testimone UNESCO di pace" },
     body: {
       it: `Lungo la salita di Corso Telesio la città vecchia si apre all'improvviso su piazza Duomo, e davanti a te compare la facciata in pietra con i suoi tre portali e tre rosoni. È il cuore spirituale di Cosenza: una chiesa più antica, dell'XI secolo, fu quasi rasa al suolo dal terremoto del 1184, e la nuova cattedrale venne solennemente consacrata il *30 gennaio 1222*, alla presenza dell'imperatore Federico II di Svevia, che per l'occasione donò alla città la preziosa Stauroteca oggi custodita nel vicino Museo diocesano.
 
@@ -116,6 +117,7 @@ Inside, three aisles divided by piers lead the eye to the apse. The chapel of th
       it: "Il grande salotto della città vecchia, tra il Palazzo del Governo, il Teatro Rendano, l'Accademia Cosentina e il verde della Villa Vecchia.",
       en: "The old town's grand drawing room, framed by Palazzo del Governo, the Teatro Rendano, the Accademia Cosentina and the green Villa Vecchia.",
     },
+    sintesi: { it: "Il salotto della città vecchia, tra Teatro Rendano, Accademia e Villa Vecchia" },
     body: {
       it: `Dopo i vicoli stretti di Corso Telesio, piazza XV Marzo è una boccata d'aria: un ampio selciato in cima alla città vecchia, con gli alberi della Villa Vecchia da una parte e le facciate color pastello dall'altra. I cosentini la chiamano ancora *piazza Prefettura*, ma il suo nome ufficiale ricorda i moti del 15 marzo 1844, quando molti insorti morirono nel tentato assalto al palazzo dell'Intendenza borbonica.
 
@@ -179,6 +181,7 @@ All around, the square gathers the city's cultural landmarks: the Teatro Rendano
       it: "Fondata nel 1511 da Aulo Giano Parrasio, è tra le più antiche accademie d'Europa; nel suo palazzo vive la Biblioteca Civica con 53 incunaboli.",
       en: "Founded in 1511 by Aulo Giano Parrasio, it is among Europe's oldest academies; its building houses the Civic Library and 53 incunabula.",
     },
+    sintesi: { it: "Tra le più antiche accademie d'Europa (1511), con la Biblioteca Civica" },
     body: {
       it: `Se Cosenza è chiamata *l'Atene della Calabria*, il merito è anche di questo edificio affacciato su piazza XV Marzo, accanto al Teatro Rendano. Qui ha sede l'Accademia Cosentina, fondata nel 1511 dall'umanista Aulo Giano Parrasio: la seconda del Regno di Napoli e una delle prime d'Europa, nata come *Accademia Parrasiana* per gli studi filosofici e letterari.
 
@@ -234,6 +237,7 @@ In 1871 the Academy founded the Civic Library, which after some lean years reope
       it: "Inaugurato nel 1909 con l'Aida e ricostruito dopo le bombe del 1943, è l'unico Teatro di tradizione della Calabria.",
       en: "Opened in 1909 with Aida and rebuilt after the 1943 bombing, it is Calabria's only official “theatre of tradition”.",
     },
+    sintesi: { it: "Inaugurato nel 1909 con l'Aida, è l'unico Teatro di tradizione della Calabria" },
     body: {
       it: `Il portico ad archi e la facciata rosa e avorio del Teatro Rendano chiudono piazza XV Marzo come un sipario. La decisione di costruire un teatro comunale arrivò nel 1877, sull'area dove sorgeva un teatro provvisorio in legno, il *Baraccone*, e su progetto dell'ingegnere Nicola Zumpano. I lavori furono lenti e più volte sospesi, finché la sera del *20 novembre 1909* il sipario si alzò sull'Aida di Verdi, tra le polemiche per il lusso della serata.
 
@@ -293,6 +297,7 @@ Rebuilding, entrusted to the Neapolitan architect Ezio Gentile, began in 1953 an
       it: "Circa 30.000 m² di verde a terrazze tra piazza XV Marzo e lo Spirito Santo, con lecci, platani e la fontana della Venere.",
       en: "Around 30,000 m² of terraced green between Piazza XV Marzo and Spirito Santo, with holm oaks, plane trees and the Venus fountain.",
     },
+    sintesi: { it: "30.000 m² di verde a terrazze, con lecci, platani e la fontana della Venere" },
     body: {
       it: `Dietro il Teatro Rendano la città vecchia rallenta e si fa ombra: è la Villa Vecchia, il giardino storico dei cosentini. Nasce sui luoghi di un giardino del Seicento annesso al monastero di Santa Maria di Costantinopoli – lo stesso su cui sorge il Palazzo del Governo – e scende a terrazze per circa 30.000 metri quadrati verso le pendici del colle Guarassano e il rione dello Spirito Santo.
 
@@ -344,6 +349,7 @@ The main entrance opens right in front of the theatre, and it's the best way in:
       it: "La strada tortuosa e in salita che attraversa tutto il centro storico, dalla confluenza dei fiumi al Duomo e a piazza XV Marzo.",
       en: "The winding, uphill street that runs the whole length of the old town, from the river confluence past the cathedral to Piazza XV Marzo.",
     },
+    sintesi: { it: "La via in salita che attraversa il centro storico, dalla confluenza al Duomo" },
     body: {
       it: `Corso Telesio non si percorre: si scala. Tortuoso e in pendenza, attraversa interamente il centro storico, dal basso, vicino alla confluenza tra Crati e Busento, fino alla sommità di piazza XV Marzo. È la spina dorsale della Cosenza antica, e porta il nome del suo figlio più illustre, il filosofo Bernardino Telesio.
 
@@ -395,6 +401,7 @@ Along the way the street widens into squares that act as natural stopping points
       it: "Un palazzo cinquecentesco che fu tribunale e carcere, oggi galleria con Mattia Preti, Luca Giordano e i disegni di Umberto Boccioni.",
       en: "A sixteenth-century palace that served as court and prison, now a gallery with Mattia Preti, Luca Giordano and drawings by Umberto Boccioni.",
     },
+    sintesi: { it: "Ex tribunale e carcere, oggi galleria con Mattia Preti, Luca Giordano e Boccioni" },
     body: {
       it: `Sul colle Triglio, di fronte al centro storico oltre il Crati, la lunga facciata di Palazzo Arnone domina la città. La sua costruzione fu avviata da Bartolo e Ascanio Arnone all'inizio del XVI secolo, ma l'edificio passò allo Stato prima ancora di essere completato. Da allora ha avuto molte vite: residenza dei presidi della Calabria Citeriore, sede del Tribunale e della Regia Udienza, carcere.
 
@@ -449,6 +456,7 @@ Handed to the Ministry of Culture in the 1980s, it now houses the *Galleria Nazi
       it: "Nel complesso quattrocentesco di Sant'Agostino, il racconto dei popoli antichi della Calabria e di Cosenza capitale dei Brettii.",
       en: "In the fifteenth-century Sant'Agostino complex, the story of Calabria's ancient peoples and of Cosenza as capital of the Bruttians.",
     },
+    sintesi: { it: "I popoli antichi della Calabria e Cosenza capitale dei Brettii, a Sant'Agostino" },
     body: {
       it: `Prima dei Romani, prima perfino dei Greci, la valle del Crati era la terra degli Enotri e poi dei *Brettii*, che dal 356 a.C. fecero di Cosenza la capitale della loro confederazione. Il museo che porta il loro nome racconta questa storia lontana negli ambienti del complesso monumentale di Sant'Agostino, del Quattrocento, dove è stato inaugurato il 17 ottobre 2009.
 
@@ -500,6 +508,7 @@ One of the most moving pieces is an imperial-age grave stele with a Greek inscri
       it: "Fondata nel 1217 nel quartiere della Giostra Vecchia, è con il suo convento il monumento religioso più importante della città dopo il Duomo.",
       en: "Founded in 1217 in the Giostra Vecchia quarter, with its convent it is the city's most important religious monument after the cathedral.",
     },
+    sintesi: { it: "Fondata nel 1217, è la chiesa più importante della città dopo il Duomo" },
     body: {
       it: `Sali tra i vicoli della *Giostra Vecchia*, il quartiere che fu il cuore della Cosenza rinascimentale, e arrivi in piazza Marco Berardi, a 273 metri di quota: qui sorgono la chiesa e il convento di San Francesco d'Assisi. Le origini risalgono al 1217, appena pochi anni dopo la nascita dell'ordine francescano, e ne fanno uno dei luoghi di culto più antichi della città e, dopo il Duomo, il complesso religioso più importante.
 
@@ -551,6 +560,7 @@ Don't miss the sacristy, with its painted wooden ceiling, a large cupboard carve
       it: "La chiesa quattrocentesca dalla cupola barocca che fa da cerniera tra la città antica e la città nuova, sulla riva del Busento.",
       en: "The fifteenth-century church with a Baroque dome that hinges the old town to the new, on the bank of the Busento.",
     },
+    sintesi: { it: "Chiesa quattrocentesca con cupola barocca, cerniera tra città antica e nuova" },
     body: {
       it: `Dove il centro storico finisce e comincia la città moderna, oltre il ponte sul Busento, la cupola di San Domenico si alza tra i cedri di piazza Tommaso Campanella. La chiesa fu edificata tra il 1441 e il 1468 per volontà della famiglia Sanseverino: nel 1448 Antonio Sanseverino cedette ai domenicani, presenti a Cosenza già dal Duecento, il proprio palazzo e i terreni accanto per costruire il nuovo complesso.
 
@@ -610,6 +620,7 @@ Inside, light falling from the dome makes the late-Baroque stucco shimmer; the 5
       it: "Dalla vetta del colle Pancrazio, a 383 metri, la fortezza di Federico II domina la città, le valli e le montagne della Sila.",
       en: "From the top of Pancrazio hill, 383 metres up, Frederick II's fortress commands the city, the valleys and the Sila mountains.",
     },
+    sintesi: { it: "La fortezza di Federico II sul colle Pancrazio, con vista su città, valli e Sila" },
     body: {
       it: `In cima al colle Pancrazio, alla fine dell'omonima via, il castello guarda Cosenza dall'alto come ha fatto per mille anni. Sorge su una motta artificiale di forma rettangolare, orientata secondo i punti cardinali come usavano i *Brettii*: non è certo che qui si trovasse la loro rocca, ma è documentato che nel 937 i cosentini costruirono il proprio forte proprio su questa cima.
 
@@ -765,6 +776,7 @@ The earthquake of 1638 began its decline, bringing down a tower and nearly all t
       it: "Dove il Busento si getta nel Crati, la leggenda vuole sepolto Alarico, re dei Visigoti, con il tesoro del sacco di Roma del 410.",
       en: "Where the Busento flows into the Crati, legend says Alaric, king of the Visigoths, was buried with the treasure of the sack of Rome in 410.",
     },
+    sintesi: { it: "Dove il Busento incontra il Crati, e la leggenda vuole sepolto Alarico" },
     body: {
       it: `Ai piedi del centro storico due fiumi si incontrano: il Busento, sceso dal monte Serratore, si getta nel Crati a 228 metri di quota. È da questo punto che Cosenza si è sempre raccontata, distinguendo la città antica, arroccata sul colle Pancrazio, dalla città moderna cresciuta oltre i ponti, sulla piana.
 
@@ -882,6 +894,7 @@ Alaric's tomb has never been found, and it has fired imaginations and treasure h
       it: "Il ponte ad arcate alla confluenza tra Crati e Busento, da cui si apre una delle viste più belle sul centro storico.",
       en: "The arched bridge at the meeting of the Crati and Busento, offering one of the finest views of the old town.",
     },
+    sintesi: { it: "Ponte ad arcate sulla confluenza, con una delle viste più belle sul centro storico" },
     body: {
       it: `Fra i tanti ponti che cuciono le due anime di Cosenza, il Ponte Alarico è quello che porta il nome più evocativo. Scavalca il Crati subito a valle della confluenza con il Busento, proprio là dove, secondo la leggenda, riposa il re dei Visigoti morto nel 410 con il suo tesoro.
 
@@ -933,6 +946,7 @@ Today it is above all a viewpoint. Stop halfway across and look upstream: in fro
       it: "La chiesa sorta nel 1444, legata alla dimora cosentina del santo di Paola, con la «grotta del santo» e opere di Pietro Negroni.",
       en: "The church founded in 1444, tied to Saint Francis of Paola's home in Cosenza, with the “saint's grotto” and works by Pietro Negroni.",
     },
+    sintesi: { it: "Chiesa del 1444 legata al santo di Paola, con la «grotta del santo»" },
     body: {
       it: `Sulla riva del Crati opposta al centro storico, alla fine di corso Plebiscito, il campanile di San Francesco di Paola si specchia sul fiume. La chiesa, sorta nel 1444, è strettamente legata alla figura di *san Francesco di Paola*, il patrono della Calabria, che secondo la tradizione ne fece la propria dimora abituale; è considerata il secondo santuario a lui dedicato per importanza.
 

@@ -15,6 +15,7 @@ export const places: SeedPlace[] = [
       it: "Il salotto della Cosenza moderna: oltre un chilometro di isola pedonale tra negozi, caffè e le sculture del Museo all'Aperto Bilotti.",
       en: "The living room of modern Cosenza: over a kilometre of pedestrian street lined with shops, cafés and the sculptures of the Bilotti Open-Air Museum.",
     },
+    sintesi: { it: "Oltre un chilometro di isola pedonale tra negozi, caffè e sculture del MAB" },
     body: {
       it: `Corso Giuseppe Mazzini è la spina dorsale della città nuova, cresciuta a nord del Busento quando Cosenza scese dai colli del centro storico verso la pianura del Crati. Qui, tra palazzi del Novecento, vetrine e dehors, i cosentini fanno la loro passeggiata quotidiana: è il luogo dove ci si incontra, si chiacchiera, si guarda e ci si fa guardare.
 
@@ -69,6 +70,7 @@ In 2019 the Ministry of Culture declared the collection of twenty sculptures to 
       it: "Un volto di bronzo alto più di due metri, ingrandito da un modello in legno che Modigliani scolpì a Parigi nel 1910.",
       en: "A bronze face over two metres tall, enlarged from a wooden model Modigliani carved in Paris in 1910.",
     },
+    sintesi: { it: "Il volto di bronzo di Modigliani, alto più di due metri, da un modello del 1910" },
     body: {
       it: `All'angolo con via Piave ti viene incontro un volto immobile e allungato: il naso sottile, gli occhi a mandorla senza pupille, il collo che sale come una colonna. È la Testa di Cariatide di Amedeo Modigliani, un bronzo alto oltre due metri e venti.
 
@@ -119,6 +121,7 @@ Stand in front of it and look at the face against the light: the smooth surface 
       it: "Il cardinale di bronzo di Manzù: un mantello che diventa architettura, uno dei temi che lo scultore inseguì per tutta la vita.",
       en: "Manzù's bronze cardinal: a cloak that turns into architecture, a theme the sculptor pursued all his life.",
     },
+    sintesi: { it: "Il cardinale di bronzo di Manzù, con un mantello che diventa architettura" },
     body: {
       it: `All'incrocio con via Isonzo si alza una figura che sembra una piccola cattedrale: un cono di bronzo chiuso nel mantello, sormontato dalla mitria, con il volto appena accennato. È il Grande Cardinale in piedi di Giacomo Manzù.
 
@@ -169,6 +172,7 @@ The Cosenza cast, made in 2004 and 232 centimetres tall, is the fifth of eight t
       it: "Il bronzo surrealista di Dalí: un cavaliere senza volto su un destriero impennato e un drago dalle spire di serpente, nel cuore del corso.",
       en: "Dalí's surrealist bronze: a faceless knight on a rearing horse and a serpent-coiled dragon, in the heart of the street.",
     },
+    sintesi: { it: "Il bronzo surrealista di Dalí: cavaliere senza volto e drago a spire di serpente" },
     body: {
       it: `All'altezza di via Paul Harris il corso si apre su una scena di battaglia. Un cavallo s'impenna con una zampa sollevata, in groppa un cavaliere in cotta di maglia, sotto di loro un drago avvolge le sue spire squamose. È San Giorgio e il drago di Salvador Dalí, il pezzo più celebre del MAB.
 
@@ -219,6 +223,7 @@ Walk around the base and follow the dragon's coils from end to end: with every s
       it: "Una figura femminile di bronzo, sottile e slanciata, che Emilio Greco modellò nel 1957: la grazia classica riletta dal Novecento.",
       en: "A slender, elongated bronze female figure modelled by Emilio Greco in 1957: classical grace reread by the twentieth century.",
     },
+    sintesi: { it: "La figura di bronzo di Emilio Greco (1957): la grazia classica riletta dal Novecento" },
     body: {
       it: `Dove via Arabia sale verso destra, una donna di bronzo si stira come appena uscita dall'acqua: una mano sul fianco, l'altra portata alla testa, il busto inarcato, le gambe lunghe e affusolate. È La Grande Bagnante n. 2, che Emilio Greco modellò nel 1957.
 
@@ -269,6 +274,7 @@ A little further on is another of his works, the Large Crouching Figure No. 5 of
       it: "Un lupo di marmo verde, sagomato come una silhouette: l'omaggio del calabrese Mimmo Rotella alla sua terra.",
       en: "A green marble wolf cut like a silhouette: Calabrian artist Mimmo Rotella's tribute to his homeland.",
     },
+    sintesi: { it: "Il lupo di marmo verde di Mimmo Rotella, omaggio dell'artista alla sua Calabria" },
     body: {
       it: `In Piazza Kennedy, dove il corso si allarga, un lupo verde alza il muso al cielo, come se ululasse. Visto di lato sembra pieno e possente, ma è una lastra spessa appena diciotto centimetri, quasi una figura ritagliata da un manifesto. È Il Lupo della Sila di Mimmo Rotella.
 
@@ -319,6 +325,7 @@ Stand to one side and then face it head-on: from one angle the wolf is a sharp p
       it: "I due manichini abbracciati di de Chirico: l'addio dell'Iliade trasformato in un'icona della Metafisica.",
       en: "De Chirico's two embracing mannequins: the farewell from the Iliad turned into an icon of Metaphysical art.",
     },
+    sintesi: { it: "I manichini abbracciati di de Chirico: l'addio dell'Iliade diventa icona metafisica" },
     body: {
       it: `All'angolo tra Piazza Kennedy e via Molinella due figure senza volto si stringono l'una all'altra. Lui porta l'elmo e impugna una lunga lancia, lei è avvolta in una veste che scende fino ai piedi; le teste sono ovali lisci, come quelle dei manichini. Sono Ettore e Andromaca di Giorgio de Chirico.
 
@@ -369,6 +376,7 @@ Move closer and see how Hector's spear stays upright while the two bodies lean i
       it: "La piazza che chiude a nord Corso Mazzini, rinnovata e popolata dai dodici Filosofi guerrieri in acciaio corten di Giuseppe Gallo.",
       en: "The square at the northern end of Corso Mazzini, redesigned and peopled by Giuseppe Gallo's twelve Corten-steel Warrior Philosophers.",
     },
+    sintesi: { it: "La piazza in fondo a Corso Mazzini, con i dodici Filosofi guerrieri di Giuseppe Gallo" },
     body: {
       it: `Per generazioni di cosentini questa è stata Piazza Fera, dal nome di Luigi Fera, politico cosentino del primo Novecento. Oggi è intitolata a Carlo Bilotti, il collezionista di origine cosentina che ha voluto regalare alla sua città il museo all'aperto di Corso Mazzini. Qui il percorso del MAB arriva al suo traguardo.
 
@@ -419,6 +427,7 @@ Close by rises Pietro Consagra's large Bifrontale in pink marble, more than thre
       it: "Il ponte strallato di Santiago Calatrava sul Crati: un'antenna inclinata alta oltre cento metri, inaugurata nel 2018.",
       en: "Santiago Calatrava's cable-stayed bridge over the Crati: an inclined mast over a hundred metres tall, opened in 2018.",
     },
+    sintesi: { it: "Il ponte strallato di Calatrava sul Crati, con un'antenna di oltre cento metri" },
     body: {
       it: `Lo vedi da lontano, da quasi ogni punto della città: un'antenna bianca che sale obliqua verso il cielo, inclinata di 52 gradi, alta oltre cento metri, con i cavi che si aprono a ventaglio come le corde di un'arpa gigante. È il Ponte San Francesco di Paola, per tutti il Ponte di Calatrava.
 
@@ -512,6 +521,7 @@ The bridge is part of an urban regeneration project aimed at stitching a long-ne
       it: "Una cupola di 15 metri e un proiettore ottico Zeiss: il planetario di Cosenza, inaugurato nel 2019, porta il cielo in città.",
       en: "A 15-metre dome and a Zeiss optical projector: Cosenza's planetarium, opened in 2019, brings the sky into the city.",
     },
+    sintesi: { it: "Una cupola di 15 metri e un proiettore Zeiss: il cielo in città dal 2019" },
     body: {
       it: `A pochi passi dal Ponte di Calatrava, nel quartiere di Gergeri, un edificio di vetro e acciaio custodisce un cielo artificiale. È il Planetario di Cosenza, inaugurato nell'aprile 2019 e intitolato a Giovan Battista Amico.
 

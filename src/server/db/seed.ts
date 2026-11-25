@@ -79,6 +79,7 @@ await db.transaction(async (tx) => {
       name: p.name,
       category: p.category,
       summary: p.summary,
+      sintesi: p.sintesi ?? null,
       body: p.body,
       curiosities: p.curiosities,
       geom: [p.lng, p.lat] as LngLat,

@@ -10,6 +10,7 @@ export const places: SeedPlace[] = [
       it: "La chiesa del patrono di Donnici Inferiore, il casale basso della frazione collinare dove Cosenza diventa campagna e vigna.",
       en: "The church of the patron saint of Donnici Inferiore, the lower hamlet where Cosenza turns into countryside and vineyards.",
     },
+    sintesi: { it: "La chiesa del patrono di Donnici Inferiore, dove Cosenza diventa campagna e vigna" },
     body: {
       it: `Donnici Inferiore si allunga sul crinale a circa 490 metri di quota, a una manciata di chilometri dal centro di Cosenza: si sale lungo la vecchia statale 19 verso sud, poi si piega sulla strada per il Savuto. In questo casale, che per secoli ha avuto il nome popolare di Donnici Sottano, la chiesa dedicata a San Michele Arcangelo è il punto attorno a cui gira la vita del paese.
 
@@ -58,6 +59,7 @@ Pause on the church steps and listen: the city traffic already feels far away, r
       it: "Piccole cantine di famiglia e aziende vitivinicole custodiscono la tradizione del rosso di Donnici, oggi sottozona della DOC Terre di Cosenza.",
       en: "Small family cellars and wine estates keep alive the tradition of Donnici red, today a subzone of the Terre di Cosenza DOC.",
     },
+    sintesi: { it: "Cantine di famiglia e aziende che custodiscono la tradizione del rosso di Donnici" },
     body: {
       it: `Non serve cercare un'insegna precisa: a Donnici il vino è ovunque. Lo trovi nei portoni socchiusi che lasciano uscire un odore di mosto e legno, nelle damigiane allineate sotto le scale, nelle aziende che negli ultimi decenni hanno trasformato la vendemmia di casa in un mestiere.
 
@@ -103,6 +105,7 @@ Many cellars in the area welcome visitors, but almost always by appointment: cal
       it: "Filari che scendono a terrazze tra Donnici Inferiore e Superiore, sulle colline a sud di Cosenza affacciate verso la Sila.",
       en: "Rows of vines stepping down the slopes between Donnici Inferiore and Superiore, on the hills south of Cosenza facing the Sila.",
     },
+    sintesi: { it: "Filari a terrazze sulle colline a sud di Cosenza, affacciati verso la Sila" },
     body: {
       it: `Qui la strada si fa stretta e la campagna si apre. Tra i due casali di Donnici il paesaggio è un mosaico di piccoli appezzamenti: filari di vite, ulivi, fichi, orti recintati da reti e canne. È una viticoltura di collina, fatta di parcelle spesso minuscole, ereditate e divise di generazione in generazione.
 
@@ -147,6 +150,7 @@ Walk along the roadside, without entering private land, and look closely: pale g
       it: "Il casale alto di Donnici, a circa 540 metri: case in pietra, vicoli quieti, acqua buona e la memoria dei Casali di Cosenza.",
       en: "The upper hamlet of Donnici, at about 540 metres: stone houses, quiet lanes, good water and the memory of Cosenza's Casali.",
     },
+    sintesi: { it: "Il casale alto di Donnici, a 540 metri: case in pietra e vicoli quieti" },
     body: {
       it: `Donnici Superiore, l'antico Donnici Soprani, è il più alto e raccolto dei due casali. Poche centinaia di abitanti, case addossate, scale esterne, orti che arrivano fino alle finestre. Da sempre il paese è rinomato per il clima salubre e per la bontà della sua acqua, quella dell'acquedotto dello Zumpo.
 
@@ -191,6 +195,7 @@ On 13 June the village celebrates St Anthony, its patron saint. On other days it
       it: "Dal ciglio di Donnici Superiore lo sguardo corre sulla valle del Crati, sui paesi della Presila e, nelle giornate limpide, fino alla Sila.",
       en: "From the edge of Donnici Superiore your gaze sweeps over the Crati valley, the Presila villages and, on clear days, the Sila plateau.",
     },
+    sintesi: { it: "Lo sguardo sulla valle del Crati, sulla Presila e, nei giorni limpidi, sulla Sila" },
     body: {
       it: `All'uscita del borgo alto, dove le ultime case lasciano spazio ai campi, il terreno si affaccia sul vuoto e la vista si spalanca. Sotto di te scorre il Crati, il fiume che poco più a nord attraversa Cosenza e incontra il Busento; di fronte, sul versante opposto, si allineano i paesi della Presila, e alle loro spalle si alzano i boschi scuri dell'altopiano silano.
 
@@ -233,6 +238,7 @@ Today the viewpoint is above all a place of silence. Come at sunset, when the lo
       it: "Il quartiere oltre il Busento, crocevia tra la città vecchia e la campagna: una piazza di mercato, partenze e ritorni.",
       en: "The quarter across the Busento, a crossroads between the old town and the countryside: a square of markets, departures and returns.",
     },
+    sintesi: { it: "Il quartiere oltre il Busento, con la piazza di mercato tra città vecchia e campagna" },
     body: {
       it: `Il punto di partenza è Piazza della Riforma, cuore del quartiere Riforma-Rivocati, sulla riva sinistra del Busento. Il nome della piazza viene dal vicino complesso dei Frati Riformati; quello del quartiere, secondo la tradizione, dai fuoriusciti che in epoca sveva si rifugiavano qui e venivano «revocati», richiamati in città.
 
@@ -275,6 +281,7 @@ Since 2017 the square has been pedestrianised, with trees and benches. Sit for a
       it: "Uno dei rioni bassi della Cosenza vecchia, tra Piazza dei Valdesi e la chiesetta di Santa Lucia: vicoli, scale e memoria.",
       en: "One of the lower quarters of old Cosenza, between Piazza dei Valdesi and the little church of Santa Lucia: alleys, stairways and memory.",
     },
+    sintesi: { it: "Rione basso della città vecchia, tra Piazza dei Valdesi, vicoli e scale" },
     body: {
       it: `Appena attraversato il Busento, la città vecchia ti accoglie con il rione di Santa Lucia, uno dei più antichi tra i quartieri del centro storico. Il punto di riferimento è la piccola Piazza Santa Lucia, a pochi passi dalla chiesa omonima: uno slargo irregolare da cui partono vicoli e gradinate che salgono verso il colle.
 
@@ -325,6 +332,7 @@ Above the quarter, the church of the Cappuccinelle looks out over the Crati vall
       it: "Il rione oltre il Crati, con l'antico convento di Sant'Agostino, oggi Museo dei Brettii e degli Enotri, e il ricordo dei vasai.",
       en: "The quarter across the Crati, with the old convent of Sant'Agostino, now the Museum of the Brettii and Enotri, and the memory of the potters.",
     },
+    sintesi: { it: "Il rione oltre il Crati, con il convento di Sant'Agostino e il ricordo dei vasai" },
     body: {
       it: `La Massa è il rione del centro storico che si allunga sulla sponda destra del Crati, collegato al cuore della città vecchia dal ponte dei Pignatari. Il nome del ponte è già un racconto: i *pignatari* erano gli artigiani che modellavano le pignatte, le pentole di terracotta usate in ogni cucina.
 
@@ -373,6 +381,7 @@ Imagine the sounds of this quarter a hundred years ago: a potter's wheel, a wate
       it: "Nel Cinquecento il rione più popoloso di Cosenza, detto delle Concerie per i suoi conciatori: oggi una piazza con fontana e scale mobili.",
       en: "In the 1500s Cosenza's most populous quarter, known as the Tanneries for its leather workers: today a square with a fountain and escalators.",
     },
+    sintesi: { it: "L'antico rione delle Concerie, oggi una piazza con fontana e scale mobili" },
     body: {
       it: `Il rione prende il nome dalla chiesa dello Spirito Santo, che dal 1513 appartenne alle suore domenicane e che si affaccia sulla piazza omonima, nella parte bassa del centro storico verso il Crati.
 
@@ -418,6 +427,7 @@ Today Spirito Santo is linked to the upper town by a series of escalators climbi
       it: "La parte alta del centro storico, sotto il Castello: vicoli in salita, orti a terrazza e il panorama più ampio sulla città.",
       en: "The upper part of the old town, below the Castle: climbing lanes, terraced gardens and the widest panorama over the city.",
     },
+    sintesi: { it: "La parte alta del centro storico, sotto il Castello, tra vicoli e orti a terrazza" },
     body: {
       it: `Portapiana è uno dei rioni alti della Cosenza vecchia, aggrappato alle pendici del colle Pancrazio, sotto il Castello normanno-svevo. Il punto di riferimento è Via Portapiana, che sale tra case basse, muri di pietra e piccoli orti a terrazza dove crescono pomodori, fichi e qualche vite.
 
@@ -460,6 +470,7 @@ But Portapiana's true treasure is the view. From the top of the quarter you can 
       it: "Il quartiere popolare nato nel secondo Novecento sul tracciato della strada romana che univa Capua a Reggio.",
       en: "The working-class district that grew up in the late twentieth century along the route of the Roman road from Capua to Reggio.",
     },
+    sintesi: { it: "Quartiere popolare del Novecento sul tracciato della strada romana Capua–Reggio" },
     body: {
       it: `Via Popilia è insieme una strada lunghissima e un quartiere. Il nome viene dall'antica strada romana, nota anche come Via Capua-Regium, che dal 132 a.C. attraversava Cosenza collegando la Campania con lo Stretto. Il punto di questa tappa è lungo il viale, nel cuore del quartiere che oggi porta il suo nome, tra il Crati e il viale Giacomo Mancini.
 

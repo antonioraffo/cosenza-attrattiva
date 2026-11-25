@@ -16,6 +16,8 @@ export interface ExplorePlace {
   slug: string;
   name: string;
   summary: string;
+  /** Una riga per la mini card della home. */
+  sintesi: string;
   category: string;
   categoryLabel: string;
   group: ExploreGroup;
@@ -30,7 +32,7 @@ const GROUPS = Object.keys(EXPLORE_GROUPS) as ExploreGroup[];
 /**
  * Elenco + mappa sincronizzati: passando su una scheda si evidenzia il punto, toccando un punto si va alla scheda.
  * `compact` (home, «Esplora a piedi»): elenco a scorrimento di altezza fissa accanto alla mappa, nomi in h3,
- * mappa creata solo quando si avvicina allo schermo.
+ * mappa creata solo quando si avvicina allo schermo; la mini card mostra solo la riga di sintesi (niente pilastro né descrizione).
  */
 export function ExploreView({ places, origin, compact = false }: { places: ExplorePlace[]; origin: LngLat; compact?: boolean }) {
   const t = useTranslations("explore");
@@ -142,11 +144,13 @@ export function ExploreView({ places, origin, compact = false }: { places: Explo
                     {p.name}
                   </Link>
                 </Name>
-                <p>{p.summary}</p>
+                <p className="ca-place-summary">{compact ? p.sintesi : p.summary}</p>
                 <p className="ca-place-meta">
-                  <span className="ca-pillar-tag" data-pillar={p.pillar}>
-                    {t(`pillar.${p.pillar}`)}
-                  </span>
+                  {!compact && (
+                    <span className="ca-pillar-tag" data-pillar={p.pillar}>
+                      {t(`pillar.${p.pillar}`)}
+                    </span>
+                  )}
                   <span>{p.categoryLabel}</span>
                   <span>{t("walk", { min: p.minutes })}</span>
                 </p>

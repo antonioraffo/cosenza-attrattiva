@@ -13,6 +13,7 @@ export async function explorePlaces(locale: string): Promise<ExplorePlace[]> {
       slug: p.slug,
       name: tr(p.name, locale),
       summary: tr(p.summary, locale),
+      sintesi: tr(p.sintesi, locale) || tr(p.summary, locale),
       category: p.category,
       categoryLabel: t(`category.${p.category}`),
       group: groupOf(p.category),

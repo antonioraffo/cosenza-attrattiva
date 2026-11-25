@@ -281,6 +281,7 @@ export const listPlacesFull = cache(async () => {
       name: places.name,
       category: places.category,
       summary: places.summary,
+      sintesi: places.sintesi,
       body: places.body,
       geom: places.geom,
       geofenceRadiusM: places.geofenceRadiusM,

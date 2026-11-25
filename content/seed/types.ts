@@ -49,6 +49,8 @@ export interface SeedPlace {
   category: PlaceCategory;
   /** Una frase, max ~160 caratteri. */
   summary: L;
+  /** Una riga di sintesi per le mini card (Esplora a piedi in home), max ~90 caratteri. */
+  sintesi?: Partial<L>;
   /** Markdown, 150–250 parole, tono evocativo ma accurato. */
   body: L;
   /** 2–3 curiosità brevi. */

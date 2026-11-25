@@ -127,6 +127,8 @@ export const places = pgTable(
     name: jsonb("name").$type<Localized>().notNull(),
     category: placeCategoryEnum("category").notNull(),
     summary: jsonb("summary").$type<Localized>().notNull(),
+    /** Una riga per le mini card (max ~90 caratteri); se manca si usa summary. */
+    sintesi: jsonb("sintesi").$type<Partial<Localized> | null>(),
     body: jsonb("body").$type<Localized>().notNull(),
     curiosities: jsonb("curiosities").$type<Localized[]>().notNull().default([]),
     geom: point("geom").notNull(),
