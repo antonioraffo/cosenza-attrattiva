@@ -20,6 +20,15 @@ test("home: sezioni nell'ordine, niente sezioni tolte, niente scroll orizzontale
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
+test("hero: ?template= sceglie la variante (1 predefinito, 2 colori del logo, 3 da definire)", async ({ page }) => {
+  for (const [query, expected] of [["", "1"], ["?template=1", "1"], ["?template=2", "2"], ["?template=3", "3"], ["?template=9", "1"], ["?colori=logo", "2"]]) {
+    await page.goto(`/it${query}`);
+    const hero = page.locator(".ca-hero-draw");
+    await expect(hero).toHaveAttribute("data-hero-template", expected);
+    await expect(hero).toHaveAttribute("data-drawing-ready", "true");
+  }
+});
+
 test("hero: disegno intero nella prima schermata, animazione automatica in loop", async ({ page }) => {
   test.setTimeout(90_000);
   await page.goto("/it");
