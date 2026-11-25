@@ -1,8 +1,7 @@
 #!/bin/sh
 # Pubblica un commit del branch dev su due repository, con lo stesso flusso (dev, poi merge su main):
-#   origin  git@github.com:antonioraffo/cosenza-attrattiva.git  progetto nella radice
+#   origin  git@github.com:antonioraffo/cosenza-attrattiva.git  progetto nella radice (Vercel pubblica main)
 #   altrama git@github.com:altrama/cosenza-attrativa.git         progetto nella cartella frontend/
-#                                                               (Vercel pubblica main, Root Directory frontend)
 # Lo lancia l'hook pre-push (scripts/git-hooks/pre-push) a ogni `git push` di dev verso origin;
 # a mano: scripts/publish.sh [commit]   (predefinito: dev)
 # I cloni di appoggio stanno in .git/publish-sync (fuori dal progetto, mai versionati).

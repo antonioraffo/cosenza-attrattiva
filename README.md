@@ -266,8 +266,8 @@ con lo stesso flusso (dev, poi merge su main):
 
 | Remoto | Repository | Dove sta il progetto |
 |---|---|---|
-| `origin` | `git@github.com:antonioraffo/cosenza-attrattiva.git` | radice |
-| `altrama` | `git@github.com:altrama/cosenza-attrativa.git` | cartella `frontend/` (Vercel: branch `main`, Root Directory `frontend`) |
+| `origin` | `git@github.com:antonioraffo/cosenza-attrattiva.git` | radice (Vercel: branch `main`, Root Directory predefinita) |
+| `altrama` | `git@github.com:altrama/cosenza-attrativa.git` | cartella `frontend/` |
 
 Lo fa l'hook `scripts/git-hooks/pre-push`, che lancia `scripts/publish.sh`. Per installarlo su un nuovo clone:
 `ln -sf "$PWD/scripts/git-hooks/pre-push" "$(git rev-parse --git-common-dir)/hooks/pre-push"`.
