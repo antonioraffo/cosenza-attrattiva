@@ -953,9 +953,9 @@ body.home-scroll-effects-active .ca-explore-tail {
 }
 
 /* ── Eventi: card editoriali senza foto (event-cards.css) ─────────────────── */
-/* fondo: variante chiara del viola del logo (prima neutro) */
+/* fondo: malva polvere, il viola del logo (colore degli eventi) spento verso il grigio caldo */
 .ca-section--light.ca-events {
-  background: var(--color-viola-50);
+  background: #f1ecef;
 }
 .ca-events-demo {
   align-self: flex-start;
