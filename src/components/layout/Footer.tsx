@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { features } from "@/lib/env";
 import { Logo } from "./Logo";
 import { ConsentManageButton } from "./ConsentBanner";
+import { PILLAR_HREF } from "./Header";
 import { PillarIcon } from "./PillarIcon";
 
 /**
@@ -37,7 +38,7 @@ export async function Footer() {
           <ul className="ca-footer-links">
             {(["vive", "connect", "crea"] as const).map((p) => (
               <li key={p}>
-                <Link href={`/#${p}`}>
+                <Link href={PILLAR_HREF[p]}>
                   <PillarIcon pillar={p} size={14} /> {tn(p)}
                 </Link>
               </li>

@@ -10,6 +10,8 @@ import { ScrollReset } from "./ScrollReset";
 import { MyItineraryButton, MyItineraryDrawer } from "@/components/mine/MyItineraryButton";
 
 export const PILLARS: Pillar[] = ["vive", "connect", "crea"];
+/** Pagina di ogni pilastro (prima erano le ancore dei blocchi della mission in home, ora rimossi). */
+export const PILLAR_HREF: Record<Pillar, string> = { vive: "/eventi", connect: "/itinerari", crea: "/fatto-a-cosenza" };
 
 /**
  * Header di sito sul modello di vivicosenza: barra bianca fissa con ombra (80/76/72 px),
@@ -40,7 +42,7 @@ export async function Header() {
     pillar: p,
     label: t(p),
     description: t(`mega.${p}`),
-    href: `/#${p}`,
+    href: PILLAR_HREF[p],
     cta: t("mega.goTo", { label: t(p) }),
     items: sub[p],
   }));

@@ -2,7 +2,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { HeroDrawing } from "@/components/home/HeroDrawing";
-import { PillarBlocks } from "@/components/home/PillarBlocks";
 import { EventsSection } from "@/components/home/EventsSection";
 import { ExploreSection } from "@/components/home/ExploreSection";
 import { TimeSection } from "@/components/home/TimeSection";
@@ -10,11 +9,12 @@ import { LowerRoot } from "@/components/home/LowerRoot";
 import { CreaBand } from "@/components/crea/CreaBand";
 
 /**
- * Home: hero (disegno al tratto in loop) → mission con i tre pilastri (PillarBlocks) → eventi (grandi eventi, poi il calendario) →
+ * Home: hero (disegno al tratto in loop) → eventi (grandi eventi, poi il calendario) →
  * «Esplora a piedi», «Il tuo tempo» e «Il tuo giro» (modello della demo di Stefano) → fascia nera
  * «Fatto a Cosenza» → footer.
  * Restano nel progetto ma non in home: HomeIntro/SilhouetteIntro, HomePanels (MAB/Duomo/San Domenico),
- * TimeBar, ThreeWays, ItinerariesSection, SectionNav, MissionSection (carosello dei pilastri).
+ * TimeBar, ThreeWays, ItinerariesSection, SectionNav, MissionSection (carosello dei pilastri),
+ * PillarBlocks (mission a blocchi alternati, documentata in docs/blocchi-rimossi/mission.md).
  */
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -49,7 +49,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             play: t("hero.play"),
           }}
         />
-        <PillarBlocks />
         <LowerRoot overlap={false}>
           <EventsSection locale={locale} />
           <ExploreSection locale={locale} />
