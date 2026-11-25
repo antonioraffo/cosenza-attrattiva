@@ -64,7 +64,8 @@ export default async function LocaleLayout({
   const t = await getTranslations("nav");
 
   return (
-    <html lang={locale} className={rethink.variable} data-scroll-behavior="smooth">
+    // suppressHydrationWarning: con ?template=3 lo script di HeroSwitch aggiunge data-hero-template a <html>
+    <html lang={locale} className={rethink.variable} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className="min-h-dvh antialiased">
         <a
           href="#main"

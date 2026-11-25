@@ -4,7 +4,7 @@ import type { FillPalette } from "./effects/fills";
  * Varianti dell'hero, scelte con ?template= nell'indirizzo della home (anteprime da confrontare):
  *   1  disegno al tratto che si colora con il verde del logo (predefinito, anche senza parametro)
  *   2  lo stesso disegno con i quattro colori del logo
- *   3  da definire: per ora uguale all'1
+ *   3  hero v2 (HeroV2.tsx): filigrana a tutta larghezza, foto del luogo, curiosità, slot «In evidenza»
  * Un valore mancante o non valido vale 1. Il vecchio ?colori=logo vale ancora come 2.
  */
 export type HeroTemplate = 1 | 2 | 3;
@@ -19,4 +19,4 @@ export function readHeroTemplate(search: string): HeroTemplate {
 }
 
 /** colori dei riempimenti per ogni template */
-export const TEMPLATE_PALETTE: Record<HeroTemplate, FillPalette> = { 1: "verde", 2: "logo", 3: "verde" };
+export const TEMPLATE_PALETTE: Record<HeroTemplate, FillPalette> = { 1: "verde", 2: "logo", 3: "verde" }; // il 3 non ha riempimenti

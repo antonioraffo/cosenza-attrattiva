@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link } from "@/i18n/navigation";
 import { initializeDrawing } from "./effects/drawing";
 import { FILLS } from "./effects/fills";
-import { readHeroTemplate, TEMPLATE_PALETTE, type HeroTemplate } from "./heroTemplate";
+import { TEMPLATE_PALETTE, type HeroTemplate } from "./heroTemplate";
 
-type Kind = "duomo" | "ponte";
+export type Kind = "duomo" | "ponte";
 
 /** Disegni al tratto (gli stessi dell'intro silhouette): nero #1d1d1d e verde #0f7663. */
-const DRAWINGS: Record<Kind, string> = {
+export const DRAWINGS: Record<Kind, string> = {
   duomo: "/home/duomo-silhouette-lines.svg",
   ponte: "/home/ponte-calatrava-silhouette-lines.svg",
 };
@@ -19,9 +19,6 @@ const DRAWINGS: Record<Kind, string> = {
  * largo 1535; tagliando il lato destro a 1248 la facciata sta al centro e l'hero torna simmetrico.
  */
 const CROPS: Partial<Record<Kind, string>> = { duomo: "0 0 1248 1025" };
-
-/** l'indirizzo non cambia mentre si è sulla home: niente da ascoltare */
-const noSubscribe = () => () => {};
 
 export interface HeroScene {
   title: string;
@@ -50,7 +47,7 @@ const arrow = (
  * Il claim in tre righe, come nella demo di Stefano: «Cosenza, / città da / vivere.». Fino alla virgola,
  * poi il resto, poi l'ultima parola (in verde).
  */
-function claimLines(title: string): string[] {
+export function claimLines(title: string): string[] {
   const comma = title.indexOf(",");
   const head = comma >= 0 ? title.slice(0, comma + 1) : "";
   const words = title.slice(head.length).trim().split(/\s+/);
@@ -59,10 +56,13 @@ function claimLines(title: string): string[] {
 }
 
 export function HeroDrawing({
+  template = 1,
   title,
   scenes,
   labels,
 }: {
+  /** 1 o 2 (scelto da HeroSwitch con ?template=) */
+  template?: HeroTemplate;
   title: string;
   scenes: Record<Kind, HeroScene>;
   labels: {
@@ -82,8 +82,6 @@ export function HeroDrawing({
   const [kind, setKind] = useState<Kind>("duomo");
   const [announcement, setAnnouncement] = useState("");
   const [paused, setPaused] = useState(false);
-  // ?template= si legge nel browser (la pagina resta statica): sul server e in idratazione vale 1
-  const template = useSyncExternalStore(noSubscribe, () => readHeroTemplate(window.location.search), () => 1 as HeroTemplate);
   const scene = scenes[kind];
 
   // altezza dell'header (sticky): l'hero occupa il resto della prima schermata
@@ -100,7 +98,7 @@ export function HeroDrawing({
 
   useEffect(() => {
     if (!root.current) return;
-    return initializeDrawing(root.current, DRAWINGS[kind], FILLS[kind], TEMPLATE_PALETTE[template], CROPS[kind]);
+    return initializeDrawing(root.current, DRAWINGS[kind], { fills: FILLS[kind], palette: TEMPLATE_PALETTE[template], crop: CROPS[kind] });
   }, [kind, template]);
 
   // pausa scelta dall'utente: effects/drawing.ts legge data-drawing-paused
