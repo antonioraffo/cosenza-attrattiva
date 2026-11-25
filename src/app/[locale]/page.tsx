@@ -10,7 +10,7 @@ import { CreaBand } from "@/components/crea/CreaBand";
 
 /**
  * Home: hero (disegno al tratto in loop) → «Esplora a piedi», «Il tuo tempo» e «Il tuo giro» (modello della
- * demo di Stefano) → eventi (grandi eventi, poi il calendario) → fascia nera «Fatto a Cosenza» → footer.
+ * demo di Stefano) → eventi (grandi eventi, poi il calendario) → fascia nera «Bottega Cosenza» → footer.
  * Restano nel progetto ma non in home: HomeIntro/SilhouetteIntro, HomePanels (MAB/Duomo/San Domenico),
  * TimeBar, ThreeWays, ItinerariesSection, SectionNav, MissionSection (carosello dei pilastri),
  * PillarBlocks (mission a blocchi alternati, documentata in docs/blocchi-rimossi/mission.md).

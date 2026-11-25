@@ -24,7 +24,7 @@
     "subCalendario": "Calendario della città",
     "subItinerari": "Itinerari",
     "subRadici": "Ritorno a Cosenza",
-    "subFatto": "Fatto a Cosenza",
+    "subFatto": "Bottega Cosenza",
     "subMani": "Le mani di Cosenza",
     "openSub": "Sottomenu {label}",
     "explore": "Esplora",
@@ -363,7 +363,7 @@
         "title": "Cosenza Crea",
         "tagline": "Dà identità",
         "text": "L'artigianato come leva economica e identitaria: botteghe diffuse nel centro storico, laboratori ed esperienze, il marchio «Fatto a Cosenza».",
-        "cta": "Scopri Fatto a Cosenza"
+        "cta": "Scopri Bottega Cosenza"
       }
     }
   },
@@ -473,12 +473,12 @@
     "events": "Eventi",
     "copyright": "© {year} Cosenza attrattiva · Comune di Cosenza",
     "calendar": "Calendario della città",
-    "crea": "Fatto a Cosenza",
+    "crea": "Bottega Cosenza",
     "roots": "Ritorno a Cosenza"
   },
   "crea": {
     "eyebrow": "Cosenza Crea",
-    "title": "Fatto a Cosenza",
+    "title": "Bottega Cosenza",
     "intro": "L'artigianato è una delle espressioni più autentiche dell'identità di una comunità: ogni bottega custodisce competenze, tradizioni e creatività. Cosenza Crea vuole farne una parte stabile della vita della città, integrata con il commercio, il turismo e il centro storico.",
     "crafts": "I mestieri",
     "craftsLabel": "Scegli un mestiere",
@@ -527,7 +527,7 @@
     "itineraryCta": "Segui «Le mani di Cosenza»",
     "eventsTitle": "Gli appuntamenti dell'artigianato",
     "quote": "L'artigianato non è un ricordo del passato. È un'economia che genera lavoro, un patrimonio che produce identità, un'esperienza che rende una città unica.",
-    "discover": "Scopri Fatto a Cosenza"
+    "discover": "Scopri Bottega Cosenza"
   },
   "roots": {
     "eyebrow": "Cosenza Connect",

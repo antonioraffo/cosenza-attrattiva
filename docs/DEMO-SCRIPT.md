@@ -34,7 +34,7 @@ in modalità dispositivo (375 px). L'URL è quello stampato da `make up`
 
 - **Cosenza Vive ▾ → Calendario della città**: fascia dei **grandi eventi** (eventi di grande rilevanza) e
   calendario filtrabile; apri **Festa della Madonna del Pilerio**: data, luogo, mappa, cosa vedere vicino, itinerari nei dintorni.
-- **Cosenza Crea ▾ → Fatto a Cosenza**: scegli un mestiere (frecce ← →), il marchio, le botteghe;
+- **Cosenza Crea ▾ → Bottega Cosenza**: scegli un mestiere (frecce ← →), il marchio, le botteghe;
   **Segui «Le mani di Cosenza»**: un itinerario *misto*, con tappe sulla mappa e letture tra una tappa e l'altra.
 - **Cosenza Connect ▾ → Ritorno a Cosenza**: turismo delle radici in italiano e inglese; l'itinerario
   *tematico* "Ritorno a Cosenza" non ha tappe su mappa e si legge come racconto.

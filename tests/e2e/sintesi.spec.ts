@@ -17,7 +17,7 @@ test("menu: sottovoci dei pilastri (megamenu Scopri) verso le nuove pagine", asy
     await page.getByRole("button", { name: "Apri menu" }).click();
     const nav = page.getByRole("navigation", { name: "Navigazione mobile" });
     await nav.getByRole("button", { name: "Cosenza Crea" }).click();
-    await expect(nav.getByRole("link", { name: "Fatto a Cosenza" })).toBeVisible();
+    await expect(nav.getByRole("link", { name: "Bottega Cosenza" })).toBeVisible();
     await nav.getByRole("button", { name: "Cosenza Vive" }).click();
     await nav.getByRole("link", { name: "Calendario della città" }).click();
     await expect(page).toHaveURL(/\/it\/eventi#calendario$/);
@@ -55,7 +55,7 @@ test("eventi: grandi eventi, filtri del calendario e pagina dell'evento", async 
   await expect(page.getByRole("heading", { name: "Itinerari nei dintorni" })).toBeVisible();
 });
 
-test("Fatto a Cosenza: mestieri come schede accessibili, raggiungibile dalla fascia in home", async ({ page }) => {
+test("Bottega Cosenza: mestieri come schede accessibili, raggiungibile dalla fascia in home", async ({ page }) => {
   await page.goto("/it");
   const link = page.locator(".ca-crea-hero").getByRole("link").first();
   await expect(link).toHaveAttribute("href", "/it/fatto-a-cosenza");

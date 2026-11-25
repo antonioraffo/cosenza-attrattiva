@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link } from "@/i18n/navigation";
 import { initializeDrawing } from "./effects/drawing";
 import { FILLS, type FillPalette } from "./effects/fills";
@@ -12,6 +12,12 @@ const DRAWINGS: Record<Kind, string> = {
   duomo: "/home/duomo-silhouette-lines.svg",
   ponte: "/home/ponte-calatrava-silhouette-lines.svg",
 };
+
+/**
+ * Ritagli (viewBox): nel Duomo l'asse della facciata (la croce, x≈624) non è al centro del disegno
+ * largo 1535; tagliando il lato destro a 1248 la facciata sta al centro e l'hero torna simmetrico.
+ */
+const CROPS: Partial<Record<Kind, string>> = { duomo: "0 0 1248 1025" };
 
 export interface HeroScene {
   title: string;
@@ -36,6 +42,18 @@ const arrow = (
  * complete e se ne vanno con la dissolvenza del loop. Il loop si può mettere in pausa (WCAG 2.2.2) e si
  * ferma da solo con il puntatore o il focus su una card.
  */
+/**
+ * Il claim in tre righe, come nella demo di Stefano: «Cosenza, / città da / vivere.». Fino alla virgola,
+ * poi il resto, poi l'ultima parola (in verde).
+ */
+function claimLines(title: string): string[] {
+  const comma = title.indexOf(",");
+  const head = comma >= 0 ? title.slice(0, comma + 1) : "";
+  const words = title.slice(head.length).trim().split(/\s+/);
+  const last = words.pop() ?? "";
+  return [head, words.join(" "), last].filter(Boolean);
+}
+
 export function HeroDrawing({
   title,
   scenes,
@@ -78,7 +96,7 @@ export function HeroDrawing({
     if (!root.current) return;
     // anteprima della variante con i colori del logo: ?colori=logo
     const palette: FillPalette = new URLSearchParams(window.location.search).get("colori") === "logo" ? "logo" : "verde";
-    return initializeDrawing(root.current, DRAWINGS[kind], FILLS[kind], palette);
+    return initializeDrawing(root.current, DRAWINGS[kind], FILLS[kind], palette, CROPS[kind]);
   }, [kind]);
 
   // pausa scelta dall'utente: effects/drawing.ts legge data-drawing-paused
@@ -90,7 +108,14 @@ export function HeroDrawing({
     <section ref={root} className="ca-hero-draw" data-drawing-kind={kind} aria-labelledby="hero-title">
       <div className="ca-hero-draw-brand">
         <h1 id="hero-title" className="ca-hero-draw-claim">
-          {title}
+          {claimLines(title).map((line, i, all) => (
+            <span key={i}>
+              <span className="ca-hero-claim-line" style={{ "--i": i } as CSSProperties} data-accent={i === all.length - 1 || undefined}>
+                <span>{line}</span>
+              </span>
+              {i < all.length - 1 && " "}
+            </span>
+          ))}
         </h1>
       </div>
       <div className="ca-hero-draw-stage">

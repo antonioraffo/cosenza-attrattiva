@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 /**
- * Pilastro Crea: "Fatto a Cosenza" (dal prototipo "Città da vivere" e dal programma Cosenza Crea).
+ * Pilastro Crea: "Bottega Cosenza" (dal prototipo "Città da vivere" e dal programma Cosenza Crea).
  * Nessuna prenotazione di laboratori; le botteghe reali arriveranno dall'Albo Artigiani.
  */
 export default async function CreaPage({ params }: Props) {

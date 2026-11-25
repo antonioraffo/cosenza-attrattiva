@@ -953,6 +953,10 @@ body.home-scroll-effects-active .ca-explore-tail {
 }
 
 /* ── Eventi: card editoriali senza foto (event-cards.css) ─────────────────── */
+/* fondo: malva polvere, il viola del logo (colore degli eventi) spento verso il grigio caldo */
+.ca-section--light.ca-events {
+  background: #f1ecef;
+}
 .ca-events-demo {
   align-self: flex-start;
   padding: 6px 12px;
@@ -1829,7 +1833,7 @@ ul.ca-events-grid,
   gap: 56px;
   padding: 56px;
   border-radius: 32px;
-  background: var(--color-primario-50);
+  background: var(--color-azzurro-50);
 }
 .ca-hometime h2 {
   margin: 0;
@@ -2009,7 +2013,7 @@ ul.ca-events-grid,
   }
 }
 
-/* Fatto a Cosenza in home: link alla pagina dedicata sotto l'introduzione */
+/* Bottega Cosenza in home: link alla pagina dedicata sotto l'introduzione */
 .ca-crea-more {
   display: inline-flex;
   align-items: center;
